@@ -344,6 +344,28 @@ input[type=file]{display:none}
 .upv-header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
 .upv-av{width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem;font-weight:700;overflow:hidden;flex-shrink:0}
 .upv-av img{width:100%;height:100%;object-fit:cover}
+
+/* ── BLOG TAGS ── */
+.blog-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:0.67rem;font-weight:700;background:var(--pl);color:var(--purple)}
+.gen-tag{background:var(--bl);color:var(--blue)}
+.ai-tag{background:var(--s2);color:var(--text2);border:1px solid var(--border)}
+/* ── RATING ── */
+.rating-stars{display:flex;gap:4px;flex-wrap:wrap}
+.star-btn{width:30px;height:30px;border:1.5px solid var(--border);border-radius:6px;background:var(--s2);color:var(--muted);font-size:0.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.star-btn:hover,.star-btn.active{background:var(--amber);color:#fff;border-color:var(--amber)}
+.rating-avg{font-size:1.1rem;font-weight:800;color:var(--amber)}
+.rating-note{margin-top:10px;padding:10px 14px;border-radius:var(--r);font-size:0.82rem;font-weight:600;animation:fadeUp .3s ease}
+.rating-note.good{background:var(--gl);color:var(--green)}
+.rating-note.low{background:var(--al);color:var(--amber)}
+/* ── VIDEO PREVIEW ── */
+.blog-card-video{width:220px;max-height:180px;object-fit:cover;flex-shrink:0;background:#000}
+/* ── USER TAG BADGE ── */
+.user-tag-badge{display:inline-block;padding:1px 7px;border-radius:20px;font-size:0.65rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;letter-spacing:.03em}
+/* ── FRIENDS ── */
+.friend-item{display:flex;align-items:center;gap:10px;padding:9px;background:var(--s2);border-radius:var(--r)}
+.friend-av{width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.8rem;font-weight:700;overflow:hidden;flex-shrink:0}
+.friend-av img{width:100%;height:100%;object-fit:cover}
+.online-ring{box-shadow:0 0 0 2px var(--green)}
 </style>
 </head>
 <body>
@@ -389,12 +411,13 @@ input[type=file]{display:none}
 <!-- APP -->
 <div id="app">
  <div class="topbar">
-  <button style="background:none;border:none;color:var(--text2);display:flex;align-items:center" onclick="document.getElementById('sidebar').classList.toggle('open')">
+  <button style="background:none;border:none;color:var(--text2);display:flex;align-items:center" onclick="openSidebar()">
    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
   <div class="topbar-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
   <div class="topbar-title">Automation Note</div>
  </div>
+ <div id="sidebarOverlay" onclick="closeSidebar()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299"></div>
  <div class="app-layout">
   <aside class="sidebar" id="sidebar">
    <div class="sb-logo">
@@ -405,6 +428,10 @@ input[type=file]{display:none}
    <button class="nav-item" data-sec="notes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes</button>
    <button class="nav-item" data-sec="blog"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Blog <span class="badge badge-purple" style="margin-left:auto;font-size:0.6rem">NEW</span></button>
    <button class="nav-item" data-sec="explore"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Explore</button>
+   <button class="nav-item" data-sec="friends" id="friendsNavBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Friends <span id="friendReqBadge" style="display:none;background:var(--blue);color:#fff;border-radius:20px;font-size:0.6rem;font-weight:700;padding:1px 5px;margin-left:auto"></span>
+   </button>
    <button class="nav-item" data-sec="messages" id="msgNavBtn">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     Messages <span id="msgBadge" style="display:none;background:var(--red);color:#fff;border-radius:20px;font-size:0.6rem;font-weight:700;padding:1px 5px;margin-left:auto"></span>
@@ -607,6 +634,21 @@ input[type=file]{display:none}
    </div>
 
 
+
+   <!-- FRIENDS -->
+   <div class="section" id="friendsSection">
+    <div class="page-hd"><h2>Friends</h2><p>Connect with other creators</p></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+     <div class="card">
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:12px">Friend Requests <span id="reqCount" class="badge badge-blue" style="margin-left:4px"></span></div>
+      <div id="friendRequests" style="display:flex;flex-direction:column;gap:8px"><div style="color:var(--muted);font-size:0.8rem">No pending requests</div></div>
+     </div>
+     <div class="card">
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:12px">My Friends</div>
+      <div id="friendsList" style="display:flex;flex-direction:column;gap:8px"><div style="color:var(--muted);font-size:0.8rem">No friends yet</div></div>
+     </div>
+    </div>
+   </div>
    <!-- MESSAGES -->
    <div class="section" id="messagesSection">
     <div class="page-hd"><h2>Messages</h2><p>Private conversations with other users</p></div>
@@ -720,6 +762,31 @@ input[type=file]{display:none}
      <input type="file" id="beImgInput" accept="image/*" style="display:none" onchange="handleBlogImg(this)">
      <div style="font-size:0.72rem;color:var(--muted)">Image position:</div>
      <select class="inp sel" id="beImgPos" style="width:auto;flex:none;font-size:0.78rem"><option value="left">Left</option><option value="right">Right</option><option value="top">Top</option></select>
+    </div>
+   </div>
+   <div>
+    <div class="lbl">Sample Video (optional — becomes the post preview)</div>
+    <div id="beVidPreview" style="margin-bottom:8px;display:none">
+     <div style="position:relative;display:inline-block"><video id="beVidThumb" src="" controls style="max-width:280px;max-height:180px;border-radius:var(--r);border:1px solid var(--border)"></video><button style="position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;border:none;background:var(--red);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.65rem" onclick="removeBlogVid()">✕</button></div>
+    </div>
+    <div class="row"><button class="btn btn-outline btn-sm" onclick="document.getElementById('beVidInput').click()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg> Upload Video</button>
+    <input type="file" id="beVidInput" accept="video/*" style="display:none" onchange="handleBlogVid(this)">
+    <span id="beVidStatus" style="font-size:0.76rem;color:var(--muted)"></span></div>
+   </div>
+   <div>
+    <div class="lbl">Generation Type</div>
+    <div class="pills" id="genTypePills">
+     <span class="pill" data-v="image">Image Generation</span>
+     <span class="pill" data-v="video">Video Generation</span>
+     <span class="pill" data-v="text">Text / Copywriting</span>
+     <span class="pill" data-v="audio">Audio Generation</span>
+     <span class="pill" data-v="workflow">Workflow Automation</span>
+    </div>
+   </div>
+   <div>
+    <div class="lbl">Works Best With (select multiple)</div>
+    <div class="pills" id="aiToolsPills">
+     <span class="pill" data-v="ChatGPT">ChatGPT</span><span class="pill" data-v="Grok">Grok</span><span class="pill" data-v="Claude">Claude</span><span class="pill" data-v="Gemini">Gemini</span><span class="pill" data-v="Flow">Flow</span><span class="pill" data-v="Midjourney">Midjourney</span><span class="pill" data-v="DALL-E">DALL-E</span><span class="pill" data-v="Stable Diffusion">Stable Diffusion</span><span class="pill" data-v="Leonardo AI">Leonardo AI</span><span class="pill" data-v="Runway">Runway ML</span><span class="pill" data-v="Kling">Kling</span><span class="pill" data-v="Pika">Pika</span><span class="pill" data-v="Sora">Sora</span><span class="pill" data-v="Luma">Luma</span><span class="pill" data-v="Ideogram">Ideogram</span><span class="pill" data-v="Adobe Firefly">Adobe Firefly</span><span class="pill" data-v="ElevenLabs">ElevenLabs</span><span class="pill" data-v="Suno">Suno</span><span class="pill" data-v="Udio">Udio</span><span class="pill" data-v="Perplexity">Perplexity</span><span class="pill" data-v="Copilot">Copilot</span><span class="pill" data-v="n8n">n8n</span><span class="pill" data-v="Make">Make</span><span class="pill" data-v="Zapier">Zapier</span>
     </div>
    </div>
    <div><div class="lbl">Content</div><textarea class="inp ta" id="beContent" placeholder="Write your post, automation prompt, or ideas here..." style="min-height:160px"></textarea></div>
@@ -861,13 +928,21 @@ function showApp(){
 }
 
 // Nav
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').style.display='none';
+}
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').style.display='block';
+}
 document.querySelectorAll('.nav-item[data-sec]').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
     document.getElementById(btn.dataset.sec+'Section').classList.add('active');
     btn.classList.add('active');
-    if(window.innerWidth<=768)document.getElementById('sidebar').classList.remove('open');
+    closeSidebar();
   });
 });
 document.querySelectorAll('.vbtn[data-view]').forEach(btn=>{
@@ -1715,6 +1790,442 @@ async function adminDeleteUser(uname) {
   toast(`@${uname} deleted`);
   loadAdminData();
 }
+
+
+// ═══════════════════════════════════════
+// BLOG EDITOR — VIDEO + AI TAGS
+// ═══════════════════════════════════════
+let blogVidUrl=null, blogVidCldId=null;
+let selectedAiTools=[], selectedGenType=null;
+
+// Pill multi-select for AI tools
+document.addEventListener('click', e => {
+  if (e.target.closest('#aiToolsPills .pill')) {
+    const p = e.target.closest('.pill');
+    p.classList.toggle('on');
+    selectedAiTools = [...document.querySelectorAll('#aiToolsPills .pill.on')].map(x=>x.dataset.v);
+  }
+  if (e.target.closest('#genTypePills .pill')) {
+    const p = e.target.closest('.pill');
+    document.querySelectorAll('#genTypePills .pill').forEach(x=>x.classList.remove('on'));
+    p.classList.add('on');
+    selectedGenType = p.dataset.v;
+  }
+});
+
+function removeBlogVid(){
+  blogVidUrl=null; blogVidCldId=null;
+  document.getElementById('beVidPreview').style.display='none';
+}
+async function handleBlogVid(input){
+  const file=input.files[0]; if(!file) return;
+  const vs=document.getElementById('beVidStatus');
+  vs.textContent='Uploading video…';
+  const fd=new FormData(); fd.append('video',file);
+  const r=await fetch('/api/blog-video',{method:'POST',headers:{'x-auth-token':token},body:fd});
+  if(!r.ok){vs.textContent='Upload failed';return;}
+  const d=await r.json();
+  blogVidUrl=d.url; blogVidCldId=d.cloudinary_id;
+  document.getElementById('beVidThumb').src=d.url;
+  document.getElementById('beVidPreview').style.display='block';
+  vs.textContent='Video uploaded!';
+  setTimeout(()=>vs.textContent='',2000);
+  input.value='';
+}
+
+// Override openBlogEditor to populate new fields
+const _origOpenBlogEditor = openBlogEditor;
+openBlogEditor = function(id) {
+  selectedAiTools=[]; selectedGenType=null;
+  blogVidUrl=null; blogVidCldId=null;
+  // Reset pills
+  document.querySelectorAll('#aiToolsPills .pill').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('#genTypePills .pill').forEach(p=>p.classList.remove('on'));
+  document.getElementById('beVidPreview').style.display='none';
+  if(document.getElementById('beVidThumb')) document.getElementById('beVidThumb').src='';
+  _origOpenBlogEditor(id);
+  if(id){
+    const b=myBlogs.find(x=>x.id===id);
+    if(b){
+      // Restore AI tools
+      if(b.ai_tools&&b.ai_tools.length){
+        selectedAiTools=[...b.ai_tools];
+        document.querySelectorAll('#aiToolsPills .pill').forEach(p=>{ if(selectedAiTools.includes(p.dataset.v)) p.classList.add('on'); });
+      }
+      // Restore gen type
+      if(b.generation_type){
+        selectedGenType=b.generation_type;
+        document.querySelectorAll('#genTypePills .pill').forEach(p=>{ if(p.dataset.v===b.generation_type) p.classList.add('on'); });
+      }
+      // Restore video
+      if(b.video_url){ blogVidUrl=b.video_url; blogVidCldId=b.video_cloudinary_id; document.getElementById('beVidThumb').src=b.video_url; document.getElementById('beVidPreview').style.display='block'; }
+    }
+  }
+};
+
+// Override saveBlog to include new fields
+const _origSaveBlog = saveBlog;
+saveBlog = async function(){
+  const title=document.getElementById('beTitle').value.trim();
+  const content=document.getElementById('beContent').value.trim();
+  if(!title||!content) return toast('Title and content required');
+  const imgUrl=window.blogImgUrl, imgCldId=window.blogImgCldId;
+  const body={title,content,image_url:imgUrl||null,cloudinary_id:imgCldId||null,
+    video_url:blogVidUrl||null,video_cloudinary_id:blogVidCldId||null,
+    image_position:document.getElementById('beImgPos').value,
+    is_public:document.getElementById('bePublic').checked,
+    ai_tools:selectedAiTools, generation_type:selectedGenType};
+  const r=await fetch(editingBlogId?`/api/blogs/${editingBlogId}`:'/api/blogs',{method:editingBlogId?'PUT':'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify(body)});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  closeBlogEditor(); await loadMyBlogs(); await loadPublicBlogs();
+  toast(editingBlogId?'Post updated!':'Post published!');
+};
+
+// ═══════════════════════════════════════
+// BLOG TAGS RENDERING
+// ═══════════════════════════════════════
+function renderBlogTags(b){
+  let tags='';
+  if(b.generation_type) tags+=`<span class="badge gen-tag">${esc(b.generation_type)}</span> `;
+  if(b.ai_tools&&b.ai_tools.length) b.ai_tools.forEach(t=>{ tags+=`<span class="badge ai-tag">✓ ${esc(t)}</span> `; });
+  return tags;
+}
+
+// Override makeExploreCard to include tags and video preview
+const _origMakeExploreCard = makeExploreCard;
+makeExploreCard = function(b){
+  const d=document.createElement('div'); d.className='blog-card';
+  const pos=b.image_position||'left';
+  const excerpt=(b.content||'').slice(0,180)+(b.content&&b.content.length>180?'…':'');
+  const dispName=b.display_name||b.owner;
+  const tagBadge=b.user_tag?`<span class="user-tag-badge">${esc(b.user_tag)}</span> `:'';
+  const avHtml=b.avatar_url
+    ?`<img src="${esc(b.avatar_url)}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle">`
+    :`<span style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;vertical-align:middle">${esc(dispName.charAt(0).toUpperCase())}</span>`;
+  // Video preview takes priority over image
+  let mediaHtml='';
+  if(b.video_url) mediaHtml=`<video class="blog-card-video" src="${esc(b.video_url)}" muted loop preload="metadata" style="cursor:pointer" onmouseenter="this.play()" onmouseleave="this.pause()"></video>`;
+  else if(b.image_url) mediaHtml=`<img class="blog-card-img" src="${esc(b.image_url)}" alt="">`;
+  const avgStar=b.avg_rating?`<span style="color:var(--amber);font-weight:700;font-size:0.75rem">★ ${b.avg_rating}</span>`:'';
+  d.innerHTML=`<div class="blog-card-inner img-${pos}">
+    ${mediaHtml}
+    <div class="blog-card-body">
+     <div class="blog-card-title">${esc(b.title)}</div>
+     <div style="margin:4px 0;display:flex;flex-wrap:wrap;gap:3px">${renderBlogTags(b)}</div>
+     <div class="blog-card-excerpt">${esc(excerpt)}</div>
+     <div class="blog-card-meta">
+      <span style="display:flex;align-items:center;gap:4px;cursor:pointer" onclick="event.stopPropagation();viewUserProfile('${esc(b.owner)}')">${avHtml} ${tagBadge}${esc(dispName)}</span>
+      <span>${fmtAgo(b.created_at)}</span>
+      ${avgStar}
+      <div style="margin-left:auto"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();viewBlog('${b.id}')">Read →</button></div>
+     </div>
+    </div>
+   </div>`;
+  d.querySelector('.blog-card-inner').addEventListener('click',()=>viewBlog(b.id));
+  return d;
+};
+
+// ═══════════════════════════════════════
+// RATINGS
+// ═══════════════════════════════════════
+async function rateBlog(blogId, rating){
+  const r=await fetch(`/api/blogs/${blogId}/rate`,{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({rating})});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  const d=await r.json();
+  // Update stars UI
+  document.querySelectorAll(`.star-btn[data-blog="${blogId}"]`).forEach(btn=>{
+    btn.classList.toggle('active', parseInt(btn.dataset.val)<=rating);
+  });
+  const avgEl=document.getElementById(`avgRating_${blogId}`);
+  if(avgEl) avgEl.textContent=`★ ${d.avg_rating} (${d.rating_count} ratings)`;
+  // Show notification based on rating
+  const noteEl=document.getElementById(`ratingNote_${blogId}`);
+  if(noteEl){
+    if(rating>=5){
+      noteEl.className='rating-note good';
+      noteEl.innerHTML=`❤️ Glad you liked it! Consider following @<strong>${esc(currentBlogOwner)}</strong> for more!`;
+    } else {
+      noteEl.className='rating-note low';
+      noteEl.innerHTML=`💡 Got any suggestions? Leave them in the comments below!`;
+    }
+    noteEl.style.display='block';
+  }
+  toast(`Rated ${rating}/10!`);
+}
+
+let currentBlogOwner='';
+
+// Override viewBlog to add rating section
+const _origViewBlog = viewBlog;
+viewBlog = async function(id){
+  const r=await fetch(`/api/blogs/${id}`,{headers:{'x-auth-token':token}});
+  if(!r.ok){const e=await r.json();toast(e.error||'Cannot view');return;}
+  const b=await r.json();
+  currentBlogOwner=b.owner;
+  const isOwner=b.owner===username;
+  const pos=b.image_position||'left';
+  const dispName=b.display_name||b.owner;
+  const tagBadge=b.user_tag?`<span class="user-tag-badge">${esc(b.user_tag)}</span>`:'';
+
+  document.getElementById('blogViewActions').innerHTML=`
+   ${isOwner?`<button class="btn btn-outline btn-sm" onclick="closeBlogView();openBlogEditor('${b.id}')">Edit</button>
+   <button class="btn btn-outline btn-sm" onclick="toggleVisibility('${b.id}',${!b.is_public})">${b.is_public?'Make Private':'Make Public'}</button>
+   <button class="btn btn-ghost btn-sm" onclick="copyBlogLink('${b.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link</button>`:''}
+   ${b.is_public?'<span class="badge badge-green">Public</span>':'<span class="badge badge-gray">Private</span>'}`;
+
+  // Rating stars
+  const myRating=b.my_rating||0;
+  const starsHtml=[1,2,3,4,5,6,7,8,9,10].map(n=>
+    `<button class="star-btn ${n<=myRating?'active':''}" data-val="${n}" data-blog="${b.id}" onclick="rateBlog('${b.id}',${n})">${n}</button>`
+  ).join('');
+
+  const mediaHtml=b.video_url
+    ?`<video src="${esc(b.video_url)}" controls style="width:100%;max-height:360px;border-radius:var(--r);background:#000;margin-bottom:14px"></video>`
+    :(b.image_url?`<img class="blog-view-img" src="${esc(b.image_url)}" alt="">`:'');
+
+  const commentsHtml=b.comments&&b.comments.length?b.comments.map(c=>{
+    const cDisp=c.display_name||c.author;
+    const cAv=c.avatar_url?`<img src="${esc(c.avatar_url)}" style="width:28px;height:28px;border-radius:50%;object-fit:cover">`:`<div class="comment-av">${esc(cDisp.charAt(0).toUpperCase())}</div>`;
+    return`<div class="comment-item">
+     <div style="flex-shrink:0">${cAv}</div>
+     <div class="comment-body">
+      <div class="comment-author">${esc(cDisp)} <span class="comment-date">${fmtAgo(c.created_at)}</span></div>
+      <div class="comment-text">${esc(c.content)}</div>
+     </div>
+     ${(isOwner||c.author===username)?`<button class="btn btn-ghost btn-sm" onclick="deleteComment('${b.id}','${c.id}',this)" style="flex-shrink:0;color:var(--muted)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>`:''}
+    </div>`;}).join(''):'<div style="color:var(--muted);font-size:0.8rem;padding:8px 0">No comments yet. Be the first!</div>';
+
+  document.getElementById('blogViewContent').innerHTML=`
+   <div class="blog-view">
+    <div class="blog-view-header">
+     <div class="blog-view-title">${esc(b.title)}</div>
+     <div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">${renderBlogTags(b)}</div>
+     <div class="blog-view-meta">
+      <span style="cursor:pointer;display:flex;align-items:center;gap:5px" onclick="closeBlogView();viewUserProfile('${esc(b.owner)}')">
+       ${b.avatar_url?`<img src="${esc(b.avatar_url)}" style="width:20px;height:20px;border-radius:50%;object-fit:cover">`:`<span style="width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700">${esc(dispName.charAt(0).toUpperCase())}</span>`}
+       ${tagBadge} ${esc(dispName)}
+      </span>
+      <span>${fmtAgo(b.created_at)}</span>
+      ${b.avg_rating?`<span id="avgRating_${b.id}" style="color:var(--amber);font-weight:700">★ ${b.avg_rating} (${b.rating_count} ratings)</span>`:`<span id="avgRating_${b.id}" style="color:var(--muted);font-size:0.78rem">No ratings yet</span>`}
+     </div>
+    </div>
+    ${b.video_url?`<video src="${esc(b.video_url)}" controls style="width:100%;max-height:360px;border-radius:var(--r);background:#000;margin-bottom:16px"></video>`:''}
+    <div class="blog-view-layout img-${b.video_url?'top':pos}">
+     ${!b.video_url&&b.image_url?`<img class="blog-view-img" src="${esc(b.image_url)}" alt="">`:''}
+     <div>
+      <div class="blog-view-copy"><button class="btn btn-outline btn-sm" onclick="copyText(document.querySelector('.blog-view-content').textContent)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Prompt</button></div>
+      <div class="blog-view-content">${esc(b.content)}</div>
+     </div>
+    </div>
+
+    <!-- RATING SECTION -->
+    ${token&&!isOwner?`
+    <div style="margin-top:20px;padding:16px;background:var(--s2);border-radius:var(--r)">
+     <div style="font-weight:700;font-size:0.88rem;margin-bottom:10px">Rate this prompt — how would you rate it on a scale of 1 to 10?</div>
+     <div class="rating-stars">${starsHtml}</div>
+     <div id="ratingNote_${b.id}" class="rating-note" style="display:${myRating?'block':'none'}">
+      ${myRating>=5?`❤️ Glad you liked it! Consider following @<strong>${esc(b.owner)}</strong> for more!`:`💡 Got any suggestions? Leave them in the comments below!`}
+     </div>
+    </div>`:isOwner?`<div style="margin-top:14px;padding:12px;background:var(--s2);border-radius:var(--r);font-size:0.82rem;color:var(--muted)">Average rating: ${b.avg_rating?`★ ${b.avg_rating} from ${b.rating_count} user(s)`:' No ratings yet'}</div>`:''}
+
+    <div class="comments-section">
+     <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Comments (${b.comments?b.comments.length:0})</div>
+     ${token?`<div class="comment-form">
+      <div class="comment-av">${username.charAt(0).toUpperCase()}</div>
+      <div class="comment-inp-wrap">
+       <textarea class="inp ta" id="commentInput_${b.id}" placeholder="Write a comment..." style="min-height:60px"></textarea>
+       <div style="display:flex;justify-content:flex-end"><button class="btn btn-dark btn-sm" onclick="postComment('${b.id}')">Post Comment</button></div>
+      </div>
+     </div>`:'<div style="color:var(--muted);font-size:0.82rem;margin-bottom:14px">Login to comment.</div>'}
+     <div id="commentsList_${b.id}">${commentsHtml}</div>
+    </div>
+   </div>`;
+
+  document.getElementById('blogViewModal').classList.add('open');
+  document.body.style.overflow='hidden';
+};
+
+// ═══════════════════════════════════════
+// ADMIN TAG feature
+// ═══════════════════════════════════════
+async function adminSetTag(username, currentTag){
+  const tag=prompt(`Set tag for @${username} (leave blank to remove):`, currentTag||'');
+  if(tag===null) return; // cancelled
+  const r=await fetch(`/api/admin/users/${username}/tag`,{method:'PATCH',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({tag:tag.trim()||null})});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  toast(tag.trim()?`Tag "${tag.trim()}" set for @${username}`:`Tag removed from @${username}`);
+  loadAdminData();
+}
+
+// Override loadAdminData to add tag column
+const _origLoadAdmin = loadAdminData;
+loadAdminData = async function(){
+  const [statsR,usersR,logR]=await Promise.all([
+    fetch('/api/admin/stats',{headers:{'x-auth-token':token}}),
+    fetch('/api/admin/users',{headers:{'x-auth-token':token}}),
+    fetch('/api/admin/log',{headers:{'x-auth-token':token}}),
+  ]);
+  const stats=await statsR.json(),users=await usersR.json(),log=await logR.json();
+  document.getElementById('adminStats').innerHTML=`
+    <div class="stat-box"><div class="stat-v">${stats.total_users}</div><div class="stat-l">Users</div></div>
+    <div class="stat-box"><div class="stat-v" style="color:var(--green)">${stats.online_users}</div><div class="stat-l">Online</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_blogs}</div><div class="stat-l">Posts</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_photos}</div><div class="stat-l">Photos</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_messages}</div><div class="stat-l">Messages</div></div>`;
+  const tbody=document.getElementById('adminUsersBody');
+  tbody.innerHTML=users.map(u=>`<tr>
+   <td>
+    <div style="display:flex;align-items:center;gap:8px">
+     ${u.avatar_url?`<img src="${esc(u.avatar_url)}" style="width:26px;height:26px;border-radius:50%;object-fit:cover">`:`<div style="width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700">${(u.display_name||u.username).charAt(0).toUpperCase()}</div>`}
+     <div><div style="font-weight:600;font-size:0.82rem">${esc(u.display_name||u.username)}</div><div style="font-size:0.7rem;color:var(--muted)">@${esc(u.username)}</div></div>
+    </div>
+   </td>
+   <td>${u.user_tag?`<span class="user-tag-badge">${esc(u.user_tag)}</span>`:'-'}</td>
+   <td><span class="badge ${u.status==='active'?'badge-green':u.status==='suspended'?'badge-amber':'badge-red'}">${u.status}</span></td>
+   <td><span class="${u.is_online?'online-dot':'offline-dot'}"></span> ${u.is_online?'Online':'Offline'}</td>
+   <td style="font-size:0.74rem;color:var(--muted)">${new Date(parseInt(u.created_at)).toLocaleDateString()}</td>
+   <td style="font-size:0.74rem;color:var(--muted)">${u.last_seen?fmtAgo(u.last_seen):'Never'}</td>
+   <td>
+    <div style="display:flex;gap:3px;flex-wrap:wrap">
+     <button class="btn btn-outline btn-sm" onclick="adminSetTag('${esc(u.username)}','${esc(u.user_tag||'')}')">Tag</button>
+     ${u.status!=='suspended'?`<button class="btn btn-sm" style="background:var(--al);color:var(--amber);border:none" onclick="adminAction('${esc(u.username)}','suspended')">Suspend</button>`:''}
+     ${u.status!=='active'?`<button class="btn btn-green btn-sm" onclick="adminAction('${esc(u.username)}','active')">Unban</button>`:''}
+     ${u.status!=='banned'?`<button class="btn btn-danger btn-sm" onclick="adminAction('${esc(u.username)}','banned')">Ban</button>`:''}
+     <button class="btn btn-danger btn-sm" style="opacity:.7" onclick="adminDeleteUser('${esc(u.username)}')">Del</button>
+    </div>
+   </td>
+  </tr>`).join('');
+  // Add tag column to thead
+  const thead=document.querySelector('#adminUsersTable thead tr');
+  if(thead&&thead.children.length<7){
+    const th=document.createElement('th'); th.textContent='Tag';
+    thead.insertBefore(th, thead.children[1]);
+  }
+  const logEl=document.getElementById('adminLog');
+  logEl.innerHTML=log.length?log.map(l=>`
+   <div style="display:flex;gap:10px;align-items:center;padding:7px 10px;background:var(--s2);border-radius:6px;font-size:0.78rem">
+    <span class="badge ${l.action==='banned'?'badge-red':l.action==='suspended'?'badge-amber':l.action==='deleted'?'badge-red':l.action==='tagged'?'badge-purple':'badge-green'}">${l.action}</span>
+    <span style="font-weight:600">@${esc(l.target||'—')}</span>
+    ${l.reason?`<span style="color:var(--muted)">${esc(l.reason)}</span>`:''}
+    <span style="color:var(--muted);margin-left:auto">${fmtAgo(l.created_at)}</span>
+   </div>`).join(''):'<div style="color:var(--muted);font-size:0.8rem">No actions yet</div>';
+};
+
+// ═══════════════════════════════════════
+// FRIENDS
+// ═══════════════════════════════════════
+async function loadFriends(){
+  const [fr, reqs] = await Promise.all([
+    fetch('/api/friends',{headers:{'x-auth-token':token}}).then(r=>r.json()),
+    fetch('/api/friends/requests',{headers:{'x-auth-token':token}}).then(r=>r.json()),
+  ]);
+  // Requests
+  const reqEl=document.getElementById('friendRequests');
+  const badge=document.getElementById('friendReqBadge');
+  if(reqs.length){badge.textContent=reqs.length;badge.style.display='inline';}else{badge.style.display='none';}
+  reqEl.innerHTML=reqs.length?reqs.map(r=>{
+    const av=r.avatar_url?`<div class="friend-av"><img src="${esc(r.avatar_url)}"></div>`:`<div class="friend-av">${(r.display_name||r.requester).charAt(0).toUpperCase()}</div>`;
+    return`<div class="friend-item">
+     ${av}<div style="flex:1"><div style="font-weight:600;font-size:0.82rem">${esc(r.display_name||r.requester)}</div>${r.user_tag?`<span class="user-tag-badge">${esc(r.user_tag)}</span>`:''}</div>
+     <button class="btn btn-green btn-sm" onclick="acceptFriend('${esc(r.requester)}')">Accept</button>
+     <button class="btn btn-danger btn-sm" onclick="rejectFriend('${esc(r.requester)}')">Decline</button>
+    </div>`;}).join(''):'<div style="color:var(--muted);font-size:0.8rem">No pending requests</div>';
+  // Friends list
+  const flEl=document.getElementById('friendsList');
+  const now=Date.now();
+  flEl.innerHTML=fr.length?fr.map(f=>{
+    const isOnline=f.last_seen&&(now-parseInt(f.last_seen))<5*60*1000;
+    const av=f.avatar_url?`<div class="friend-av ${isOnline?'online-ring':''}"><img src="${esc(f.avatar_url)}"></div>`:`<div class="friend-av ${isOnline?'online-ring':''}">${(f.display_name||f.other_user).charAt(0).toUpperCase()}</div>`;
+    return`<div class="friend-item">
+     ${av}<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:0.82rem">${esc(f.display_name||f.other_user)}</div><div style="font-size:0.7rem;color:${isOnline?'var(--green)':'var(--muted)'}">${isOnline?'Online':'Offline'}</div>${f.user_tag?`<span class="user-tag-badge">${esc(f.user_tag)}</span>`:''}</div>
+     <button class="btn btn-outline btn-sm" onclick="startChatWith('${esc(f.other_user)}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+     <button class="btn btn-ghost btn-sm" onclick="viewUserProfile('${esc(f.other_user)}')">Profile</button>
+     <button class="btn btn-danger btn-sm" onclick="removeFriend('${esc(f.other_user)}')">Remove</button>
+    </div>`;}).join(''):'<div style="color:var(--muted);font-size:0.8rem">No friends yet — find people in Explore!</div>';
+}
+async function acceptFriend(uname){
+  const r=await fetch(`/api/friends/${uname}/accept`,{method:'PATCH',headers:{'x-auth-token':token}});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  toast('Friend request accepted!'); loadFriends();
+}
+async function rejectFriend(uname){
+  await fetch(`/api/friends/${uname}`,{method:'DELETE',headers:{'x-auth-token':token}});
+  toast('Request declined'); loadFriends();
+}
+async function removeFriend(uname){
+  if(!confirm(`Remove ${uname} from friends?`)) return;
+  await fetch(`/api/friends/${uname}`,{method:'DELETE',headers:{'x-auth-token':token}});
+  toast('Removed'); loadFriends();
+}
+async function sendFriendRequest(uname){
+  const r=await fetch(`/api/friends/request/${uname}`,{method:'POST',headers:{'x-auth-token':token}});
+  const d=await r.json();
+  toast(r.ok?'Friend request sent!':d.error||'Failed');
+}
+
+// Override viewUserProfile to add friend button
+const _origViewUserProfile = viewUserProfile;
+viewUserProfile = async function(uname){
+  if(uname===username){openMyProfile();return;}
+  const r=await fetch(`/api/profile/${uname}`,{headers:{'x-auth-token':token}});
+  if(!r.ok){toast('User not found');return;}
+  const profile=await r.json();
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('userProfileSection').classList.add('active');
+  const avHtml=profile.avatar_url?`<div class="upv-av"><img src="${esc(profile.avatar_url)}" alt=""></div>`:`<div class="upv-av">${esc((profile.display_name||profile.username).charAt(0).toUpperCase())}</div>`;
+  const tagBadge=profile.user_tag?`<span class="user-tag-badge" style="margin-left:6px">${esc(profile.user_tag)}</span>`:'';
+  const fs=profile.friend_status;
+  let friendBtn='';
+  if(token&&!isAdmin){
+    if(fs==='friends') friendBtn=`<button class="btn btn-outline btn-sm" onclick="removeFriend('${esc(uname)}');navToExplore()">Friends ✓</button>`;
+    else if(fs==='sent') friendBtn=`<button class="btn btn-outline btn-sm" disabled>Request Sent</button>`;
+    else if(fs==='received') friendBtn=`<button class="btn btn-green btn-sm" onclick="acceptFriend('${esc(uname)}');viewUserProfile('${esc(uname)}')">Accept Friend Request</button>`;
+    else friendBtn=`<button class="btn btn-outline btn-sm" onclick="sendFriendRequest('${esc(uname)}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Add Friend</button>`;
+  }
+  const blogsHtml=profile.blogs&&profile.blogs.length?profile.blogs.map(b=>`<div class="blog-card" onclick="viewBlog('${b.id}')" style="cursor:pointer"><div class="blog-card-inner img-${b.image_position||'left'}">${b.video_url?`<video class="blog-card-video" src="${esc(b.video_url)}" muted></video>`:b.image_url?`<img class="blog-card-img" src="${esc(b.image_url)}" alt="">`:''}
+    <div class="blog-card-body"><div class="blog-card-title">${esc(b.title)}</div><div style="margin:3px 0">${renderBlogTags(b)}</div><div class="blog-card-excerpt">${esc((b.content||'').slice(0,120))}…</div><div class="blog-card-meta"><span>${fmtAgo(b.created_at)}</span></div></div></div></div>`).join(''):'<div class="empty" style="padding:24px"><p>No public posts yet</p></div>';
+  document.getElementById('userProfileContent').innerHTML=`
+   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <button class="btn btn-ghost btn-sm" onclick="navToExplore()">← Back</button>
+   </div>
+   <div class="upv-header">${avHtml}
+    <div>
+     <div style="font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:6px">${esc(profile.display_name||profile.username)}${tagBadge}</div>
+     <div style="color:var(--muted);font-size:0.8rem">@${esc(profile.username)}</div>
+     <div style="font-size:0.74rem;color:var(--muted);margin-top:3px">Member since ${new Date(parseInt(profile.created_at)).toLocaleDateString()}</div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-left:auto">
+     ${friendBtn}
+     ${token&&!isAdmin?`<button class="btn btn-dark btn-sm" onclick="startChatWith('${esc(profile.username)}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Message</button>`:''}
+    </div>
+   </div>
+   <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Public Posts (${profile.blogs?profile.blogs.length:0})</div>
+   <div class="blog-feed">${blogsHtml}</div>`;
+};
+
+// Poll friend requests badge
+async function pollFriendRequests(){
+  try{
+    const r=await fetch('/api/friends/requests',{headers:{'x-auth-token':token}});
+    const d=await r.json();
+    const badge=document.getElementById('friendReqBadge');
+    if(d.length){badge.textContent=d.length;badge.style.display='inline';}else{badge.style.display='none';}
+  }catch(e){}
+}
+
+// Friends nav click
+document.querySelector('[data-sec="friends"]').addEventListener('click',()=>{ loadFriends(); });
+
+// Add friend polling to showApp
+const _origShowAppV6 = showApp;
+showApp = function(){
+  _origShowAppV6();
+  if(!isAdmin){
+    pollFriendRequests();
+    setInterval(pollFriendRequests, 60000);
+  }
+};
 
 </script>
 </body>
