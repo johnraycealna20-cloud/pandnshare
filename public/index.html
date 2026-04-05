@@ -316,6 +316,34 @@ input[type=file]{display:none}
   .blog-view-img{max-width:100%}
   .blog-view-layout.img-left,.blog-view-layout.img-right{flex-direction:column}
 }
+
+/* ── MESSAGES ── */
+.conv-item{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s}
+.conv-item:hover{background:var(--s2)}
+.conv-item.active{background:var(--s2)}
+.conv-av{width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.8rem;font-weight:700;flex-shrink:0;overflow:hidden}
+.conv-av img{width:100%;height:100%;object-fit:cover}
+.conv-info{flex:1;min-width:0}
+.conv-name{font-size:0.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv-preview{font-size:0.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.conv-unread{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0}
+.msg-bubble{max-width:72%;padding:9px 13px;border-radius:14px;font-size:0.85rem;line-height:1.5;word-break:break-word}
+.msg-bubble.mine{background:var(--accent);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.msg-bubble.theirs{background:var(--s2);color:var(--text);border-bottom-left-radius:4px;align-self:flex-start}
+.msg-time{font-size:0.66rem;color:var(--muted);margin-top:2px;text-align:right}
+.msg-time.theirs{text-align:left}
+.msg-row{display:flex;flex-direction:column}
+.msg-row.mine{align-items:flex-end}
+.msg-row.theirs{align-items:flex-start}
+
+/* ── ADMIN ── */
+.online-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block}
+.offline-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+
+/* ── USER PROFILE VIEW ── */
+.upv-header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.upv-av{width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem;font-weight:700;overflow:hidden;flex-shrink:0}
+.upv-av img{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -377,6 +405,10 @@ input[type=file]{display:none}
    <button class="nav-item" data-sec="notes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes</button>
    <button class="nav-item" data-sec="blog"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Blog <span class="badge badge-purple" style="margin-left:auto;font-size:0.6rem">NEW</span></button>
    <button class="nav-item" data-sec="explore"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Explore</button>
+   <button class="nav-item" data-sec="messages" id="msgNavBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Messages <span id="msgBadge" style="display:none;background:var(--red);color:#fff;border-radius:20px;font-size:0.6rem;font-weight:700;padding:1px 5px;margin-left:auto"></span>
+   </button>
    <button class="nav-item" data-sec="schedule"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Schedule</button>
    <div class="nav-sep"></div>
    <div class="nav-label">Creator Tools</div>
@@ -386,9 +418,16 @@ input[type=file]{display:none}
    <button class="nav-item" data-sec="checklist"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Checklist</button>
    <button class="nav-item" data-sec="ideas"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Ideas</button>
    <div class="sb-foot">
-    <div class="user-av" id="userAv">—</div>
-    <div class="user-nm" id="userNm">—</div>
-    <button style="background:none;border:none;color:var(--muted);display:flex;align-items:center;cursor:pointer" onclick="doLogout()" title="Logout"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
+    <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0;cursor:pointer" onclick="openMyProfile()">
+     <div style="position:relative;flex-shrink:0"><img id="userAvImg" src="" style="width:26px;height:26px;border-radius:50%;object-fit:cover;display:none"><div class="user-av" id="userAv">—</div></div>
+     <div style="min-width:0">
+      <div class="user-nm" id="userNm">—</div>
+      <div id="userDispNm" style="font-size:0.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none"></div>
+     </div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="doLogout()" title="Logout" style="flex-shrink:0;padding:5px 9px">
+     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Logout
+    </button>
    </div>
   </aside>
 
@@ -565,6 +604,87 @@ input[type=file]{display:none}
      </div>
     </div>
     <div id="ideasGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:9px"></div>
+   </div>
+
+
+   <!-- MESSAGES -->
+   <div class="section" id="messagesSection">
+    <div class="page-hd"><h2>Messages</h2><p>Private conversations with other users</p></div>
+    <div style="display:grid;grid-template-columns:260px 1fr;gap:12px;min-height:480px" id="msgLayout">
+     <div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column">
+      <div style="padding:12px 14px;border-bottom:1px solid var(--border);font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">Conversations</div>
+      <div id="convList" style="flex:1;overflow-y:auto"></div>
+     </div>
+     <div class="card" id="msgPanel" style="display:flex;flex-direction:column;gap:0;padding:0;overflow:hidden">
+      <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px" id="msgHeader">
+       <div style="color:var(--muted);font-size:0.85rem">Select a conversation or start a new one</div>
+      </div>
+      <div id="msgBody" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;min-height:280px"></div>
+      <div id="msgInputArea" style="display:none;padding:12px;border-top:1px solid var(--border)">
+       <div style="display:flex;gap:8px">
+        <textarea class="inp" id="msgInput" placeholder="Type a message…" style="flex:1;min-height:40px;max-height:100px;resize:none;line-height:1.4"></textarea>
+        <button class="btn btn-dark" onclick="sendMessage()" style="align-self:flex-end">Send</button>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div style="margin-top:14px">
+     <div class="lbl" style="margin-bottom:6px">New conversation — enter a username</div>
+     <div style="display:flex;gap:8px">
+      <input class="inp" id="newMsgUser" placeholder="Username…" style="max-width:240px">
+      <button class="btn btn-dark btn-sm" onclick="startConversation()">Start Chat</button>
+     </div>
+    </div>
+   </div>
+
+   <!-- ADMIN -->
+   <div class="section" id="adminSection">
+    <div class="page-hd"><h2>Admin Panel</h2><p>Exclusive admin controls</p></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:20px" id="adminStats"></div>
+    <div class="card" style="margin-bottom:14px">
+     <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">All Users</div>
+     <div style="overflow-x:auto">
+      <table class="tbl" id="adminUsersTable">
+       <thead><tr><th>User</th><th>Status</th><th>Online</th><th>Joined</th><th>Last Seen</th><th>Actions</th></tr></thead>
+       <tbody id="adminUsersBody"></tbody>
+      </table>
+     </div>
+    </div>
+    <div class="card">
+     <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Admin Log</div>
+     <div id="adminLog" style="display:flex;flex-direction:column;gap:5px;max-height:280px;overflow-y:auto"></div>
+    </div>
+   </div>
+
+   <!-- PROFILE (own) -->
+   <div class="section" id="profileSection">
+    <div class="page-hd"><h2>My Profile</h2><p>Edit your display name and profile picture</p></div>
+    <div class="card" style="max-width:480px">
+     <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+      <div style="position:relative">
+       <img id="profileAvImg" src="" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid var(--border);display:none">
+       <div id="profileAvLetter" style="width:72px;height:72px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.6rem;font-weight:700"></div>
+       <button onclick="document.getElementById('avatarInput').click()" style="position:absolute;bottom:0;right:0;width:22px;height:22px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.6rem">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+       </button>
+       <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="uploadAvatar(this)">
+      </div>
+      <div>
+       <div style="font-weight:700;font-size:1rem" id="profileUsername"></div>
+       <div style="font-size:0.78rem;color:var(--muted)">@<span id="profileUsernameAt"></span></div>
+      </div>
+     </div>
+     <div style="margin-bottom:14px">
+      <div class="lbl">Display Name</div>
+      <input class="inp" id="displayNameInput" placeholder="Your display name" style="max-width:320px">
+     </div>
+     <button class="btn btn-dark btn-sm" onclick="saveProfile()">Save Changes</button>
+    </div>
+   </div>
+
+   <!-- USER PROFILE (other users) -->
+   <div class="section" id="userProfileSection">
+    <div id="userProfileContent"></div>
    </div>
 
   </div><!-- end main -->
@@ -1165,6 +1285,437 @@ if(token){
     .then(d=>{if(d){username=d.username;showApp();}else{token='';localStorage.removeItem('an_token');}})
     .catch(()=>{});
 }
+
+// ═══════════════════════════════════════
+// LOGOUT FIX + INIT
+// ═══════════════════════════════════════
+let currentMsgUser = null;
+let msgPollInterval = null;
+let unreadPollInterval = null;
+let isAdmin = false;
+let myDisplayName = '';
+let myAvatarUrl = '';
+
+// Override showApp to default to explore and load profile
+const _origShowApp = showApp;
+showApp = function() {
+  // Call original but then override section
+  document.getElementById('authScreen').style.display='none';
+  document.getElementById('app').style.display='flex';
+
+  // Show admin nav if admin
+  if (isAdmin) {
+    let adminBtn = document.querySelector('[data-sec="admin"]');
+    if (!adminBtn) {
+      adminBtn = document.createElement('button');
+      adminBtn.className = 'nav-item';
+      adminBtn.dataset.sec = 'admin';
+      adminBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Admin <span class="badge badge-red" style="margin-left:auto">ADMIN</span>';
+      document.querySelector('.nav-label').before(adminBtn);
+      adminBtn.addEventListener('click', () => {
+        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+        document.getElementById('adminSection').classList.add('active');
+        adminBtn.classList.add('active');
+        loadAdminData();
+      });
+    }
+  }
+
+  document.getElementById('userAv').textContent = username.charAt(0).toUpperCase();
+  document.getElementById('userNm').textContent = myDisplayName || username;
+  if (myDisplayName && myDisplayName !== username) {
+    document.getElementById('userDispNm').textContent = '@'+username;
+    document.getElementById('userDispNm').style.display = 'block';
+  }
+  if (myAvatarUrl) {
+    document.getElementById('userAvImg').src = myAvatarUrl;
+    document.getElementById('userAvImg').style.display = 'block';
+    document.getElementById('userAv').style.display = 'none';
+  }
+
+  loadPhotos(); loadNotes(); loadMyBlogs(); loadPublicBlogs();
+  renderTracker(); renderIdeas(); renderCL(); renderHashSets(); renderSched();
+
+  // Default to Explore section
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('exploreSection').classList.add('active');
+  document.querySelector('[data-sec="explore"]').classList.add('active');
+
+  // Poll unread messages
+  if (!isAdmin) {
+    pollUnread();
+    unreadPollInterval = setInterval(pollUnread, 30000);
+  }
+
+  if (!checkBlogRoute()) checkUserRoute();
+};
+
+// ═══════════════════════════════════════
+// AUTH OVERRIDE — capture isAdmin & profile
+// ═══════════════════════════════════════
+const _origLogin = doLogin;
+doLogin = async function() {
+  const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value;
+  if(!u||!p)return setAM('Please fill in all fields','err');
+  const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+  const d=await r.json();if(!r.ok)return setAM(d.error,'err');
+  token=d.token; username=d.username; isAdmin=d.isAdmin||false;
+  myDisplayName=d.display_name||d.username; myAvatarUrl=d.avatar_url||'';
+  localStorage.setItem('an_token',token); localStorage.setItem('an_user',username);
+  localStorage.setItem('an_admin',isAdmin?'1':'0');
+  showApp();
+};
+const _origRegister = doRegister;
+doRegister = async function() {
+  const u=document.getElementById('regUser').value.trim(),p=document.getElementById('regPass').value;
+  if(!u||!p)return setAM('Please fill in all fields','err');
+  const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+  const d=await r.json();if(!r.ok)return setAM(d.error,'err');
+  setAM('Account created! Please log in.','ok');
+  document.querySelector('.auth-tab').click();document.getElementById('loginUser').value=u;
+};
+const _origLogout = doLogout;
+doLogout = async function() {
+  await fetch('/api/logout',{method:'POST',headers:{'x-auth-token':token}}).catch(()=>{});
+  token='';username='';isAdmin=false;myDisplayName='';myAvatarUrl='';
+  localStorage.removeItem('an_token');localStorage.removeItem('an_user');localStorage.removeItem('an_admin');
+  clearInterval(unreadPollInterval);clearInterval(msgPollInterval);
+  document.getElementById('app').style.display='none';
+  document.getElementById('authScreen').style.display='flex';
+};
+
+// Restore session with profile
+const _origInit = window._initDone;
+if (token) {
+  isAdmin = localStorage.getItem('an_admin') === '1';
+  fetch('/api/me',{headers:{'x-auth-token':token}})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{
+      if(d){
+        username=d.username; isAdmin=d.isAdmin||false;
+        myDisplayName=d.display_name||d.username; myAvatarUrl=d.avatar_url||'';
+        showApp();
+      } else {
+        token='';localStorage.removeItem('an_token');
+      }
+    }).catch(()=>{});
+}
+
+// ═══════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════
+function openMyProfile() {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('profileSection').classList.add('active');
+  // Load profile data
+  document.getElementById('profileUsername').textContent = myDisplayName || username;
+  document.getElementById('profileUsernameAt').textContent = username;
+  document.getElementById('displayNameInput').value = myDisplayName || username;
+  document.getElementById('profileAvLetter').textContent = username.charAt(0).toUpperCase();
+  if (myAvatarUrl) {
+    document.getElementById('profileAvImg').src = myAvatarUrl;
+    document.getElementById('profileAvImg').style.display = 'block';
+    document.getElementById('profileAvLetter').style.display = 'none';
+  } else {
+    document.getElementById('profileAvImg').style.display = 'none';
+    document.getElementById('profileAvLetter').style.display = 'flex';
+  }
+}
+async function saveProfile() {
+  const name = document.getElementById('displayNameInput').value.trim();
+  if (!name) return toast('Display name cannot be empty');
+  const r = await fetch('/api/profile', {method:'PUT', headers:{'Content-Type':'application/json','x-auth-token':token}, body:JSON.stringify({display_name:name})});
+  if (!r.ok) return toast('Failed to save');
+  myDisplayName = name;
+  document.getElementById('userNm').textContent = name;
+  document.getElementById('profileUsername').textContent = name;
+  toast('Profile saved!');
+}
+async function uploadAvatar(input) {
+  const file = input.files[0]; if (!file) return;
+  const fd = new FormData(); fd.append('avatar', file);
+  toast('Uploading avatar…');
+  const r = await fetch('/api/profile/avatar', {method:'POST', headers:{'x-auth-token':token}, body:fd});
+  if (!r.ok) return toast('Avatar upload failed');
+  const d = await r.json();
+  myAvatarUrl = d.avatar_url;
+  document.getElementById('profileAvImg').src = d.avatar_url;
+  document.getElementById('profileAvImg').style.display = 'block';
+  document.getElementById('profileAvLetter').style.display = 'none';
+  document.getElementById('userAvImg').src = d.avatar_url;
+  document.getElementById('userAvImg').style.display = 'block';
+  document.getElementById('userAv').style.display = 'none';
+  input.value = '';
+  toast('Avatar updated!');
+}
+
+// ═══════════════════════════════════════
+// VIEW OTHER USER PROFILE
+// ═══════════════════════════════════════
+async function viewUserProfile(uname) {
+  if (uname === username) { openMyProfile(); return; }
+  const r = await fetch(`/api/profile/${uname}`, {headers:{'x-auth-token':token}});
+  if (!r.ok) { toast('User not found'); return; }
+  const profile = await r.json();
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('userProfileSection').classList.add('active');
+
+  const avHtml = profile.avatar_url
+    ? `<div class="upv-av"><img src="${esc(profile.avatar_url)}" alt=""></div>`
+    : `<div class="upv-av">${esc((profile.display_name||profile.username).charAt(0).toUpperCase())}</div>`;
+
+  const blogsHtml = profile.blogs && profile.blogs.length
+    ? profile.blogs.map(b=>`
+      <div class="blog-card" onclick="viewBlog('${b.id}')" style="cursor:pointer">
+       <div class="blog-card-inner img-${b.image_position||'left'}">
+        ${b.image_url?`<img class="blog-card-img" src="${esc(b.image_url)}" alt="">`: ''}
+        <div class="blog-card-body">
+         <div class="blog-card-title">${esc(b.title)}</div>
+         <div class="blog-card-excerpt">${esc((b.content||'').slice(0,140))}${b.content&&b.content.length>140?'…':''}</div>
+         <div class="blog-card-meta"><span>${fmtAgo(b.created_at)}</span></div>
+        </div>
+       </div>
+      </div>`).join('')
+    : '<div class="empty" style="padding:24px"><p>No public posts yet</p></div>';
+
+  document.getElementById('userProfileContent').innerHTML = `
+   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <button class="btn btn-ghost btn-sm" onclick="navToExplore()">← Back</button>
+   </div>
+   <div class="upv-header">
+    ${avHtml}
+    <div>
+     <div style="font-size:1.1rem;font-weight:700">${esc(profile.display_name||profile.username)}</div>
+     <div style="color:var(--muted);font-size:0.8rem">@${esc(profile.username)}</div>
+     <div style="font-size:0.75rem;color:var(--muted);margin-top:3px">Member since ${new Date(parseInt(profile.created_at)).toLocaleDateString()}</div>
+    </div>
+    ${token&&!isAdmin?`<button class="btn btn-dark btn-sm" onclick="startChatWith('${esc(profile.username)}')">
+     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Message
+    </button>`:''}
+   </div>
+   <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Public Posts (${profile.blogs?profile.blogs.length:0})</div>
+   <div class="blog-feed">${blogsHtml}</div>`;
+}
+function navToExplore() {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('exploreSection').classList.add('active');
+  document.querySelector('[data-sec="explore"]').classList.add('active');
+}
+function startChatWith(uname) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('messagesSection').classList.add('active');
+  document.getElementById('msgNavBtn').classList.add('active');
+  loadConversations();
+  setTimeout(()=>openConversation(uname), 300);
+}
+
+// Patch explore feed to make usernames clickable
+const _origRenderExploreFeed = renderExploreFeed;
+renderExploreFeed = function() {
+  const el = document.getElementById('exploreFeed');
+  if (!publicBlogs.length) { el.innerHTML='<div class="empty"><p>No public posts yet. Be the first to share!</p></div>'; return; }
+  el.innerHTML = '';
+  publicBlogs.forEach(b => { el.appendChild(makeExploreCard(b)); });
+};
+function makeExploreCard(b) {
+  const d = document.createElement('div'); d.className = 'blog-card';
+  const pos = b.image_position || 'left';
+  const excerpt = (b.content||'').slice(0,180)+(b.content&&b.content.length>180?'…':'');
+  const dispName = b.display_name || b.owner;
+  const avHtml = b.avatar_url
+    ? `<img src="${esc(b.avatar_url)}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle">`
+    : `<span style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;vertical-align:middle">${esc(dispName.charAt(0).toUpperCase())}</span>`;
+  d.innerHTML = `<div class="blog-card-inner img-${pos}">
+    ${b.image_url?`<img class="blog-card-img" src="${esc(b.image_url)}" alt="">`:''}
+    <div class="blog-card-body">
+     <div class="blog-card-title">${esc(b.title)}</div>
+     <div class="blog-card-excerpt">${esc(excerpt)}</div>
+     <div class="blog-card-meta">
+      <span style="display:flex;align-items:center;gap:5px;cursor:pointer" onclick="event.stopPropagation();viewUserProfile('${esc(b.owner)}')">${avHtml} ${esc(dispName)}</span>
+      <span>${fmtAgo(b.created_at)}</span>
+      <div style="margin-left:auto"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();viewBlog('${b.id}')">Read →</button></div>
+     </div>
+    </div>
+   </div>`;
+  d.querySelector('.blog-card-inner').addEventListener('click', ()=>viewBlog(b.id));
+  return d;
+}
+
+function checkUserRoute() {
+  const m = location.pathname.match(/^\/user\/([^/]+)$/);
+  if (m) viewUserProfile(decodeURIComponent(m[1]));
+}
+
+// ═══════════════════════════════════════
+// MESSAGES
+// ═══════════════════════════════════════
+async function loadConversations() {
+  const r = await fetch('/api/messages/conversations', {headers:{'x-auth-token':token}});
+  const convs = await r.json();
+  const el = document.getElementById('convList');
+  if (!convs.length) { el.innerHTML='<div style="padding:16px;color:var(--muted);font-size:0.82rem">No conversations yet</div>'; return; }
+  el.innerHTML = '';
+  convs.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'conv-item' + (currentMsgUser===c.other_user?' active':'');
+    const avHtml = c.avatar_url
+      ? `<div class="conv-av"><img src="${esc(c.avatar_url)}" alt=""></div>`
+      : `<div class="conv-av">${esc((c.display_name||c.other_user).charAt(0).toUpperCase())}</div>`;
+    d.innerHTML = `${avHtml}
+      <div class="conv-info">
+       <div class="conv-name">${esc(c.display_name||c.other_user)}</div>
+       <div class="conv-preview">${esc((c.content||'').slice(0,36))}</div>
+      </div>
+      ${c.has_unread?'<div class="conv-unread"></div>':''}`;
+    d.onclick = () => openConversation(c.other_user);
+    el.appendChild(d);
+  });
+}
+async function openConversation(otherUser) {
+  currentMsgUser = otherUser;
+  clearInterval(msgPollInterval);
+  // Load profile for header
+  const profR = await fetch(`/api/profile/${otherUser}`, {headers:{'x-auth-token':token}});
+  const prof = profR.ok ? await profR.json() : { username: otherUser };
+  const dispName = prof.display_name || otherUser;
+  const avHtml = prof.avatar_url
+    ? `<img src="${esc(prof.avatar_url)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover">`
+    : `<div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700">${esc(dispName.charAt(0).toUpperCase())}</div>`;
+  document.getElementById('msgHeader').innerHTML = `${avHtml}<div><div style="font-weight:700;font-size:0.88rem">${esc(dispName)}</div><div style="font-size:0.72rem;color:var(--muted)">@${esc(otherUser)}</div></div><button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="viewUserProfile('${esc(otherUser)}')">View Profile</button>`;
+  document.getElementById('msgInputArea').style.display = 'block';
+  await loadMessages(otherUser);
+  loadConversations();
+  msgPollInterval = setInterval(() => loadMessages(otherUser), 8000);
+}
+async function loadMessages(otherUser) {
+  const r = await fetch(`/api/messages/${otherUser}`, {headers:{'x-auth-token':token}});
+  const msgs = await r.json();
+  const el = document.getElementById('msgBody');
+  el.innerHTML = msgs.length ? msgs.map(m => {
+    const mine = m.from_user === username;
+    const time = new Date(parseInt(m.created_at)).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    return `<div class="msg-row ${mine?'mine':'theirs'}">
+      <div class="msg-bubble ${mine?'mine':'theirs'}">${esc(m.content)}</div>
+      <div class="msg-time ${mine?'':'theirs'}">${time}</div>
+     </div>`;
+  }).join('') : '<div style="text-align:center;color:var(--muted);font-size:0.82rem;padding:20px">Start the conversation!</div>';
+  el.scrollTop = el.scrollHeight;
+}
+async function sendMessage() {
+  if (!currentMsgUser) return;
+  const inp = document.getElementById('msgInput');
+  const content = inp.value.trim(); if (!content) return;
+  const r = await fetch(`/api/messages/${currentMsgUser}`, {method:'POST', headers:{'Content-Type':'application/json','x-auth-token':token}, body:JSON.stringify({content})});
+  if (!r.ok) { const e=await r.json(); toast(e.error||'Failed'); return; }
+  inp.value = '';
+  await loadMessages(currentMsgUser);
+  loadConversations();
+}
+document.addEventListener('keydown', e => {
+  if (e.key==='Enter' && !e.shiftKey && document.getElementById('msgInput')===document.activeElement) {
+    e.preventDefault(); sendMessage();
+  }
+});
+async function startConversation() {
+  const u = document.getElementById('newMsgUser').value.trim();
+  if (!u) return toast('Enter a username');
+  if (u === username) return toast('Cannot message yourself');
+  document.getElementById('newMsgUser').value = '';
+  await openConversation(u);
+}
+async function pollUnread() {
+  try {
+    const r = await fetch('/api/messages/unread/count', {headers:{'x-auth-token':token}});
+    const d = await r.json();
+    const badge = document.getElementById('msgBadge');
+    if (d.count > 0) { badge.textContent = d.count; badge.style.display = 'inline'; }
+    else badge.style.display = 'none';
+  } catch(e) {}
+}
+
+// Messages nav click
+document.querySelector('[data-sec="messages"]').addEventListener('click', () => {
+  loadConversations();
+  document.getElementById('msgBadge').style.display = 'none';
+});
+
+// ═══════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════
+async function loadAdminData() {
+  const [statsR, usersR, logR] = await Promise.all([
+    fetch('/api/admin/stats', {headers:{'x-auth-token':token}}),
+    fetch('/api/admin/users', {headers:{'x-auth-token':token}}),
+    fetch('/api/admin/log', {headers:{'x-auth-token':token}}),
+  ]);
+  const stats = await statsR.json();
+  const users = await usersR.json();
+  const log = await logR.json();
+
+  document.getElementById('adminStats').innerHTML = `
+    <div class="stat-box"><div class="stat-v">${stats.total_users}</div><div class="stat-l">Total Users</div></div>
+    <div class="stat-box"><div class="stat-v" style="color:var(--green)">${stats.online_users}</div><div class="stat-l">Online Now</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_blogs}</div><div class="stat-l">Posts</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_photos}</div><div class="stat-l">Photos</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_messages}</div><div class="stat-l">Messages</div></div>`;
+
+  const tbody = document.getElementById('adminUsersBody');
+  tbody.innerHTML = users.map(u => `
+    <tr>
+     <td>
+      <div style="display:flex;align-items:center;gap:8px">
+       ${u.avatar_url?`<img src="${esc(u.avatar_url)}" style="width:26px;height:26px;border-radius:50%;object-fit:cover">`:`<div style="width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700">${(u.display_name||u.username).charAt(0).toUpperCase()}</div>`}
+       <div>
+        <div style="font-weight:600;font-size:0.82rem">${esc(u.display_name||u.username)}</div>
+        <div style="font-size:0.7rem;color:var(--muted)">@${esc(u.username)}</div>
+       </div>
+      </div>
+     </td>
+     <td><span class="badge ${u.status==='active'?'badge-green':u.status==='suspended'?'badge-amber':'badge-red'}">${u.status}</span></td>
+     <td><span class="${u.is_online?'online-dot':'offline-dot'}"></span> ${u.is_online?'Online':'Offline'}</td>
+     <td style="font-size:0.76rem;color:var(--muted)">${new Date(parseInt(u.created_at)).toLocaleDateString()}</td>
+     <td style="font-size:0.76rem;color:var(--muted)">${u.last_seen?fmtAgo(u.last_seen):'Never'}</td>
+     <td>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">
+       ${u.status!=='suspended'?`<button class="btn btn-sm" style="background:var(--al);color:var(--amber);border:none" onclick="adminAction('${esc(u.username)}','suspended')">Suspend</button>`:''}
+       ${u.status!=='active'?`<button class="btn btn-green btn-sm" onclick="adminAction('${esc(u.username)}','active')">Unban</button>`:''}
+       ${u.status!=='banned'?`<button class="btn btn-danger btn-sm" onclick="adminAction('${esc(u.username)}','banned')">Ban</button>`:''}
+       <button class="btn btn-danger btn-sm" style="opacity:.7" onclick="adminDeleteUser('${esc(u.username)}')">Delete</button>
+      </div>
+     </td>
+    </tr>`).join('');
+
+  const logEl = document.getElementById('adminLog');
+  logEl.innerHTML = log.length ? log.map(l=>`
+    <div style="display:flex;gap:10px;align-items:center;padding:7px 10px;background:var(--s2);border-radius:6px;font-size:0.78rem">
+     <span class="badge ${l.action==='banned'?'badge-red':l.action==='suspended'?'badge-amber':l.action==='deleted'?'badge-red':'badge-green'}">${l.action}</span>
+     <span style="font-weight:600">@${esc(l.target||'—')}</span>
+     ${l.reason?`<span style="color:var(--muted)">${esc(l.reason)}</span>`:''}
+     <span style="color:var(--muted);margin-left:auto">${fmtAgo(l.created_at)}</span>
+    </div>`).join('') : '<div style="color:var(--muted);font-size:0.8rem">No actions yet</div>';
+}
+
+async function adminAction(uname, status) {
+  const reason = status !== 'active' ? (prompt(`Reason for ${status} @${uname}:`) || '') : '';
+  const r = await fetch(`/api/admin/users/${uname}/status`, {method:'PATCH', headers:{'Content-Type':'application/json','x-auth-token':token}, body:JSON.stringify({status, reason})});
+  if (!r.ok) { const e=await r.json(); toast(e.error||'Failed'); return; }
+  toast(`@${uname} is now ${status}`);
+  loadAdminData();
+}
+async function adminDeleteUser(uname) {
+  if (!confirm(`Permanently delete @${uname} and all their data? This cannot be undone.`)) return;
+  const r = await fetch(`/api/admin/users/${uname}`, {method:'DELETE', headers:{'x-auth-token':token}});
+  if (!r.ok) { const e=await r.json(); toast(e.error||'Failed'); return; }
+  toast(`@${uname} deleted`);
+  loadAdminData();
+}
+
 </script>
 </body>
 </html>
