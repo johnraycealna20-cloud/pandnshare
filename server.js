@@ -112,6 +112,14 @@ async function initDb() {
       read BOOLEAN DEFAULT false,
       created_at BIGINT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS reports (
+      id TEXT PRIMARY KEY,
+      from_user TEXT NOT NULL,
+      type TEXT NOT NULL,
+      content TEXT NOT NULL,
+      read BOOLEAN DEFAULT false,
+      created_at BIGINT NOT NULL
+    );
     CREATE TABLE IF NOT EXISTS admin_log (
       id SERIAL PRIMARY KEY,
       action TEXT NOT NULL,
@@ -129,12 +137,15 @@ async function initDb() {
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS user_tag TEXT`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'active'`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS last_seen BIGINT`,
+    `ALTER TABLE users ADD COLUMN IF NOT EXISTS top_contributor BOOLEAN DEFAULT false`,
     `ALTER TABLE blogs ADD COLUMN IF NOT EXISTS video_url TEXT`,
     `ALTER TABLE blogs ADD COLUMN IF NOT EXISTS video_cloudinary_id TEXT`,
     `ALTER TABLE blogs ADD COLUMN IF NOT EXISTS ai_tools TEXT[]`,
     `ALTER TABLE blogs ADD COLUMN IF NOT EXISTS generation_type TEXT`,
   ];
   for (const sql of migrations) await pool.query(sql).catch(() => {});
+  // Ensure admin has admin tag on every startup
+  await pool.query("UPDATE users SET user_tag='Admin' WHERE username='ecstar'").catch(()=>{});
   console.log('✅ Database ready');
 }
 
@@ -435,7 +446,7 @@ async function enrichBlogs(rows, viewerUsername) {
 
 app.get('/api/blogs/public', optionalAuth, async (req,res) => {
   try {
-    const r=await pool.query(`SELECT b.*,u.display_name,u.avatar_url,u.user_tag FROM blogs b LEFT JOIN users u ON b.owner=u.username WHERE b.is_public=true ORDER BY b.created_at DESC`);
+    const r=await pool.query(`SELECT b.*,u.display_name,u.avatar_url,u.user_tag,u.top_contributor FROM blogs b LEFT JOIN users u ON b.owner=u.username WHERE b.is_public=true ORDER BY b.created_at DESC`);
     res.json(await enrichBlogs(r.rows, req.username));
   } catch(err){res.status(500).json({error:err.message});}
 });
@@ -448,7 +459,7 @@ app.get('/api/blogs/:id', optionalAuth, async (req,res) => {
     const r=await pool.query('SELECT b.*,u.display_name,u.avatar_url,u.user_tag FROM blogs b LEFT JOIN users u ON b.owner=u.username WHERE b.id=$1',[req.params.id]);
     if(!r.rows.length) return res.status(404).json({error:'Not found'});
     const blog=r.rows[0];
-    if(!blog.is_public && blog.owner!==req.username && !req.isAdmin) return res.status(403).json({error:'Private post'});
+    if(!blog.is_public && blog.owner!==req.username && !req.isAdmin) return res.status(403).json({error:'Private post', needsAuth:true});
     const comments=await pool.query('SELECT c.*,u.display_name,u.avatar_url FROM blog_comments c LEFT JOIN users u ON c.author=u.username WHERE c.blog_id=$1 ORDER BY c.created_at ASC',[req.params.id]);
     const enriched=(await enrichBlogs([blog], req.username))[0];
     res.json({...enriched, comments:comments.rows});
@@ -571,6 +582,53 @@ app.get('/api/messages/unread/count', requireAuth, async (req,res) => {
   catch(err){res.status(500).json({error:err.message});}
 });
 
+// ── FRIEND SUGGESTIONS ─────────────────────────────────────
+app.get('/api/friends/suggestions', requireAuth, async (req,res) => {
+  try {
+    // Get users not already friends or pending, exclude self, order by blog count
+    const r = await pool.query(`
+      SELECT u.username, u.display_name, u.avatar_url, u.user_tag, u.top_contributor,
+        (SELECT COUNT(*) FROM blogs b WHERE b.owner=u.username AND b.is_public=true) as post_count
+      FROM users u
+      WHERE u.username != $1
+        AND u.status = 'active'
+        AND u.username NOT IN (
+          SELECT CASE WHEN requester=$1 THEN recipient ELSE requester END
+          FROM friendships WHERE requester=$1 OR recipient=$1
+        )
+      ORDER BY post_count DESC, u.created_at DESC
+      LIMIT 6
+    `, [req.username]);
+    res.json(r.rows);
+  } catch(err) { res.status(500).json({ error: err.message }); }
+});
+
+// ── REPORTS / CONTACT ADMIN ─────────────────────────────────
+app.post('/api/report', requireAuth, async (req,res) => {
+  try {
+    const { type, content } = req.body;
+    if (!content?.trim()) return res.status(400).json({ error: 'Content required' });
+    const id = crypto.randomBytes(8).toString('hex');
+    await pool.query('INSERT INTO reports (id,from_user,type,content,read,created_at) VALUES($1,$2,$3,$4,$5,$6)',
+      [id, req.username, type||'general', content.trim(), false, Date.now()]);
+    res.status(201).json({ message: 'Report submitted!' });
+  } catch(err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/admin/reports', requireAdmin, async (req,res) => {
+  try {
+    const r = await pool.query('SELECT * FROM reports ORDER BY created_at DESC');
+    res.json(r.rows);
+  } catch(err) { res.status(500).json({ error: err.message }); }
+});
+
+app.patch('/api/admin/reports/:id/read', requireAdmin, async (req,res) => {
+  try {
+    await pool.query('UPDATE reports SET read=true WHERE id=$1', [req.params.id]);
+    res.json({ message: 'ok' });
+  } catch(err) { res.status(500).json({ error: err.message }); }
+});
+
 // ── ADMIN ──────────────────────────────────────────────────
 app.get('/api/admin/stats', requireAdmin, async (req,res) => {
   try {
@@ -586,7 +644,7 @@ app.get('/api/admin/stats', requireAdmin, async (req,res) => {
 });
 app.get('/api/admin/users', requireAdmin, async (req,res) => {
   try {
-    const r=await pool.query('SELECT id,username,display_name,avatar_url,user_tag,status,created_at,last_seen FROM users ORDER BY created_at DESC');
+    const r=await pool.query('SELECT id,username,display_name,avatar_url,user_tag,top_contributor,status,created_at,last_seen FROM users ORDER BY created_at DESC');
     const now=Date.now();
     res.json(r.rows.map(u=>({...u,is_online:u.last_seen&&(now-u.last_seen)<5*60*1000})));
   } catch(err){res.status(500).json({error:err.message});}
@@ -602,6 +660,17 @@ app.patch('/api/admin/users/:username/status', requireAdmin, async (req,res) => 
     res.json({message:`${req.params.username} is now ${status}`});
   } catch(err){res.status(500).json({error:err.message});}
 });
+app.patch('/api/admin/users/:username/top-contributor', requireAdmin, async (req,res) => {
+  try {
+    const { value } = req.body;
+    if(req.params.username.toLowerCase()===ADMIN_USERNAME) return res.status(400).json({error:'Cannot modify admin'});
+    await pool.query('UPDATE users SET top_contributor=$1 WHERE username=$2', [!!value, req.params.username]);
+    await pool.query('INSERT INTO admin_log(action,target,reason,created_at) VALUES($1,$2,$3,$4)',
+      [value?'top_contributor_added':'top_contributor_removed', req.params.username, null, Date.now()]);
+    res.json({ message: 'Updated' });
+  } catch(err) { res.status(500).json({ error: err.message }); }
+});
+
 app.patch('/api/admin/users/:username/tag', requireAdmin, async (req,res) => {
   try {
     const{tag}=req.body;

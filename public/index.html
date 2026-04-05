@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Automation Note</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#111110">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#111110">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23111'/><rect x='22' y='28' width='56' height='8' rx='4' fill='%23fff' opacity='.9'/><rect x='22' y='46' width='40' height='8' rx='4' fill='%23fff' opacity='.6'/><rect x='22' y='64' width='48' height='8' rx='4' fill='%23fff' opacity='.4'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -16,6 +23,13 @@
   --blue:#2563eb;--bl:#eff6ff;--purple:#7c3aed;--pl:#f5f3ff;
   --r:8px;--rl2:12px;
   --sh:0 1px 3px rgba(0,0,0,.07),0 4px 12px rgba(0,0,0,.05);
+}
+[data-theme="dark"]{
+  --bg:#0f0f0e;--surface:#1a1a18;--s2:#242422;--s3:#2e2e2c;
+  --border:#333330;--border2:#444440;--text:#f0f0ee;--text2:#a0a09a;--muted:#606058;
+  --accent:#f0f0ee;--green:#22c55e;--gl:#052e16;
+  --red:#f87171;--rl:#2d0a0a;--amber:#fbbf24;--al:#2d1f00;
+  --blue:#60a5fa;--bl:#0f1f3d;--purple:#a78bfa;--pl:#1e0a3d;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;font-size:14px;line-height:1.5}
@@ -366,6 +380,46 @@ input[type=file]{display:none}
 .friend-av{width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.8rem;font-weight:700;overflow:hidden;flex-shrink:0}
 .friend-av img{width:100%;height:100%;object-fit:cover}
 .online-ring{box-shadow:0 0 0 2px var(--green)}
+
+/* ── DARK MODE EXTRAS ── */
+[data-theme="dark"] .sidebar { background: var(--surface); }
+[data-theme="dark"] .topbar { background: rgba(15,15,14,.94); }
+[data-theme="dark"] video { border-radius: 8px; }
+[data-theme="dark"] img { opacity: .92; }
+[data-theme="dark"] .card, [data-theme="dark"] .card-sm { background: var(--surface); }
+[data-theme="dark"] .inp, [data-theme="dark"] .ta, [data-theme="dark"] .sel { background: var(--s2); color: var(--text); border-color: var(--border); }
+
+/* ── TOP CONTRIBUTOR ── */
+.top-contributor-ring { box-shadow: 0 0 0 2.5px #f59e0b, 0 0 0 4px #fef3c7; border-radius: 50%; }
+[data-theme="dark"] .top-contributor-ring { box-shadow: 0 0 0 2.5px #f59e0b, 0 0 0 4px rgba(245,158,11,.2); }
+.tc-badge { display:inline-block;padding:1px 7px;border-radius:20px;font-size:0.62rem;font-weight:800;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;letter-spacing:.03em; }
+
+/* ── GUEST LANDING ── */
+#guestBanner { background: linear-gradient(135deg, var(--accent) 0%, #374151 100%); color: white; padding: 14px 20px; text-align: center; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+[data-theme="dark"] #guestBanner { background: linear-gradient(135deg, #1a1a18 0%, #2d2d2b 100%); border-bottom: 1px solid var(--border); }
+.guest-lock-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.6); backdrop-filter: blur(2px); border-radius: var(--r); cursor: pointer; z-index: 10; }
+
+/* ── SEARCH ── */
+.search-wrap { position: relative; margin-bottom: 18px; }
+.search-inp { padding-left: 38px !important; }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+
+/* ── DARK MODE TOGGLE ── */
+.dark-toggle { width: 36px; height: 20px; border-radius: 10px; background: var(--border2); border: none; cursor: pointer; position: relative; transition: background .2s; flex-shrink: 0; }
+.dark-toggle::after { content:''; position: absolute; left: 2px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); transition: transform .2s; }
+[data-theme="dark"] .dark-toggle { background: var(--accent); }
+[data-theme="dark"] .dark-toggle::after { transform: translateX(16px); }
+
+/* ── SIMPLIFIED BLOG EDITOR ── */
+.editor-step { display: none; }
+.editor-step.active { display: block; animation: fadeUp .2s ease; }
+.step-indicators { display: flex; gap: 6px; margin-bottom: 18px; }
+.step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); transition: background .2s; }
+.step-dot.active { background: var(--accent); }
+
+/* ── REPORT MODAL ── */
+.fab { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 500; transition: transform .15s; }
+.fab:hover { transform: scale(1.08); }
 </style>
 </head>
 <body>
@@ -373,6 +427,11 @@ input[type=file]{display:none}
 <div id="toast"></div>
 
 <!-- AUTH -->
+<div id="guestBanner" style="display:none">
+  <span>👋 Welcome to <strong>Automation Note</strong> — Browse AI prompts for free!</span>
+  <button class="btn btn-sm" style="background:#fff;color:#111;border:none;font-weight:700" onclick="showAuthModal('register')">Sign Up Free</button>
+  <button class="btn btn-sm" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)" onclick="showAuthModal('login')">Login</button>
+</div>
 <div id="authScreen">
  <div style="width:100%;max-width:380px">
   <div style="width:36px;height:36px;background:var(--accent);border-radius:9px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
@@ -416,6 +475,7 @@ input[type=file]{display:none}
   </button>
   <div class="topbar-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
   <div class="topbar-title">Automation Note</div>
+  <button class="dark-toggle" id="darkToggleMobile" onclick="toggleDark()" style="margin-left:auto"></button>
  </div>
  <div id="sidebarOverlay" onclick="closeSidebar()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299"></div>
  <div class="app-layout">
@@ -444,17 +504,23 @@ input[type=file]{display:none}
    <button class="nav-item" data-sec="tracker"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Tracker</button>
    <button class="nav-item" data-sec="checklist"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Checklist</button>
    <button class="nav-item" data-sec="ideas"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Ideas</button>
-   <div class="sb-foot">
-    <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0;cursor:pointer" onclick="openMyProfile()">
+   <div class="sb-foot" style="flex-direction:column;gap:8px;align-items:stretch">
+    <div style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="openMyProfile()">
      <div style="position:relative;flex-shrink:0"><img id="userAvImg" src="" style="width:26px;height:26px;border-radius:50%;object-fit:cover;display:none"><div class="user-av" id="userAv">—</div></div>
-     <div style="min-width:0">
+     <div style="min-width:0;flex:1">
       <div class="user-nm" id="userNm">—</div>
       <div id="userDispNm" style="font-size:0.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none"></div>
      </div>
     </div>
-    <button class="btn btn-outline btn-sm" onclick="doLogout()" title="Logout" style="flex-shrink:0;padding:5px 9px">
-     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Logout
-    </button>
+    <div style="display:flex;gap:6px">
+     <button class="btn btn-outline btn-sm" onclick="toggleDark()" style="flex:1;justify-content:center" id="darkToggleDesk">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <span id="darkToggleLabel">Dark</span>
+     </button>
+     <button class="btn btn-outline btn-sm" onclick="doLogout()" style="flex:1;justify-content:center">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Logout
+     </button>
+    </div>
    </div>
   </aside>
 
@@ -517,7 +583,19 @@ input[type=file]{display:none}
 
    <!-- EXPLORE (Public blogs) -->
    <div class="section" id="exploreSection">
-    <div class="page-hd"><h2>Explore</h2><p>Public automation prompts and posts from the community</p></div>
+    <div class="page-hd"><h2>Explore</h2><p>Discover AI automation prompts from the community</p></div>
+    <div class="search-wrap">
+     <div class="search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+     <input class="inp search-inp" id="exploreSearch" placeholder="Search prompts, tools, users…" oninput="filterExplore(this.value)">
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px" id="exploreFilters">
+     <button class="pill on" data-filter="all" onclick="setExploreFilter('all',this)">All</button>
+     <button class="pill" data-filter="image" onclick="setExploreFilter('image',this)">Image Gen</button>
+     <button class="pill" data-filter="video" onclick="setExploreFilter('video',this)">Video Gen</button>
+     <button class="pill" data-filter="text" onclick="setExploreFilter('text',this)">Text</button>
+     <button class="pill" data-filter="audio" onclick="setExploreFilter('audio',this)">Audio</button>
+     <button class="pill" data-filter="workflow" onclick="setExploreFilter('workflow',this)">Workflow</button>
+    </div>
     <div id="exploreFeed"></div>
    </div>
 
@@ -638,6 +716,10 @@ input[type=file]{display:none}
    <!-- FRIENDS -->
    <div class="section" id="friendsSection">
     <div class="page-hd"><h2>Friends</h2><p>Connect with other creators</p></div>
+    <div class="card" style="margin-bottom:14px">
+     <div style="font-weight:700;font-size:0.88rem;margin-bottom:12px">People You May Know</div>
+     <div id="friendSuggestions" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px"></div>
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
      <div class="card">
       <div style="font-weight:700;font-size:0.88rem;margin-bottom:12px">Friend Requests <span id="reqCount" class="badge badge-blue" style="margin-left:4px"></span></div>
@@ -2227,6 +2309,222 @@ showApp = function(){
   }
 };
 
+
+// ── DARK MODE ──────────────────────────
+function toggleDark() {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? '' : 'dark';
+  localStorage.setItem('an_dark', isDark ? '' : 'dark');
+  const lbl = document.getElementById('darkToggleLabel');
+  if (lbl) lbl.textContent = isDark ? 'Dark' : 'Light';
+}
+(function() {
+  if (localStorage.getItem('an_dark') === 'dark') {
+    document.documentElement.dataset.theme = 'dark';
+    setTimeout(() => { const l=document.getElementById('darkToggleLabel'); if(l)l.textContent='Light'; }, 200);
+  }
+})();
+
+// ── GUEST MODE ────────────────────────
+let isGuest = false;
+function showGuestMode() {
+  isGuest = true;
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('guestBanner').style.display = 'flex';
+  document.getElementById('reportFab').style.display = 'none';
+  ['photos','notes','blog','schedule','caption','hashtags','tracker','checklist','ideas','messages','friends'].forEach(sec => {
+    const btn = document.querySelector(`[data-sec="${sec}"]`);
+    if (btn) btn.style.display = 'none';
+  });
+  const sbFoot = document.querySelector('.sb-foot');
+  if (sbFoot) sbFoot.innerHTML = `<div style="display:flex;gap:6px;width:100%">
+    <button class="btn btn-dark btn-sm" style="flex:1;justify-content:center" onclick="showAuthForGuest('register')">Sign Up</button>
+    <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" onclick="showAuthForGuest('login')">Login</button>
+  </div>`;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('exploreSection').classList.add('active');
+  const expBtn = document.querySelector('[data-sec="explore"]');
+  if (expBtn) expBtn.classList.add('active');
+  loadPublicBlogs();
+}
+function showAuthForGuest(tab) {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('authScreen').style.display = 'flex';
+  isGuest = false;
+  if (tab === 'register') {
+    const tabs = document.querySelectorAll('.auth-tab');
+    if (tabs[1]) tabs[1].click();
+  }
+}
+
+// Init: show guest if not logged in
+window.addEventListener('load', () => {
+  setTimeout(() => { if (!token && !username) showGuestMode(); }, 100);
+});
+
+// Override showApp to restore nav and hide guest banner
+const _showAppFinal = showApp;
+showApp = function() {
+  isGuest = false;
+  _showAppFinal();
+  const gb = document.getElementById('guestBanner');
+  if (gb) gb.style.display = 'none';
+  const fab = document.getElementById('reportFab');
+  if (fab) fab.style.display = 'flex';
+  ['photos','notes','blog','explore','schedule','caption','hashtags','tracker','checklist','ideas','messages','friends'].forEach(sec => {
+    const btn = document.querySelector(`[data-sec="${sec}"]`);
+    if (btn) btn.style.display = '';
+  });
+};
+
+// ── EXPLORE SEARCH ────────────────────
+let exploreFilter = 'all', exploreSearchQ = '';
+function filterExplore(q) { exploreSearchQ = q.toLowerCase(); renderFilteredExplore(); }
+function setExploreFilter(f, btn) {
+  exploreFilter = f;
+  document.querySelectorAll('#exploreFilters .pill').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  renderFilteredExplore();
+}
+function renderFilteredExplore() {
+  const el = document.getElementById('exploreFeed');
+  let filtered = (window.publicBlogs||[]);
+  if (exploreFilter !== 'all') filtered = filtered.filter(b => b.generation_type === exploreFilter);
+  if (exploreSearchQ) filtered = filtered.filter(b =>
+    (b.title||'').toLowerCase().includes(exploreSearchQ) ||
+    (b.content||'').toLowerCase().includes(exploreSearchQ) ||
+    (b.owner||'').toLowerCase().includes(exploreSearchQ) ||
+    (b.display_name||'').toLowerCase().includes(exploreSearchQ) ||
+    (b.ai_tools||[]).some(t => t.toLowerCase().includes(exploreSearchQ))
+  );
+  el.innerHTML = '';
+  if (!filtered.length) { el.innerHTML='<div class="empty"><p>No posts match your search</p></div>'; return; }
+  filtered.forEach(b => el.appendChild(makeExploreCard(b)));
+}
+const _origRenderExploreV7 = renderExploreFeed;
+renderExploreFeed = function() { renderFilteredExplore(); };
+
+// Guest lock on blog cards
+const _origMakeExploreCardV7 = makeExploreCard;
+makeExploreCard = function(b) {
+  const d = _origMakeExploreCardV7(b);
+  if (isGuest) {
+    const body = d.querySelector('.blog-card-body');
+    if (body) {
+      const exc = body.querySelector('.blog-card-excerpt');
+      if (exc) exc.style.filter = 'blur(3px)';
+      body.style.position = 'relative';
+      const lock = document.createElement('div');
+      lock.className = 'guest-lock-overlay';
+      lock.innerHTML = `<button class="btn btn-dark btn-sm" onclick="event.stopPropagation();showAuthForGuest('register')">🔓 Sign Up to Read</button>`;
+      body.appendChild(lock);
+    }
+  }
+  return d;
+};
+
+// ── FRIEND SUGGESTIONS ────────────────
+async function loadFriendSuggestions() {
+  try {
+    const r = await fetch('/api/friends/suggestions', {headers:{'x-auth-token':token}});
+    if (!r.ok) return;
+    const sug = await r.json();
+    const el = document.getElementById('friendSuggestions');
+    if (!el) return;
+    if (!sug.length) { el.innerHTML='<div style="color:var(--muted);font-size:0.8rem">No suggestions right now</div>'; return; }
+    el.innerHTML = sug.map(u => {
+      const ring = u.top_contributor ? 'box-shadow:0 0 0 2.5px #f59e0b,0 0 0 4px #fef3c7;' : '';
+      const av = u.avatar_url
+        ? `<img src="${esc(u.avatar_url)}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;${ring}">`
+        : `<div style="width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;${ring}">${(u.display_name||u.username).charAt(0).toUpperCase()}</div>`;
+      return `<div style="background:var(--s2);border-radius:var(--r);padding:12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px">
+        ${av}
+        <div style="font-size:0.8rem;font-weight:600">${esc(u.display_name||u.username)}</div>
+        ${u.user_tag?`<span class="user-tag-badge">${esc(u.user_tag)}</span>`:''}
+        ${u.top_contributor?`<span class="tc-badge">⭐ Top Contributor</span>`:''}
+        <div style="font-size:0.68rem;color:var(--muted)">${u.post_count} posts</div>
+        <button class="btn btn-dark btn-sm" style="width:100%;justify-content:center" onclick="sendFriendRequest('${esc(u.username)}');this.textContent='Sent!';this.disabled=true">+ Add Friend</button>
+      </div>`;
+    }).join('');
+  } catch(e){}
+}
+const _origLoadFriendsV7 = loadFriends;
+if (typeof loadFriends !== 'undefined') {
+  loadFriends = async function() { await _origLoadFriendsV7(); await loadFriendSuggestions(); };
+}
+document.querySelector('[data-sec="friends"]')?.addEventListener('click', loadFriendSuggestions);
+
+// ── ADMIN TOP CONTRIBUTOR ─────────────
+async function adminToggleTopContributor(uname, cur) {
+  const r = await fetch(`/api/admin/users/${uname}/top-contributor`, {method:'PATCH',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({value:!cur})});
+  if (!r.ok) { const e=await r.json(); toast(e.error||'Failed'); return; }
+  toast(!cur ? `⭐ ${uname} is now Top Contributor!` : `Removed Top Contributor from ${uname}`);
+  if (typeof loadAdminData === 'function') loadAdminData();
+}
+
+// ── REPORT ───────────────────────────
+function openReportModal() { document.getElementById('reportModal').classList.add('open'); }
+async function submitReport() {
+  const type=document.getElementById('reportType').value;
+  const content=document.getElementById('reportContent').value.trim();
+  if(!content) return toast('Please write a message');
+  const r=await fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({type,content})});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  document.getElementById('reportContent').value='';
+  document.getElementById('reportModal').classList.remove('open');
+  toast('Message sent to admin!');
+}
+async function loadAdminReports() {
+  const r = await fetch('/api/admin/reports',{headers:{'x-auth-token':token}});
+  if (!r.ok) return;
+  const reports = await r.json();
+  let el = document.getElementById('adminReports');
+  if (!el) { const d=document.createElement('div');d.className='card';d.style.marginTop='14px';d.innerHTML='<div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Reports & Messages</div><div id="adminReports"></div>';document.getElementById('adminSection').appendChild(d);el=document.getElementById('adminReports'); }
+  el.innerHTML = reports.length ? reports.map(rep=>`
+   <div style="background:var(--s2);border-radius:var(--r);padding:9px 11px;display:flex;gap:9px;align-items:flex-start;${rep.read?'opacity:.55':''}">
+    <span class="badge ${rep.type==='bug'?'badge-red':rep.type==='suggestion'?'badge-blue':'badge-gray'}">${rep.type}</span>
+    <div style="flex:1"><div style="font-weight:600;font-size:0.79rem">@${esc(rep.from_user)}</div><div style="font-size:0.81rem;margin-top:2px">${esc(rep.content)}</div></div>
+    <div style="flex-shrink:0;text-align:right"><div style="font-size:0.69rem;color:var(--muted)">${fmtAgo(rep.created_at)}</div>
+    ${!rep.read?`<button class="btn btn-ghost btn-sm" onclick="markReportRead('${rep.id}')">Done</button>`:''}</div>
+   </div>`).join('') : '<div style="color:var(--muted);font-size:0.8rem">No reports yet</div>';
+}
+async function markReportRead(id) {
+  await fetch(`/api/admin/reports/${id}/read`,{method:'PATCH',headers:{'x-auth-token':token}});
+  loadAdminReports();
+}
+
+// ── PWA ───────────────────────────────
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+
 </script>
+
+<!-- Report/Contact FAB -->
+<button class="fab" onclick="openReportModal()" title="Contact Admin / Report Bug" id="reportFab" style="display:none">
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<!-- Report Modal -->
+<div class="modal-ov" id="reportModal">
+ <div class="modal" style="max-width:420px">
+  <div class="modal-hd">Contact Admin <button style="background:none;border:none;color:var(--muted);display:flex;align-items:center;cursor:pointer" onclick="document.getElementById('reportModal').classList.remove('open')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+   <div><div class="lbl">Type</div>
+    <select class="inp sel" id="reportType">
+     <option value="bug">🐛 Bug Report</option>
+     <option value="suggestion">💡 Suggestion</option>
+     <option value="report_user">🚩 Report a User</option>
+     <option value="general">💬 General Message</option>
+    </select>
+   </div>
+   <div><div class="lbl">Message</div><textarea class="inp ta" id="reportContent" placeholder="Describe your bug, suggestion, or message..." style="min-height:100px"></textarea></div>
+   <div class="row" style="justify-content:flex-end;gap:6px">
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('reportModal').classList.remove('open')">Cancel</button>
+    <button class="btn btn-dark btn-sm" onclick="submitReport()">Send to Admin</button>
+   </div>
+  </div>
+ </div>
+</div>
 </body>
 </html>
