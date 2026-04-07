@@ -80,7 +80,7 @@ textarea,input{font-family:'Inter',sans-serif}
 .nav-sep{height:1px;background:var(--border);margin:5px 4px}
 .nav-label{padding:5px 10px;font-size:0.67rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
 .sb-foot{margin-top:auto;padding:10px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.user-av{width:26px;height:26px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.72rem;font-weight:700;flex-shrink:0}
+.user-av{width:26px;height:26px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:0.72rem;font-weight:700;flex-shrink:0}
 .user-nm{font-size:0.79rem;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* ── TOPBAR mobile ── */
@@ -420,24 +420,14 @@ input[type=file]{display:none}
 /* ── REPORT MODAL ── */
 .fab { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 500; transition: transform .15s; }
 .fab:hover { transform: scale(1.08); }
-[data-theme="dark"] .user-av,
-[data-theme="dark"] .ph-card,
-[data-theme="dark"] .comment-av { background: #f0f0ee !important; color: #111110 !important; }
-[data-theme="dark"] .avatar-img { filter: brightness(1.1); }
-[data-theme="dark"] .blog-card, [data-theme="dark"] .card { background: #1a1a18; border-color: #333330; }
-[data-theme="dark"] .inp { background: #242422; border-color: #444440; }
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-.skeleton {
-  animation: shimmer 1.5s linear infinite;
-  background: linear-gradient(90deg, var(--s2) 25%, #ddd 50%, var(--s2) 75%);
-  background-size: 200% 100%;
-  border-radius: var(--r);
-}
-[data-theme="dark"] .skeleton { background: linear-gradient(90deg, #242422 25%, #444440 50%, #242422 75%); }
 
+/* ── SKELETON LOADING ── */
+.skeleton { background: linear-gradient(90deg, var(--s2) 25%, var(--s3) 50%, var(--s2) 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite; }
+@keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.skeleton-card { border-radius: var(--rl2); padding: 18px; margin-bottom: 14px; }
+.skeleton-title { height: 20px; width: 60%; margin-bottom: 8px; }
+.skeleton-text { height: 14px; width: 100%; margin-bottom: 4px; }
+.skeleton-text:last-child { width: 80%; }
 </style>
 </head>
 <body>
@@ -478,7 +468,6 @@ input[type=file]{display:none}
       <button style="position:absolute;right:9px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);display:flex;align-items:center" onclick="togglePw('regPass',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
      </div>
     </div>
-    <div style="margin-bottom:11px"><div class="lbl">Profile Icon</div><select class="inp sel" id="regIcon"><option value="🚀">🚀 Rocket</option><option value="💡">💡 Lightbulb</option><option value="🎨">🎨 Palette</option><option value="📸">📸 Camera</option><option value="🎥">🎥 Video</option><option value="🎵">🎵 Music</option><option value="📝">📝 Note</option><option value="🔥">🔥 Fire</option><option value="🌟">🌟 Star</option><option value="⚡">⚡ Lightning</option><option value="🎯">🎯 Target</option><option value="🛠️">🛠️ Tools</option><option value="📊">📊 Chart</option><option value="🎪">🎪 Circus</option><option value="🦄">🦄 Unicorn</option></select></div>
     <button class="btn btn-dark" style="width:100%;justify-content:center;margin-top:4px" onclick="doRegister()">Create Account</button>
    </div>
    <p id="authMsg" style="text-align:center;font-size:0.79rem;margin-top:9px;min-height:16px"></p>
@@ -515,9 +504,8 @@ input[type=file]{display:none}
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     Messages <span id="msgBadge" style="display:none;background:var(--red);color:#fff;border-radius:20px;font-size:0.6rem;font-weight:700;padding:1px 5px;margin-left:auto"></span>
    </button>
+   <button class="nav-item" data-sec="whatsnew"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>What's New</button>
    <button class="nav-item" data-sec="schedule"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Schedule</button>
-   <div class="nav-sep"></div>
-   <button class="nav-item" onclick="showWhatsNew()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>What's New</button>
    <div class="nav-sep"></div>
    <div class="nav-label">Creator Tools</div>
    <button class="nav-item" data-sec="caption"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Captions</button>
@@ -530,7 +518,7 @@ input[type=file]{display:none}
      <div style="position:relative;flex-shrink:0"><img id="userAvImg" src="" style="width:26px;height:26px;border-radius:50%;object-fit:cover;display:none"><div class="user-av" id="userAv">—</div></div>
      <div style="min-width:0;flex:1">
       <div class="user-nm" id="userNm">—</div>
-      <div id="userDispNm" style="font-size:0.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none"></div>
+      <div id="userDispNm" style="font-size:0.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:none"><span id="userTag"></span></div>
      </div>
     </div>
     <div style="display:flex;gap:6px">
@@ -801,6 +789,24 @@ input[type=file]{display:none}
     </div>
    </div>
 
+   <!-- WHAT'S NEW -->
+   <div class="section" id="whatsnewSection">
+    <div class="page-hd"><h2>What's New</h2><p>Latest updates and features</p></div>
+    <div class="card">
+     <div style="font-weight:700;font-size:1rem;margin-bottom:12px">Version 7.0 - April 2026</div>
+     <ul style="padding-left:20px;line-height:1.6">
+      <li>Added step-by-step tutorial creation for blog posts</li>
+      <li>Improved dark mode with better color optimization</li>
+      <li>Added user icons for personalization</li>
+      <li>Verified admin badges for trust</li>
+      <li>Skeleton loading on app startup</li>
+      <li>Disabled copy for non-logged-in users</li>
+      <li>Enhanced admin panel with user management</li>
+      <li>What's New section for updates</li>
+     </ul>
+    </div>
+   </div>
+
    <!-- PROFILE (own) -->
    <div class="section" id="profileSection">
     <div class="page-hd"><h2>My Profile</h2><p>Edit your display name and profile picture</p></div>
@@ -816,12 +822,16 @@ input[type=file]{display:none}
       </div>
       <div>
        <div style="font-weight:700;font-size:1rem" id="profileUsername"></div>
-       <div style="font-size:0.78rem;color:var(--muted)">@<span id="profileUsernameAt"></span></div>
+       <div style="font-size:0.78rem;color:var(--muted)">@<span id="profileUsernameAt"></span> <span id="profileUserTag"></span></div>
       </div>
      </div>
      <div style="margin-bottom:14px">
       <div class="lbl">Display Name</div>
       <input class="inp" id="displayNameInput" placeholder="Your display name" style="max-width:320px">
+     </div>
+     <div style="margin-bottom:14px">
+      <div class="lbl">User Icon (1-15 unique characters)</div>
+      <input class="inp" id="userTagInput" placeholder="e.g. 🔥, ⚡, 💎" maxlength="15" style="max-width:320px">
      </div>
      <button class="btn btn-dark btn-sm" onclick="saveProfile()">Save Changes</button>
     </div>
@@ -892,23 +902,17 @@ input[type=file]{display:none}
      <span class="pill" data-v="ChatGPT">ChatGPT</span><span class="pill" data-v="Grok">Grok</span><span class="pill" data-v="Claude">Claude</span><span class="pill" data-v="Gemini">Gemini</span><span class="pill" data-v="Flow">Flow</span><span class="pill" data-v="Midjourney">Midjourney</span><span class="pill" data-v="DALL-E">DALL-E</span><span class="pill" data-v="Stable Diffusion">Stable Diffusion</span><span class="pill" data-v="Leonardo AI">Leonardo AI</span><span class="pill" data-v="Runway">Runway ML</span><span class="pill" data-v="Kling">Kling</span><span class="pill" data-v="Pika">Pika</span><span class="pill" data-v="Sora">Sora</span><span class="pill" data-v="Luma">Luma</span><span class="pill" data-v="Ideogram">Ideogram</span><span class="pill" data-v="Adobe Firefly">Adobe Firefly</span><span class="pill" data-v="ElevenLabs">ElevenLabs</span><span class="pill" data-v="Suno">Suno</span><span class="pill" data-v="Udio">Udio</span><span class="pill" data-v="Perplexity">Perplexity</span><span class="pill" data-v="Copilot">Copilot</span><span class="pill" data-v="n8n">n8n</span><span class="pill" data-v="Make">Make</span><span class="pill" data-v="Zapier">Zapier</span>
     </div>
    </div>
-   <div>
-    <div class="lbl">Step-by-Step Tutorial (optional)</div>
-    <div id="stepsContainer"></div>
-    <button class="btn btn-outline btn-sm" onclick="addStep()">+ Add Step</button>
-   </div>
-   <div>
-    <div class="lbl">Final Result (optional)</div>
-    <div id="finalResultPreview" style="margin-bottom:8px;display:none">
-     <div style="position:relative;display:inline-block"><img id="finalResultThumb" src="" style="max-width:280px;max-height:200px;border-radius:var(--r);object-fit:cover;border:1px solid var(--border)"><button style="position:absolute;top:5px;right:5px;width:20px;height:20px;border-radius:50%;border:none;background:var(--red);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.65rem" onclick="removeFinalResult()">✕</button></div>
-    </div>
-    <div class="row"><button class="btn btn-outline btn-sm" onclick="document.getElementById('finalResultInput').click()">Upload Final Result</button>
-    <input type="file" id="finalResultInput" accept="image/*,video/*" style="display:none" onchange="handleFinalResult(this)">
-    <select class="inp sel" id="finalResultType" style="width:auto;flex:none;font-size:0.78rem"><option value="image">Image</option><option value="video">Video</option></select></div>
-   </div>
    <div><div class="lbl">Content</div><textarea class="inp ta" id="beContent" placeholder="Write your post, automation prompt, or ideas here..." style="min-height:160px"></textarea></div>
+   <div id="beStepsSection" style="display:none">
+    <div class="lbl">Tutorial Steps</div>
+    <div id="beStepsList"></div>
+    <button class="btn btn-outline btn-sm" onclick="addBlogStep()">+ Add Step</button>
+   </div>
    <div class="row" style="justify-content:space-between">
     <div class="row" style="gap:8px">
+     <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.81rem;font-weight:500">
+      <input type="checkbox" id="beTutorial" onchange="toggleTutorialMode(this.checked)"> Tutorial Mode
+     </label>
      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.81rem;font-weight:500">
       <input type="checkbox" id="bePublic" style="width:15px;height:15px;accent-color:var(--accent)"> Make Public
      </label>
@@ -931,31 +935,6 @@ input[type=file]{display:none}
    <button style="background:none;border:none;color:var(--muted);display:flex;align-items:center;cursor:pointer" onclick="closeBlogView()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div id="blogViewContent"></div>
- </div>
-</div>
-
-<!-- What's New Modal -->
-<div class="modal-ov" id="whatsNewModal">
- <div class="modal" style="max-width:500px">
-  <div class="modal-hd">
-   <span>What's New</span>
-   <button style="background:none;border:none;color:var(--muted);display:flex;align-items:center;cursor:pointer" onclick="closeWhatsNew()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:16px">
-   <div>
-    <div style="font-weight:700;font-size:0.9rem;margin-bottom:8px">Latest Updates</div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-     <div><div style="font-weight:600">Step-by-Step Tutorials</div><div style="color:var(--muted);font-size:0.8rem">Now you can create detailed tutorials with media for each step and a final result showcase.</div></div>
-     <div><div style="font-weight:600">Profile Icons</div><div style="color:var(--muted);font-size:0.8rem">Choose a unique icon when signing up to personalize your profile.</div></div>
-     <div><div style="font-weight:600">Improved Dark Mode</div><div style="color:var(--muted);font-size:0.8rem">Fixed color issues and better visibility in dark theme.</div></div>
-     <div><div style="font-weight:600">Skeleton Loading</div><div style="color:var(--muted);font-size:0.8rem">Faster perceived loading with skeleton placeholders.</div></div>
-     <div><div style="font-weight:600">Guest Restrictions</div><div style="color:var(--muted);font-size:0.8rem">Guests can browse but can't copy prompts — sign up to unlock full access.</div></div>
-     <div><div style="font-weight:600">Admin Verification</div><div style="color:var(--muted);font-size:0.8rem">Verified admin badge for official posts.</div></div>
-     <div><div style="font-weight:600">Push Notifications</div><div style="color:var(--muted);font-size:0.8rem">Get notified when you have new messages.</div></div>
-     <div><div style="font-weight:600">Enhanced Admin Panel</div><div style="color:var(--muted);font-size:0.8rem">More tools for managing users and content.</div></div>
-    </div>
-   </div>
-  </div>
  </div>
 </div>
 
@@ -988,6 +967,7 @@ input[type=file]{display:none}
 // ═══════════════════════════════════════
 let token=localStorage.getItem('an_token')||'';
 let username=localStorage.getItem('an_user')||'';
+let myDisplayName='',myAvatarUrl='',myUserTag='';
 let photos=[],notes=[],myBlogs=[],publicBlogs=[];
 let currentView='grid',currentPhoto=null,currentNote=null;
 let selectedPhotos=new Set();
@@ -999,8 +979,6 @@ let schedPosts=JSON.parse(localStorage.getItem('an_sched')||'[]');
 let capTone='fun',hookStyle='question';
 let editingBlogId=null;
 let blogImgUrl=null,blogImgCldId=null;
-let blogVidUrl=null,blogVidCldId=null;
-let blogSteps=[], finalResultUrl=null, finalResultCldId=null, finalResultType='image';
 
 // ═══════════════════════════════════════
 // UTILS
@@ -1045,9 +1023,9 @@ async function doLogin(){
   showApp();
 }
 async function doRegister(){
-  const u=document.getElementById('regUser').value.trim(),p=document.getElementById('regPass').value,i=document.getElementById('regIcon').value;
+  const u=document.getElementById('regUser').value.trim(),p=document.getElementById('regPass').value;
   if(!u||!p)return setAM('Please fill in all fields','err');
-  const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p,profile_icon:i})});
+  const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
   const d=await r.json();if(!r.ok)return setAM(d.error,'err');
   setAM('Account created! Please log in.','ok');
   document.querySelector('.auth-tab').click();document.getElementById('loginUser').value=u;
@@ -1066,11 +1044,32 @@ function showApp(){
   document.getElementById('app').style.display='flex';
   document.getElementById('userAv').textContent=username.charAt(0).toUpperCase();
   document.getElementById('userNm').textContent=username;
-  if('Notification' in window) Notification.requestPermission();
+  loadProfile();
   loadPhotos();loadNotes();loadMyBlogs();loadPublicBlogs();
   renderTracker();renderIdeas();renderCL();renderHashSets();renderSched();
-  setInterval(checkNewMessages, 30000); // check every 30s
   if(!checkBlogRoute()){}
+  // Request notification permission
+  if('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
+}
+
+async function loadProfile(){
+  try{
+    const r=await fetch(`/api/profile/${username}`,{headers:{'x-auth-token':token}});
+    if(r.ok){
+      const p=await r.json();
+      myDisplayName=p.display_name||username;
+      myUserTag=p.user_tag||'';
+      document.getElementById('userNm').textContent=myDisplayName;
+      document.getElementById('userDispNm').style.display=p.display_name?'block':'none';
+      document.getElementById('userDispNm').textContent=p.display_name||'';
+      document.getElementById('userTag').textContent=p.user_tag||'';
+      if(p.avatar_url){
+        document.getElementById('userAvImg').src=p.avatar_url;
+        document.getElementById('userAvImg').style.display='block';
+        document.getElementById('userAv').style.display='none';
+      }
+    }
+  }catch(e){}
 }
 
 // Nav
@@ -1236,17 +1235,13 @@ async function delNote(id){if(!confirm('Delete note?'))return;await fetch(`/api/
 // BLOG
 // ═══════════════════════════════════════
 async function loadMyBlogs(){try{const r=await fetch('/api/blogs/mine',{headers:{'x-auth-token':token}});myBlogs=await r.json();renderMyBlogs();}catch(e){}}
-async function loadPublicBlogs(){
+async function loadPublicBlogs(){try{
   const el=document.getElementById('exploreFeed');
-  el.innerHTML='<div class="blog-card skeleton" style="height:200px;margin-bottom:14px"></div><div class="blog-card skeleton" style="height:200px;margin-bottom:14px"></div><div class="blog-card skeleton" style="height:200px;margin-bottom:14px"></div>';
-  try{
-    const r=await fetch('/api/blogs/public',{headers:{'x-auth-token':token}});
-    publicBlogs=await r.json();
-    renderExploreFeed();
-  }catch(e){
-    el.innerHTML='<div class="empty"><p>Failed to load posts</p></div>';
-  }
-}
+  el.innerHTML='<div class="skeleton skeleton-card"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text"></div></div>'.repeat(3);
+  const r=await fetch('/api/blogs/public',{headers:{'x-auth-token':token}});
+  publicBlogs=await r.json();
+  renderExploreFeed();
+}catch(e){document.getElementById('exploreFeed').innerHTML='<div class="empty"><p>Failed to load posts</p></div>';}}
 
 function renderMyBlogs(){
   const el=document.getElementById('myBlogFeed');
@@ -1272,7 +1267,7 @@ function makeBlogCard(b,isOwner){
      <div class="blog-card-title">${esc(b.title)}</div>
      <div class="blog-card-excerpt">${esc(excerpt)}</div>
      <div class="blog-card-meta">
-      <span>by ${esc(b.owner)} ${b.owner === 'ecstar' ? '<span class="badge badge-blue" style="font-size:0.6rem">✓ Verified</span>' : ''}</span>
+      <span>by ${esc(b.display_name || b.owner)}${b.user_tag === 'Admin' ? ' <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>' : ''}</span>
       <span>${fmtAgo(b.created_at)}</span>
       ${isOwner?`<span class="badge ${b.is_public?'badge-green':'badge-gray'}">${b.is_public?'Public':'Private'}</span>`:''}
       <div class="blog-card-actions">
@@ -1314,34 +1309,27 @@ async function viewBlog(id){
     <div class="blog-view-header">
      <div class="blog-view-title">${esc(b.title)}</div>
      <div class="blog-view-meta">
-      <span>by ${esc(b.owner)} ${b.owner === 'ecstar' ? '<span class="badge badge-blue" style="font-size:0.6rem">✓ Verified</span>' : ''}</span>
+      <span>by ${esc(b.owner)}</span>
       <span>${fmtAgo(b.created_at)}</span>
      </div>
     </div>
     <div class="blog-view-layout img-${pos}">
      ${b.image_url?`<img class="blog-view-img" src="${esc(b.image_url)}" alt="">`:''}
      <div>
-      <div class="blog-view-copy">${!isGuest ? `<button class="btn btn-outline btn-sm" onclick="copyText(document.querySelector('.blog-view-content').textContent)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Text</button>` : ''}</div>
+      <div class="blog-view-copy">${token?`<button class="btn btn-outline btn-sm" onclick="copyText(document.querySelector('.blog-view-content').textContent)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Text</button>`:`<button class="btn btn-outline btn-sm" disabled style="opacity:0.5"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Login to Copy</button>`}</div>
       <div class="blog-view-content">${esc(b.content)}</div>
+      ${b.steps&&b.steps.length?`<div class="tutorial-steps" style="margin-top:20px;border-top:1px solid var(--border);padding-top:20px">
+       <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Step-by-Step Tutorial</div>
+       ${b.steps.map(s=>`<div class="step-item" style="display:flex;gap:12px;margin-bottom:16px;align-items:flex-start">
+        <div style="font-weight:700;color:var(--accent);flex-shrink:0">Step ${s.step_order}</div>
+        <div style="flex:1">
+         ${s.type==='video'?`<video src="${esc(s.url)}" controls style="max-width:300px;max-height:200px;border-radius:var(--r);border:1px solid var(--border)"></video>`:`<img src="${esc(s.url)}" alt="" style="max-width:300px;max-height:200px;border-radius:var(--r);border:1px solid var(--border);object-fit:cover">`}
+         <div style="margin-top:8px;font-size:0.85rem">${esc(s.prompt)}</div>
+        </div>
+       </div>`).join('')}
+      </div>`:''}
      </div>
     </div>
-    ${b.steps&&b.steps.length?`
-    <div style="margin-top:24px;border-top:1px solid var(--border);padding-top:20px">
-     <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Step-by-Step Tutorial</div>
-     ${b.steps.map((step,i)=>`
-     <div style="margin-bottom:16px;padding:12px;border:1px solid var(--border);border-radius:var(--r)">
-      <div style="font-weight:600;margin-bottom:8px">Step ${i+1}: ${esc(step.prompt)}</div>
-      ${step.media_url?(step.media_type==='video'?`<video src="${esc(step.media_url)}" controls style="max-width:100%;max-height:300px;border-radius:var(--r)"></video>`:`<img src="${esc(step.media_url)}" style="max-width:100%;max-height:300px;border-radius:var(--r);object-fit:cover">`):''}
-     </div>
-     `).join('')}
-    </div>
-    `:''}
-    ${b.final_result_url?`
-    <div style="margin-top:24px">
-     <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Final Result</div>
-     ${b.final_result_type==='video'?`<video src="${esc(b.final_result_url)}" controls style="max-width:100%;max-height:400px;border-radius:var(--r)"></video>`:`<img src="${esc(b.final_result_url)}" style="max-width:100%;max-height:400px;border-radius:var(--r);object-fit:cover">`}
-    </div>
-    `:''}
     <div class="comments-section">
      <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Comments (${b.comments?b.comments.length:0})</div>
      ${token?`<div class="comment-form">
@@ -1359,22 +1347,6 @@ async function viewBlog(id){
   document.body.style.overflow='hidden';
 }
 function closeBlogView(){document.getElementById('blogViewModal').classList.remove('open');document.body.style.overflow='';}
-
-function showWhatsNew(){document.getElementById('whatsNewModal').classList.add('open');document.body.style.overflow='hidden';}
-function closeWhatsNew(){document.getElementById('whatsNewModal').classList.remove('open');document.body.style.overflow='';}
-
-async function checkNewMessages(){
-  if(!token) return;
-  try{
-    const r = await fetch('/api/messages/unread',{headers:{'x-auth-token':token}});
-    if(r.ok){
-      const count = await r.json();
-      if(count > 0 && Notification.permission === 'granted'){
-        new Notification('New Message', {body: `You have ${count} unread message(s)`, icon: '/icon.png'});
-      }
-    }
-  }catch(e){}
-}
 
 async function postComment(blogId){
   const inp=document.getElementById(`commentInput_${blogId}`);
@@ -1408,13 +1380,10 @@ async function toggleVisibility(id,makePublic){
 
 // Blog Editor
 function openBlogEditor(id){
-  editingBlogId=id;blogImgUrl=null;blogImgCldId=null;blogSteps=[];finalResultUrl=null;finalResultCldId=null;finalResultType='image';
+  editingBlogId=id;blogImgUrl=null;blogImgCldId=null;
   document.getElementById('blogEditorTitle').textContent=id?'Edit Post':'New Post';
   document.getElementById('beSaveBtn').textContent=id?'Update':'Publish';
   document.getElementById('beImgPreview').style.display='none';
-  document.getElementById('beVidPreview').style.display='none';
-  document.getElementById('finalResultPreview').style.display='none';
-  document.getElementById('stepsContainer').innerHTML='';
   document.getElementById('bePublic').checked=false;
   document.getElementById('bePublicHint').textContent='Only you can see this';
   if(id){
@@ -1426,102 +1395,48 @@ function openBlogEditor(id){
       document.getElementById('bePublic').checked=!!b.is_public;
       document.getElementById('bePublicHint').textContent=b.is_public?'Anyone with the link can view this':'Only you can see this';
       if(b.image_url){blogImgUrl=b.image_url;blogImgCldId=b.cloudinary_id;document.getElementById('beImgThumb').src=b.image_url;document.getElementById('beImgPreview').style.display='block';}
-      if(b.video_url){blogVidUrl=b.video_url;blogVidCldId=b.video_cloudinary_id;document.getElementById('beVidThumb').src=b.video_url;document.getElementById('beVidPreview').style.display='block';}
-      if(b.steps)blogSteps=b.steps;
-      if(b.final_result_url){finalResultUrl=b.final_result_url;finalResultCldId=b.final_result_cloudinary_id;finalResultType=b.final_result_type||'image';document.getElementById('finalResultThumb').src=b.final_result_url;document.getElementById('finalResultPreview').style.display='block';document.getElementById('finalResultType').value=finalResultType;}
-      renderSteps();
     }
   } else {
     document.getElementById('beTitle').value='';
     document.getElementById('beContent').value='';
     document.getElementById('beImgPos').value='left';
+    document.getElementById('bePublic').checked=true;
+    document.getElementById('bePublicHint').textContent='Anyone with the link can view this';
   }
   document.getElementById('blogEditorModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeBlogEditor(){document.getElementById('blogEditorModal').classList.remove('open');document.body.style.overflow='';}
-function removeBlogVid(){blogVidUrl=null;blogVidCldId=null;document.getElementById('beVidPreview').style.display='none';}
-async function handleBlogVid(input){
+function removeBlogImg(){blogImgUrl=null;blogImgCldId=null;document.getElementById('beImgPreview').style.display='none';}
+async function handleBlogImg(input){
   const file=input.files[0];if(!file)return;
-  const fd=new FormData();fd.append('video',file);
+  const fd=new FormData();fd.append('image',file);
   const btn=document.getElementById('beSaveBtn');btn.textContent='Uploading…';btn.disabled=true;
-  const r=await fetch('/api/blog-video',{method:'POST',headers:{'x-auth-token':token},body:fd});
+  const r=await fetch('/api/blog-image',{method:'POST',headers:{'x-auth-token':token},body:fd});
   btn.textContent=editingBlogId?'Update':'Publish';btn.disabled=false;
-  if(!r.ok){toast('Video upload failed');return;}
+  if(!r.ok){toast('Image upload failed');return;}
   const d=await r.json();
-  blogVidUrl=d.url;blogVidCldId=d.cloudinary_id;
-  document.getElementById('beVidThumb').src=d.url;
-  document.getElementById('beVidPreview').style.display='block';
+  blogImgUrl=d.url;blogImgCldId=d.cloudinary_id;
+  document.getElementById('beImgThumb').src=d.url;
+  document.getElementById('beImgPreview').style.display='block';
   input.value='';
 }
-
-function addStep(){
-  blogSteps.push({prompt:'', media_url:null, media_cloudinary_id:null, media_type:'image'});
-  renderSteps();
-}
-function removeStep(index){
-  blogSteps.splice(index,1);
-  renderSteps();
-}
-function renderSteps(){
-  const container=document.getElementById('stepsContainer');
-  container.innerHTML=blogSteps.map((step,i)=>`
-    <div style="border:1px solid var(--border);border-radius:var(--r);padding:12px;margin-bottom:8px">
-     <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span>Step ${i+1}</span><button class="btn btn-ghost btn-sm" onclick="removeStep(${i})">Remove</button></div>
-     <div style="margin-bottom:8px"><div class="lbl">Prompt</div><textarea class="inp ta" placeholder="Enter the prompt for this step..." onchange="blogSteps[${i}].prompt=this.value" style="min-height:60px">${esc(step.prompt||'')}</textarea></div>
-     <div>
-      <div class="lbl">Media (optional)</div>
-      ${step.media_url?`<div style="position:relative;display:inline-block;margin-bottom:8px"><img src="${esc(step.media_url)}" style="max-width:200px;max-height:150px;border-radius:var(--r);object-fit:cover;border:1px solid var(--border)"><button style="position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:50%;border:none;background:var(--red);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.6rem" onclick="removeStepMedia(${i})">✕</button></div>`:''}
-      <div class="row"><button class="btn btn-outline btn-sm" onclick="document.getElementById('stepMediaInput${i}').click()">Upload Media</button>
-      <input type="file" id="stepMediaInput${i}" accept="image/*,video/*" style="display:none" onchange="handleStepMedia(${i},this)">
-      <select class="inp sel" onchange="blogSteps[${i}].media_type=this.value" style="width:auto;flex:none;font-size:0.78rem"><option value="image" ${step.media_type==='image'?'selected':''}>Image</option><option value="video" ${step.media_type==='video'?'selected':''}>Video</option></select></div>
-     </div>
-    </div>
-  `).join('');
-}
-async function handleStepMedia(index,input){
-  const file=input.files[0];if(!file)return;
-  const fd=new FormData();fd.append('media',file);
-  const r=await fetch('/api/blog-media',{method:'POST',headers:{'x-auth-token':token},body:fd});
-  if(!r.ok){toast('Media upload failed');return;}
-  const d=await r.json();
-  blogSteps[index].media_url=d.url;
-  blogSteps[index].media_cloudinary_id=d.cloudinary_id;
-  renderSteps();
-  input.value='';
-}
-function removeStepMedia(index){
-  blogSteps[index].media_url=null;
-  blogSteps[index].media_cloudinary_id=null;
-  renderSteps();
-}
-
-async function handleFinalResult(input){
-  const file=input.files[0];if(!file)return;
-  const fd=new FormData();fd.append('media',file);
-  const r=await fetch('/api/blog-media',{method:'POST',headers:{'x-auth-token':token},body:fd});
-  if(!r.ok){toast('Upload failed');return;}
-  const d=await r.json();
-  finalResultUrl=d.url;
-  finalResultCldId=d.cloudinary_id;
-  finalResultType=document.getElementById('finalResultType').value;
-  document.getElementById('finalResultThumb').src=d.url;
-  document.getElementById('finalResultPreview').style.display='block';
-  input.value='';
-}
-function removeFinalResult(){
-  finalResultUrl=null;
-  finalResultCldId=null;
-  document.getElementById('finalResultPreview').style.display='none';
-}
-
 async function saveBlog(){
   const title=document.getElementById('beTitle').value.trim();
   const content=document.getElementById('beContent').value.trim();
   if(!title||!content)return toast('Title and content are required');
-  const genType=document.querySelector('#genTypePills .pill.on')?.dataset.v||null;
-  const aiTools=Array.from(document.querySelectorAll('#aiToolsPills .pill.on')).map(p=>p.dataset.v);
-  const body={title,content,image_url:blogImgUrl,cloudinary_id:blogImgCldId,video_url:blogVidUrl,video_cloudinary_id:blogVidCldId,steps:blogSteps,final_result_url:finalResultUrl,final_result_cloudinary_id:finalResultCldId,final_result_type:finalResultType,image_position:document.getElementById('beImgPos').value,is_public:document.getElementById('bePublic').checked,ai_tools:aiTools,generation_type:genType};
+  const steps=[];
+  if(document.getElementById('beTutorial').checked){
+    const stepEditors=document.querySelectorAll('.step-editor');
+    stepEditors.forEach((div,i)=>{
+      const type=div.dataset.type;
+      const url=div.dataset.url;
+      const cloudinaryId=div.dataset.cloudinaryId;
+      const prompt=div.querySelector('textarea').value.trim();
+      if(type&&url&&prompt)steps.push({type,url,cloudinary_id:cloudinaryId,prompt});
+    });
+  }
+  const body={title,content,image_url:blogImgUrl,cloudinary_id:blogImgCldId,image_position:document.getElementById('beImgPos').value,is_public:document.getElementById('bePublic').checked,steps};
   const r=await fetch(editingBlogId?`/api/blogs/${editingBlogId}`:'/api/blogs',{method:editingBlogId?'PUT':'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify(body)});
   if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
   const saved=await r.json();
@@ -1534,6 +1449,51 @@ async function deleteBlog(id){
   if(!confirm('Delete this post?'))return;
   await fetch(`/api/blogs/${id}`,{method:'DELETE',headers:{'x-auth-token':token}});
   await loadMyBlogs();await loadPublicBlogs();toast('Post deleted');
+}
+
+function toggleTutorialMode(isTutorial){
+  document.getElementById('beStepsSection').style.display=isTutorial?'block':'none';
+  if(!isTutorial)document.getElementById('beStepsList').innerHTML='';
+}
+
+function addBlogStep(){
+  const list=document.getElementById('beStepsList');
+  const stepDiv=document.createElement('div');
+  stepDiv.className='step-editor';
+  stepDiv.innerHTML=`
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+     <select class="inp sel" style="width:auto">
+      <option value="photo">Photo</option>
+      <option value="video">Video</option>
+     </select>
+     <button class="btn btn-outline btn-sm" onclick="uploadStepMedia(this)">Upload</button>
+     <button class="btn btn-ghost btn-sm" onclick="this.parentElement.parentElement.remove()">Remove</button>
+    </div>
+    <textarea class="inp ta" placeholder="Prompt for this step..." style="min-height:60px"></textarea>
+  `;
+  list.appendChild(stepDiv);
+}
+
+async function uploadStepMedia(btn){
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='image/*,video/*';
+  input.onchange=async(e)=>{
+    const file=e.target.files[0];
+    if(!file)return;
+    const fd=new FormData();
+    fd.append('media',file);
+    btn.textContent='Uploading…';
+    const r=await fetch('/api/blog-media',{method:'POST',headers:{'x-auth-token':token},body:fd});
+    if(!r.ok){toast('Upload failed');btn.textContent='Upload';return;}
+    const d=await r.json();
+    const stepDiv=btn.parentElement.parentElement;
+    stepDiv.dataset.url=d.url;
+    stepDiv.dataset.cloudinaryId=d.cloudinary_id;
+    stepDiv.dataset.type=d.type;
+    btn.textContent='Uploaded';
+  };
+  input.click();
 }
 
 async function loadAndViewBlog(id){
@@ -1748,6 +1708,8 @@ function openMyProfile() {
   document.getElementById('profileUsername').textContent = myDisplayName || username;
   document.getElementById('profileUsernameAt').textContent = username;
   document.getElementById('displayNameInput').value = myDisplayName || username;
+  document.getElementById('userTagInput').value = myUserTag || '';
+  document.getElementById('profileUserTag').textContent = myUserTag || '';
   document.getElementById('profileAvLetter').textContent = username.charAt(0).toUpperCase();
   if (myAvatarUrl) {
     document.getElementById('profileAvImg').src = myAvatarUrl;
@@ -1760,12 +1722,17 @@ function openMyProfile() {
 }
 async function saveProfile() {
   const name = document.getElementById('displayNameInput').value.trim();
+  const tag = document.getElementById('userTagInput').value.trim();
   if (!name) return toast('Display name cannot be empty');
-  const r = await fetch('/api/profile', {method:'PUT', headers:{'Content-Type':'application/json','x-auth-token':token}, body:JSON.stringify({display_name:name})});
+  if (tag.length > 15) return toast('User icon must be 15 characters or less');
+  const r = await fetch('/api/profile', {method:'PUT', headers:{'Content-Type':'application/json','x-auth-token':token}, body:JSON.stringify({display_name:name, user_tag:tag})});
   if (!r.ok) return toast('Failed to save');
   myDisplayName = name;
+  myUserTag = tag;
   document.getElementById('userNm').textContent = name;
   document.getElementById('profileUsername').textContent = name;
+  document.getElementById('userTag').textContent = tag;
+  document.getElementById('profileUserTag').textContent = tag;
   toast('Profile saved!');
 }
 async function uploadAvatar(input) {
@@ -1895,7 +1862,9 @@ async function loadConversations() {
   const el = document.getElementById('convList');
   if (!convs.length) { el.innerHTML='<div style="padding:16px;color:var(--muted);font-size:0.82rem">No conversations yet</div>'; return; }
   el.innerHTML = '';
+  let hasUnread = false;
   convs.forEach(c => {
+    if (c.has_unread) hasUnread = true;
     const d = document.createElement('div');
     d.className = 'conv-item' + (currentMsgUser===c.other_user?' active':'');
     const avHtml = c.avatar_url
@@ -1910,6 +1879,9 @@ async function loadConversations() {
     d.onclick = () => openConversation(c.other_user);
     el.appendChild(d);
   });
+  if (hasUnread && document.hidden && Notification.permission === 'granted') {
+    new Notification('New Message', {body: 'You have unread messages', icon: '/manifest.json' ? '' : ''});
+  }
 }
 async function openConversation(otherUser) {
   currentMsgUser = otherUser;
@@ -2675,24 +2647,6 @@ async function markReportRead(id) {
 // ── PWA ───────────────────────────────
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 
-// Fix: ensure ALL public prompts always load
-async function loadPublicBlogs() {
-  const feed = document.getElementById('exploreFeed');
-  if (!feed) return;
-  
-  // Show skeleton while loading (Render cold start)
-  feed.innerHTML = Array(6).fill(`<div class="blog-card skeleton" style="height:220px"></div>`).join('');
-  
-  const r = await fetch('/api/blogs/public', { headers: token ? {'x-auth-token':token} : {} });
-  const blogs = await r.json();
-  window.publicBlogs = blogs;
-  
-  renderFilteredExplore(); // now uses ALL prompts
-}
-
-// Call it on explore nav + on app load
-document.querySelector('[data-sec="explore"]').addEventListener('click', loadPublicBlogs);
-window.addEventListener('load', () => { if (isGuest || token) setTimeout(loadPublicBlogs, 300); });
 </script>
 
 <!-- Report/Contact FAB -->
