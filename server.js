@@ -96,16 +96,6 @@ async function initDb() {
       created_at BIGINT NOT NULL,
       UNIQUE(blog_id, rater)
     );
-    CREATE TABLE IF NOT EXISTS blog_steps (
-      id TEXT PRIMARY KEY,
-      blog_id TEXT NOT NULL REFERENCES blogs(id) ON DELETE CASCADE,
-      step_order INTEGER NOT NULL,
-      type TEXT NOT NULL, -- 'photo' or 'video'
-      url TEXT NOT NULL,
-      cloudinary_id TEXT NOT NULL,
-      prompt TEXT NOT NULL,
-      created_at BIGINT NOT NULL
-    );
     CREATE TABLE IF NOT EXISTS friendships (
       id TEXT PRIMARY KEY,
       requester TEXT NOT NULL,
@@ -152,7 +142,6 @@ async function initDb() {
     `ALTER TABLE blogs ADD COLUMN IF NOT EXISTS video_cloudinary_id TEXT`,
     `ALTER TABLE blogs ADD COLUMN IF NOT EXISTS ai_tools TEXT[]`,
     `ALTER TABLE blogs ADD COLUMN IF NOT EXISTS generation_type TEXT`,
-    `CREATE TABLE IF NOT EXISTS blog_steps (id TEXT PRIMARY KEY, blog_id TEXT NOT NULL REFERENCES blogs(id) ON DELETE CASCADE, step_order INTEGER NOT NULL, type TEXT NOT NULL, url TEXT NOT NULL, cloudinary_id TEXT NOT NULL, prompt TEXT NOT NULL, created_at BIGINT NOT NULL)`,
   ];
   for (const sql of migrations) await pool.query(sql).catch(() => {});
   // Ensure admin has admin tag on every startup
@@ -278,11 +267,10 @@ app.get('/api/profile/:username', optionalAuth, async (req, res) => {
 
 app.put('/api/profile', requireAuth, async (req, res) => {
   try {
-    const { display_name, user_tag } = req.body;
+    const { display_name } = req.body;
     if (!display_name?.trim()) return res.status(400).json({ error: 'Name required' });
-    if (user_tag && user_tag.length > 15) return res.status(400).json({ error: 'User tag too long' });
-    await pool.query('UPDATE users SET display_name=$1, user_tag=$2 WHERE username=$3', [display_name.trim(), user_tag?.trim() || null, req.username]);
-    res.json({ display_name: display_name.trim(), user_tag: user_tag?.trim() || null });
+    await pool.query('UPDATE users SET display_name=$1 WHERE username=$2', [display_name.trim(), req.username]);
+    res.json({ display_name: display_name.trim() });
   } catch(err) { res.status(500).json({ error: err.message }); }
 });
 
@@ -436,19 +424,6 @@ app.post('/api/blog-video', requireAuth, upload.single('video'), async (req,res)
   } catch(err){res.status(500).json({error:err.message});}
 });
 
-app.post('/api/blog-media', requireAuth, upload.single('media'), async (req,res) => {
-  try {
-    if(!req.file) return res.status(400).json({error:'No file'});
-    const isVideo=req.file.mimetype.startsWith('video/');
-    const folder=isVideo?'blog-videos':'blog-images';
-    const resourceType=isVideo?'video':'image';
-    const result=await new Promise((resolve,reject)=>{
-      const s=cloudinary.uploader.upload_stream({folder,resource_type:resourceType},(e,r)=>e?reject(e):resolve(r)); s.end(req.file.buffer);
-    });
-    res.json({url:result.secure_url,cloudinary_id:result.public_id,type:isVideo?'video':'photo'});
-  } catch(err){res.status(500).json({error:err.message});}
-});
-
 // Helper to build blog query with rating avg
 async function enrichBlogs(rows, viewerUsername) {
   const ids = rows.map(b => b.id);
@@ -486,27 +461,18 @@ app.get('/api/blogs/:id', optionalAuth, async (req,res) => {
     const blog=r.rows[0];
     if(!blog.is_public && blog.owner!==req.username && !req.isAdmin) return res.status(403).json({error:'Private post', needsAuth:true});
     const comments=await pool.query('SELECT c.*,u.display_name,u.avatar_url FROM blog_comments c LEFT JOIN users u ON c.author=u.username WHERE c.blog_id=$1 ORDER BY c.created_at ASC',[req.params.id]);
-    const steps=await pool.query('SELECT * FROM blog_steps WHERE blog_id=$1 ORDER BY step_order ASC',[req.params.id]);
     const enriched=(await enrichBlogs([blog], req.username))[0];
-    res.json({...enriched, comments:comments.rows, steps:steps.rows});
+    res.json({...enriched, comments:comments.rows});
   } catch(err){res.status(500).json({error:err.message});}
 });
 app.post('/api/blogs', requireAuth, async (req,res) => {
   try {
-    const{title,content,image_url,cloudinary_id,video_url,video_cloudinary_id,image_position,is_public,ai_tools,generation_type,steps}=req.body;
+    const{title,content,image_url,cloudinary_id,video_url,video_cloudinary_id,image_position,is_public,ai_tools,generation_type}=req.body;
     if(!title||!content) return res.status(400).json({error:'Title and content required'});
     const id=crypto.randomBytes(10).toString('hex'); const now=Date.now();
     await pool.query('INSERT INTO blogs(id,title,content,image_url,cloudinary_id,video_url,video_cloudinary_id,image_position,is_public,ai_tools,generation_type,owner,created_at,updated_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)',
       [id,title,content,image_url||null,cloudinary_id||null,video_url||null,video_cloudinary_id||null,image_position||'left',is_public||false,ai_tools||[],generation_type||null,req.username,now,now]);
-    if(steps&&Array.isArray(steps)){
-      for(let i=0;i<steps.length;i++){
-        const s=steps[i];
-        const sid=crypto.randomBytes(8).toString('hex');
-        await pool.query('INSERT INTO blog_steps(id,blog_id,step_order,type,url,cloudinary_id,prompt,created_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8)',
-          [sid,id,i+1,s.type,s.url,s.cloudinary_id,s.prompt,now]);
-      }
-    }
-    res.status(201).json({id,title,content,image_url,video_url,ai_tools,generation_type,is_public,owner:req.username,created_at:now,steps:steps||[]});
+    res.status(201).json({id,title,content,image_url,video_url,ai_tools,generation_type,is_public,owner:req.username,created_at:now});
   } catch(err){res.status(500).json({error:err.message});}
 });
 app.put('/api/blogs/:id', requireAuth, async (req,res) => {
