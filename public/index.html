@@ -421,8 +421,6 @@ input[type=file]{display:none}
 .fab { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 500; transition: transform .15s; }
 .fab:hover { transform: scale(1.08); }
 
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 </style>
 </head>
 <body>
@@ -436,39 +434,6 @@ input[type=file]{display:none}
   <button class="btn btn-sm" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)" onclick="showAuthModal('login')">Login</button>
 </div>
 
-<!-- WAKE / SKELETON SCREEN -->
-<div id="wakeScreen" style="display:none;position:fixed;inset:0;z-index:9999;background:var(--bg, #f9f9f8);flex-direction:column;align-items:center;justify-content:center;gap:20px">
-  <div style="width:48px;height:48px;background:#111;border-radius:14px;display:flex;align-items:center;justify-content:center">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-  </div>
-  <div style="width:36px;height:36px;border:3px solid #e4e4e0;border-top-color:#111;border-radius:50%;animation:spin .8s linear infinite"></div>
-  <div style="font-family:Inter,sans-serif;font-size:.82rem;color:#9c9c96;font-weight:500">Starting server, please wait…</div>
-  <!-- Skeleton cards -->
-  <div style="width:min(580px,90vw);display:flex;flex-direction:column;gap:10px">
-    <div style="background:#fff;border:1px solid #e4e4e0;border-radius:12px;overflow:hidden">
-      <div style="height:180px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-      <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
-        <div style="height:14px;width:60%;border-radius:4px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-        <div style="height:12px;width:80%;border-radius:4px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-        <div style="height:12px;width:45%;border-radius:4px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-      </div>
-    </div>
-    <div style="background:#fff;border:1px solid #e4e4e0;border-radius:12px;padding:14px;display:flex;gap:12px;align-items:center">
-      <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;flex-shrink:0"></div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:8px">
-        <div style="height:13px;width:55%;border-radius:4px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-        <div style="height:11px;width:35%;border-radius:4px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-      </div>
-    </div>
-    <div style="background:#fff;border:1px solid #e4e4e0;border-radius:12px;overflow:hidden">
-      <div style="height:140px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-      <div style="padding:12px;display:flex;flex-direction:column;gap:7px">
-        <div style="height:13px;width:70%;border-radius:4px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-        <div style="height:11px;width:50%;border-radius:4px;background:linear-gradient(90deg,#f2f2f0 25%,#eaeae8 50%,#f2f2f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div id="authScreen">
  <div style="width:100%;max-width:380px">
@@ -857,7 +822,7 @@ input[type=file]{display:none}
 <div id="previewModal" onclick="closePrevBg(event)">
  <div class="prev-wrap">
   <button class="prev-close" onclick="closeModal()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <img id="prevImg" src="" alt="">
+  <img id="prevImg" src="" alt="" draggable="true" title="Drag to another app or website" ondragstart="onPhotoDragStart(event,this.src,document.getElementById('prevMeta').textContent.split('·')[0].trim())">
   <div class="prev-meta" id="prevMeta"></div>
   <button class="btn btn-dark btn-sm" onclick="dlCurrent()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
  </div>
@@ -962,49 +927,6 @@ input[type=file]{display:none}
 
 <script>
 
-// ─── WAKE / SKELETON SCREEN ───────────────────────────────
-(function() {
-  // Show skeleton immediately if server might be cold
-  const wake = document.getElementById('wakeScreen');
-  let wakeShown = false;
-  let wakeTimer = setTimeout(() => {
-    // Only show wake screen if we haven't gotten a response yet
-    if (!wakeShown) { wake.style.display = 'flex'; }
-  }, 800);
-
-  async function pingServer() {
-    let attempts = 0;
-    while (attempts < 25) {
-      try {
-        const r = await fetch('/api/ping');
-        if (r.ok) {
-          clearTimeout(wakeTimer);
-          wake.style.display = 'none';
-          wakeShown = true;
-          return;
-        }
-      } catch(e) {}
-      await new Promise(r => setTimeout(r, 2000));
-      attempts++;
-    }
-    // Timeout
-    wake.innerHTML = '<div style="font-family:Inter,sans-serif;text-align:center;color:#666"><div style="font-size:1rem;font-weight:600;margin-bottom:8px">Server is taking a long time</div><div style="font-size:.84rem;margin-bottom:16px">Render free tier may be sleeping</div><button onclick="location.reload()" style="padding:8px 18px;border-radius:8px;border:1px solid #ddd;cursor:pointer;font-family:Inter,sans-serif;background:#fff">Refresh</button></div>';
-  }
-
-  // Ping immediately
-  pingServer();
-
-  // Also hide wake screen when app or auth screen shows
-  const observer = new MutationObserver(() => {
-    const app = document.getElementById('app');
-    const auth = document.getElementById('authScreen');
-    if ((app && app.style.display !== 'none') || (auth && auth.style.display !== 'none')) {
-      wake.style.display = 'none';
-      wakeShown = true;
-    }
-  });
-  observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
-})();
 
 // ═══════════════════════════════════════
 // STATE
@@ -1187,7 +1109,7 @@ function renderGallery(){
 
 function makeGridCard(p){norm(p);const isSel=selectedPhotos.has(p.id);
   const d=document.createElement('div');d.className='ph-card'+(isSel?' sel':'');
-  d.innerHTML=`<img src="${esc(p.src)}" alt="" loading="lazy">
+  d.innerHTML=`<img src="${esc(p.src)}" alt="" loading="lazy" draggable="true" title="Drag to another app or website">
     <div class="ph-card-ov">
      <div class="card-top">
       <div class="chk">${isSel?'<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
