@@ -421,6 +421,30 @@ input[type=file]{display:none}
 .fab { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 500; transition: transform .15s; }
 .fab:hover { transform: scale(1.08); }
 
+
+/* ═══ COLLECTIONS ═══════════════════════════════════════════════ */
+.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.col-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;cursor:pointer;transition:box-shadow .15s,background .15s;position:relative}
+.col-card:hover{box-shadow:var(--sh)}
+.col-cover{width:100%;height:140px;object-fit:cover;background:var(--sf2);display:flex;align-items:center;justify-content:center}
+.col-cover-ph{width:100%;height:140px;background:linear-gradient(135deg,var(--sf2),var(--sf3));display:flex;align-items:center;justify-content:center}
+.col-card-body{padding:12px}
+.col-card-name{font-weight:700;font-size:.88rem;color:var(--tx);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.col-card-meta{font-size:.72rem;color:var(--mu)}
+.col-actions{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+/* Collection view */
+.col-header{display:flex;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.col-cover-lg{width:120px;height:90px;object-fit:cover;border-radius:var(--r);flex-shrink:0;background:var(--sf2)}
+.col-section-hd{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+/* Add to collection modal checkbox list */
+.col-pick-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:var(--r);cursor:pointer;border:1.5px solid var(--bd);transition:all .12s;background:var(--sf)}
+.col-pick-item:hover{border-color:var(--bd2);background:var(--sf2)}
+.col-pick-item.selected{border-color:var(--ac);background:var(--sf2)}
+.col-pick-thumb{width:40px;height:40px;object-fit:cover;border-radius:5px;flex-shrink:0;background:var(--sf2)}
+/* Note card in collection */
+.note-col-item{background:var(--sf2);border-radius:var(--r);padding:11px;border:1px solid var(--bd);position:relative}
+.note-col-title{font-weight:600;font-size:.83rem;color:var(--tx);margin-bottom:3px}
+.note-col-preview{font-size:.76rem;color:var(--mu);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 </style>
 </head>
 <body>
@@ -488,6 +512,7 @@ input[type=file]{display:none}
     <div class="sb-logo-txt">Automation Note</div>
    </div>
    <button class="nav-item active" data-sec="photos"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos</button>
+   <button class="nav-item" data-sec="collections"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Collections</button>
    <button class="nav-item" data-sec="notes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes</button>
    <button class="nav-item" data-sec="blog"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Blog <span class="badge badge-purple" style="margin-left:auto;font-size:0.6rem">NEW</span></button>
    <button class="nav-item" data-sec="explore"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Explore</button>
@@ -544,6 +569,7 @@ input[type=file]{display:none}
      <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.25)" onclick="downloadSelected()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
      <button class="btn btn-sm btn-danger" onclick="deleteSelected()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Delete</button>
      <button class="btn btn-sm" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.2)" onclick="clearSel()">Cancel</button>
+     <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.25)" onclick="openAddToCollectionModal('photos')">+ Collection</button>
     </div>
     <div class="ph-toolbar">
      <div class="ph-toolbar-l">
@@ -560,6 +586,23 @@ input[type=file]{display:none}
     <div id="gallery"></div>
    </div>
 
+
+   <!-- COLLECTIONS -->
+   <div class="section" id="collectionsSection">
+    <div class="page-hd">
+     <div class="row" style="justify-content:space-between;align-items:flex-start">
+      <div><h2>Collections</h2><p>Organize photos and notes into folders. Share them publicly or keep private.</p></div>
+      <button class="btn btn-dark" onclick="openNewCollectionModal()">+ New Collection</button>
+     </div>
+    </div>
+    <div id="collectionsFeed"></div>
+   </div>
+
+   <!-- COLLECTION VIEW (single) -->
+   <div class="section" id="collectionViewSection">
+    <div id="collectionViewContent"></div>
+   </div>
+
    <!-- NOTES -->
    <div class="section" id="notesSection">
     <div class="page-hd"><h2>Notes</h2><p>Scripts, links, ideas — save anything</p></div>
@@ -567,6 +610,12 @@ input[type=file]{display:none}
      <div class="notes-list-panel">
       <div style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">My Notes</div>
       <button class="btn btn-dark btn-sm" onclick="newNote()">+ New Note</button>
+      <button class="btn btn-outline btn-sm" id="noteSelMode" onclick="toggleNoteSelMode()" style="font-size:.71rem">Select</button>
+      <div id="noteSelActions" style="display:none;flex-direction:column;gap:4px">
+       <button class="btn btn-dark btn-sm" onclick="openAddToCollectionModal('notes')">Add to Collection</button>
+       <button class="btn btn-danger btn-sm" onclick="deleteSelectedNotes()">Delete Selected</button>
+       <button class="btn btn-ghost btn-sm" onclick="toggleNoteSelMode()">Cancel</button>
+      </div>
       <div class="notes-list" id="noteList"></div>
      </div>
      <div class="note-ed-panel" id="noteEditor"><div class="note-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Select or create a note</span></div></div>
@@ -1009,7 +1058,7 @@ function showApp(){
   document.getElementById('app').style.display='flex';
   document.getElementById('userAv').textContent=username.charAt(0).toUpperCase();
   document.getElementById('userNm').textContent=username;
-  loadPhotos();loadNotes();loadMyBlogs();loadPublicBlogs();
+  loadPhotos();loadNotes();loadMyBlogs();loadPublicBlogs();loadCollections();
   renderTracker();renderIdeas();renderCL();renderHashSets();renderSched();
   if(!checkBlogRoute()){}
 }
@@ -2502,6 +2551,172 @@ async function markReportRead(id) {
 
 // ── PWA ───────────────────────────────
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
+// ═══ COLLECTIONS ═══════════════════════════════════════════════
+let collections = [];
+let currentCollectionId = null;
+let addToColType = 'photos';
+let selectedColId = null;
+let noteSelectMode = false;
+let selectedNoteIds = new Set();
+
+async function loadCollections() {
+  try {
+    const r = await fetch('/api/collections', { headers: { 'x-auth-token': token } });
+    if (r.ok) collections = await r.json();
+  } catch(e) {}
+  renderCollections();
+}
+
+function renderCollections() {
+  const el = document.getElementById('collectionsFeed');
+  if (!el) return;
+  if (!collections.length) {
+    el.innerHTML = '<div class="empty"><p style="color:var(--mu)">No collections yet. Create one to start organizing!</p></div>';
+    return;
+  }
+  let html = '<div class="col-grid">';
+  collections.forEach(c => { html += colCardHtml(c); });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function colCardHtml(c) {
+  const ph = parseInt(c.photo_count)||0, nt = parseInt(c.note_count)||0;
+  const meta = [ph?ph+' photo'+(ph!==1?'s':''):'', nt?nt+' note'+(nt!==1?'s':''):''].filter(Boolean).join(' · ')||'Empty';
+  const cover = c.cover_url
+    ? '<img src="'+esc(c.cover_url)+'" class="col-cover" alt="">'
+    : '<div class="col-cover-ph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.3"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>';
+  return '<div class="col-card" onclick="openCollectionView(''+c.id+'')">'+cover+'<div class="col-card-body">'+
+    '<div class="col-card-name">'+esc(c.name)+'</div>'+
+    '<div class="col-card-meta">'+meta+(c.is_public?' &middot; <span class="badge badge-green" style="font-size:.6rem">Public</span>':'')+'</div>'+
+    '<div class="col-actions" onclick="event.stopPropagation()">'+
+    '<button class="btn btn-outline btn-xs" onclick="openRenameModal(''+c.id+'')">Edit</button>'+
+    '<button class="btn btn-outline btn-xs" onclick="trigColCover(''+c.id+'')">Cover</button>'+
+    (c.is_public?'<button class="btn btn-outline btn-xs" onclick="copyColLink(''+c.id+'')">Copy Link</button>':'')+
+    '<button class="btn btn-danger btn-xs" onclick="deleteCollection(''+c.id+'')">Delete</button>'+
+    '</div></div></div>';
+}
+
+function trigColCover(id) {
+  const inp = document.createElement('input'); inp.type='file'; inp.accept='image/*';
+  inp.onchange = () => uploadColCover(id, inp); inp.click();
+}
+
+async function openCollectionView(id) {
+  const r = await fetch('/api/collections/'+id, { headers: { 'x-auth-token': token } });
+  if (!r.ok) { toast('Could not load collection'); return; }
+  const col = await r.json();
+  currentCollectionId = id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('collectionViewSection').classList.add('active');
+  const ph=(col.photos||[]).length, nt=(col.notes||[]).length;
+  const cover = col.cover_url
+    ? '<img src="'+esc(col.cover_url)+'" class="col-cover-lg" alt="">'
+    : '<div class="col-cover-lg" style="display:flex;align-items:center;justify-content:center;color:var(--mu);background:var(--sf2)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>';
+  let photosHtml = ph
+    ? '<div class="g-grid">'+col.photos.map(p=>
+        '<div style="position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:1;cursor:pointer;background:var(--sf2)" draggable="true" ondragstart="onPhotoDragStart(event,''+esc(p.src)+'',''+esc(p.original_name||'')+'')">'+
+        '<img src="'+esc(p.src)+'" style="width:100%;height:100%;object-fit:cover" loading="lazy" onclick="openPhotoPreviewFromCol(''+esc(p.src)+'',''+esc(p.original_name||'')+'')">'+
+        '<button onclick="removeFromCol(''+id+'','photo',''+p.id+'')" style="position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;background:rgba(220,38,38,.85);color:#fff;border:none;cursor:pointer;font-size:.65rem" title="Remove">&#10005;</button>'+
+        '</div>').join('')+'</div>'
+    : '<p style="color:var(--mu);font-size:.82rem">No photos in this collection</p>';
+  let notesHtml = nt
+    ? col.notes.map(n=>
+        '<div class="note-col-item">'+
+        '<div class="note-col-title">'+esc(n.title||'Untitled')+'</div>'+
+        '<div class="note-col-preview">'+esc((n.content||'').slice(0,120))+'</div>'+
+        '<div class="row" style="margin-top:7px;gap:5px">'+
+        '<button class="btn btn-outline btn-xs" onclick="openNoteFromCol(''+n.id+'')">Open</button>'+
+        '<button class="btn btn-ghost btn-xs" onclick="copyText(notes.find(x=>x.id===''+n.id+'')?.content||'')" >Copy</button>'+
+        '<button class="btn btn-danger btn-xs" onclick="removeFromCol(''+id+'','note',''+n.id+'')">Remove</button>'+
+        '</div></div>').join('')
+    : '<p style="color:var(--mu);font-size:.82rem">No notes in this collection</p>';
+  document.getElementById('collectionViewContent').innerHTML =
+    '<div class="row" style="justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">'+
+    '<button class="btn btn-ghost btn-sm" onclick="goToCollections()">&#8592; Collections</button>'+
+    '<div class="row" style="gap:6px">'+
+    '<button class="btn btn-outline btn-sm" onclick="openRenameModal(''+id+'')">Edit</button>'+
+    '<button class="btn btn-outline btn-sm" onclick="trigColCover(''+id+'')">Change Cover</button>'+
+    (col.is_public?'<button class="btn btn-dark btn-sm" onclick="copyColLink(''+id+'')">Copy Link</button>':'<button class="btn btn-outline btn-sm" onclick="makeColPublic(''+id+'')">Make Public</button>')+
+    '</div></div>'+
+    '<div class="col-header">'+cover+
+    '<div><div style="font-size:1.3rem;font-weight:800;letter-spacing:-.03em;color:var(--tx)">'+esc(col.name)+'</div>'+
+    (col.description?'<div style="font-size:.82rem;color:var(--mu);margin-top:4px">'+esc(col.description)+'</div>':'')+
+    '<div style="font-size:.75rem;color:var(--mu);margin-top:6px">'+ph+' photos &middot; '+nt+' notes '+
+    (col.is_public?'&middot; <span class="badge badge-green">Public</span>':'&middot; <span class="badge badge-gray">Private</span>')+'</div></div></div>'+
+    '<div class="col-section-hd">Photos ('+ph+')</div><div style="margin-bottom:18px">'+photosHtml+'</div>'+
+    '<div class="col-section-hd">Notes ('+nt+')</div><div style="display:flex;flex-direction:column;gap:8px">'+notesHtml+'</div>';
+}
+function goToCollections() {
+  loadCollections();
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('collectionsSection').classList.add('active');
+  document.querySelector('[data-sec="collections"]')?.classList.add('active');
+}
+function openPhotoPreviewFromCol(src, name) {
+  document.getElementById('prevImg').src=src; document.getElementById('prevMeta').textContent=name;
+  document.getElementById('previewModal').classList.add('open'); document.body.style.overflow='hidden';
+  currentPhoto={src,originalName:name};
+}
+function openNoteFromCol(noteId) {
+  const n=notes.find(x=>x.id===noteId); if(!n)return;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('notesSection').classList.add('active');
+  document.querySelector('[data-sec="notes"]')?.classList.add('active'); openNote(n);
+}
+function copyColLink(id){copyText(location.origin+'/collection/'+id);toast('Collection link copied!');}
+async function makeColPublic(id){const r=await fetch('/api/collections/'+id,{method:'PUT',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({is_public:true})});if(!r.ok){toast('Failed');return;}toast('Collection is now public!');openCollectionView(id);}
+function openNewCollectionModal(){document.getElementById('newColName').value='';document.getElementById('newColDesc').value='';document.getElementById('newColModal').classList.add('open');setTimeout(()=>document.getElementById('newColName').focus(),100);}
+async function createCollection(){const name=document.getElementById('newColName').value.trim(),description=document.getElementById('newColDesc').value.trim();if(!name)return toast('Enter a name');const r=await fetch('/api/collections',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({name,description})});if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}const col=await r.json();collections.unshift(col);document.getElementById('newColModal').classList.remove('open');renderCollections();toast('Collection "'+name+'" created!');}
+function openRenameModal(id){const col=collections.find(c=>c.id===id);if(!col)return;document.getElementById('editColId').value=id;document.getElementById('editColName').value=col.name;document.getElementById('editColDesc').value=col.description||'';document.getElementById('editColPublic').checked=col.is_public||false;document.getElementById('renameColModal').classList.add('open');}
+async function saveCollectionEdit(){const id=document.getElementById('editColId').value,name=document.getElementById('editColName').value.trim(),description=document.getElementById('editColDesc').value.trim(),is_public=document.getElementById('editColPublic').checked;if(!name)return toast('Name required');const r=await fetch('/api/collections/'+id,{method:'PUT',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({name,description,is_public})});if(!r.ok){toast('Failed');return;}document.getElementById('renameColModal').classList.remove('open');const idx=collections.findIndex(c=>c.id===id);if(idx>-1){collections[idx].name=name;collections[idx].description=description;collections[idx].is_public=is_public;}renderCollections();if(currentCollectionId===id)openCollectionView(id);toast('Updated!');}
+async function uploadColCover(id,input){const file=input.files[0];if(!file)return;const fd=new FormData();fd.append('cover',file);toast('Uploading cover...');const r=await fetch('/api/collections/'+id+'/cover',{method:'POST',headers:{'x-auth-token':token},body:fd});if(!r.ok){toast('Failed');return;}const d=await r.json();const idx=collections.findIndex(c=>c.id===id);if(idx>-1)collections[idx].cover_url=d.cover_url;renderCollections();if(currentCollectionId===id)openCollectionView(id);toast('Cover updated!');input.value='';}
+async function deleteCollection(id){const col=collections.find(c=>c.id===id);if(!confirm('Delete collection "'+((col&&col.name)||'')+'"? Items inside are not deleted.'))return;await fetch('/api/collections/'+id,{method:'DELETE',headers:{'x-auth-token':token}});collections=collections.filter(c=>c.id!==id);renderCollections();toast('Collection deleted');}
+async function removeFromCol(colId,type,itemId){const url=type==='photo'?'/api/collections/'+colId+'/photos/'+itemId:'/api/collections/'+colId+'/notes/'+itemId;await fetch(url,{method:'DELETE',headers:{'x-auth-token':token}});toast('Removed from collection');openCollectionView(colId);}
+async function openAddToCollectionModal(type){
+  addToColType=type;selectedColId=null;document.getElementById('quickColName').value='';
+  const count=type==='photos'?selectedPhotos.size:selectedNoteIds.size;
+  if(!count)return toast('Select some '+type+' first');
+  document.getElementById('addToColTitle').textContent='Add '+count+' '+type+' to Collection';
+  document.getElementById('addToColSubtitle').textContent=count+' '+type+' selected';
+  if(!collections.length)await loadCollections();
+  const listEl=document.getElementById('colPickList');
+  if(!collections.length){listEl.innerHTML='<div style="color:var(--mu);font-size:.82rem">No collections yet. Create one below.</div>';}
+  else{listEl.innerHTML=collections.map(c=>{const ph=parseInt(c.photo_count)||0,nt=parseInt(c.note_count)||0;return'<div class="col-pick-item" id="colPick_'+c.id+'" onclick="selectColForAdd(''+c.id+'')">'+(c.cover_url?'<img src="'+esc(c.cover_url)+'" class="col-pick-thumb" alt="">':'<div class="col-pick-thumb" style="background:var(--sf2);display:flex;align-items:center;justify-content:center;color:var(--mu)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>')+'<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:.83rem;color:var(--tx)">'+esc(c.name)+'</div><div style="font-size:.71rem;color:var(--mu)">'+ph+' photos &middot; '+nt+' notes</div></div><div id="colPickCheck_'+c.id+'" style="width:18px;height:18px;border-radius:50%;border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;flex-shrink:0"></div></div>';}).join('');}
+  document.getElementById('addToColModal').classList.add('open');
+}
+function selectColForAdd(id){
+  if(selectedColId){document.getElementById('colPick_'+selectedColId)?.classList.remove('selected');const pc=document.getElementById('colPickCheck_'+selectedColId);if(pc){pc.innerHTML='';pc.style.background='';pc.style.borderColor='var(--bd2)';}}
+  selectedColId=id;document.getElementById('colPick_'+id)?.classList.add('selected');const c=document.getElementById('colPickCheck_'+id);if(c){c.innerHTML='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>';c.style.background='var(--ac)';c.style.borderColor='var(--ac)';}
+}
+async function confirmAddToCollection(){if(!selectedColId)return toast('Pick a collection first');await doAddToCollection(selectedColId);}
+async function quickCreateAndAdd(){const name=document.getElementById('quickColName').value.trim();if(!name)return toast('Enter a name');const r=await fetch('/api/collections',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({name})});if(!r.ok){toast('Failed');return;}const col=await r.json();collections.unshift(col);await doAddToCollection(col.id);}
+async function doAddToCollection(colId){
+  if(addToColType==='photos'){const ids=[...selectedPhotos];const r=await fetch('/api/collections/'+colId+'/photos',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({photo_ids:ids})});if(!r.ok){toast('Failed');return;}const d=await r.json();document.getElementById('addToColModal').classList.remove('open');clearSel();await loadCollections();toast(d.added+' photo'+(d.added!==1?'s':'')+' added to collection!');}
+  else{const ids=[...selectedNoteIds];const r=await fetch('/api/collections/'+colId+'/notes',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({note_ids:ids})});if(!r.ok){toast('Failed');return;}const d=await r.json();document.getElementById('addToColModal').classList.remove('open');clearNoteSelection();await loadCollections();toast(d.added+' note'+(d.added!==1?'s':'')+' added to collection!');}
+}
+function toggleNoteSelMode(){noteSelectMode=!noteSelectMode;selectedNoteIds.clear();const btn=document.getElementById('noteSelMode'),actions=document.getElementById('noteSelActions');if(btn)btn.textContent=noteSelectMode?'Cancel':'Select';if(actions){actions.style.display=noteSelectMode?'flex':'none';if(noteSelectMode)actions.style.flexDirection='column';}renderNoteList();}
+function clearNoteSelection(){noteSelectMode=false;selectedNoteIds.clear();const btn=document.getElementById('noteSelMode'),actions=document.getElementById('noteSelActions');if(btn)btn.textContent='Select';if(actions)actions.style.display='none';renderNoteList();}
+async function deleteSelectedNotes(){if(!selectedNoteIds.size)return toast('No notes selected');if(!confirm('Delete '+selectedNoteIds.size+' note'+(selectedNoteIds.size!==1?'s':'')+' permanently?'))return;for(const id of selectedNoteIds)await fetch('/api/notes/'+id,{method:'DELETE',headers:{'x-auth-token':token}});toast(selectedNoteIds.size+' notes deleted');clearNoteSelection();await loadNotes();}
+const _origRNL=renderNoteList;
+renderNoteList=function(){
+  const el=document.getElementById('noteList');if(!el)return;
+  if(!notes.length){el.innerHTML='<div style="color:var(--mu);font-size:.76rem;padding:5px">No notes yet</div>';return;}
+  el.innerHTML='';
+  notes.forEach(n=>{
+    const d=document.createElement('div'),isSel=selectedNoteIds.has(n.id);
+    d.className='note-item'+(currentNote&&currentNote.id===n.id?' on':'');
+    if(isSel)d.style.cssText='border:1.5px solid var(--ac);border-radius:6px;';
+    const chk=noteSelectMode?'<div style="width:16px;height:16px;border-radius:3px;border:1.5px solid '+(isSel?'var(--ac)':'var(--bd2)')+';background:'+(isSel?'var(--ac)':'transparent')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:6px">'+(isSel?'<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>':'')+'</div>':'';
+    d.innerHTML='<div style="display:flex;align-items:center">'+chk+'<div style="flex:1;min-width:0"><div style="font-size:.81rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tx)">'+esc(n.title||'Untitled')+'</div><div style="font-size:.69rem;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px">'+esc((n.content||'').slice(0,50))+'</div></div></div>';
+    d.onclick=()=>{if(noteSelectMode){if(selectedNoteIds.has(n.id))selectedNoteIds.delete(n.id);else selectedNoteIds.add(n.id);renderNoteList();}else openNote(n);};
+    el.appendChild(d);
+  });
+};
+document.querySelector('[data-sec="collections"]')?.addEventListener('click',()=>loadCollections());
 
 </script>
 
@@ -2531,5 +2746,65 @@ if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').cat
   </div>
  </div>
 </div>
+
+<!-- NEW COLLECTION MODAL -->
+<div class="modal-ov" id="newColModal">
+ <div class="modal" style="max-width:400px">
+  <div class="modal-hd">New Collection
+   <button style="background:none;border:none;color:var(--muted);cursor:pointer;display:flex" onclick="document.getElementById('newColModal').classList.remove('open')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+   <div><div class="lbl">Collection Name</div><input class="inp" id="newColName" placeholder="e.g. Product Photos, Summer 2024…"></div>
+   <div><div class="lbl">Description (optional)</div><textarea class="inp ta" id="newColDesc" placeholder="What's this collection about?" style="min-height:70px"></textarea></div>
+   <div class="row" style="justify-content:flex-end;gap:6px">
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('newColModal').classList.remove('open')">Cancel</button>
+    <button class="btn btn-dark btn-sm" onclick="createCollection()">Create</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ADD TO COLLECTION MODAL -->
+<div class="modal-ov" id="addToColModal">
+ <div class="modal" style="max-width:480px">
+  <div class="modal-hd"><span id="addToColTitle">Add to Collection</span>
+   <button style="background:none;border:none;color:var(--muted);cursor:pointer;display:flex" onclick="document.getElementById('addToColModal').classList.remove('open')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div style="margin-bottom:12px;font-size:.82rem;color:var(--muted)" id="addToColSubtitle"></div>
+  <div id="colPickList" style="display:flex;flex-direction:column;gap:7px;max-height:320px;overflow-y:auto;margin-bottom:14px"></div>
+  <div class="divider"></div>
+  <div style="font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:8px">Or create a new collection</div>
+  <div class="row" style="gap:7px;margin-bottom:14px">
+   <input class="inp" id="quickColName" placeholder="New collection name…" style="flex:1">
+   <button class="btn btn-outline btn-sm" onclick="quickCreateAndAdd()">Create & Add</button>
+  </div>
+  <div class="row" style="justify-content:flex-end;gap:6px">
+   <button class="btn btn-outline btn-sm" onclick="document.getElementById('addToColModal').classList.remove('open')">Cancel</button>
+   <button class="btn btn-dark btn-sm" onclick="confirmAddToCollection()">Add to Selected</button>
+  </div>
+ </div>
+</div>
+
+<!-- RENAME COLLECTION MODAL -->
+<div class="modal-ov" id="renameColModal">
+ <div class="modal" style="max-width:400px">
+  <div class="modal-hd">Edit Collection
+   <button style="background:none;border:none;color:var(--muted);cursor:pointer;display:flex" onclick="document.getElementById('renameColModal').classList.remove('open')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+   <input type="hidden" id="editColId">
+   <div><div class="lbl">Collection Name</div><input class="inp" id="editColName" placeholder="Collection name…"></div>
+   <div><div class="lbl">Description</div><textarea class="inp ta" id="editColDesc" style="min-height:70px" placeholder="Description…"></textarea></div>
+   <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.82rem;font-weight:500">
+    <input type="checkbox" id="editColPublic" style="width:15px;height:15px;accent-color:var(--accent)"> Make Public (anyone with link can view)
+   </label>
+   <div class="row" style="justify-content:flex-end;gap:6px">
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('renameColModal').classList.remove('open')">Cancel</button>
+    <button class="btn btn-dark btn-sm" onclick="saveCollectionEdit()">Save</button>
+   </div>
+  </div>
+ </div>
+</div>
+
 </body>
 </html>
