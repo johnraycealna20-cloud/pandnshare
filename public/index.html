@@ -420,31 +420,6 @@ input[type=file]{display:none}
 /* ── REPORT MODAL ── */
 .fab { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 500; transition: transform .15s; }
 .fab:hover { transform: scale(1.08); }
-
-
-/* ═══ COLLECTIONS ═══════════════════════════════════════════════ */
-.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.col-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;cursor:pointer;transition:box-shadow .15s,background .15s;position:relative}
-.col-card:hover{box-shadow:var(--sh)}
-.col-cover{width:100%;height:140px;object-fit:cover;background:var(--sf2);display:flex;align-items:center;justify-content:center}
-.col-cover-ph{width:100%;height:140px;background:linear-gradient(135deg,var(--sf2),var(--sf3));display:flex;align-items:center;justify-content:center}
-.col-card-body{padding:12px}
-.col-card-name{font-weight:700;font-size:.88rem;color:var(--tx);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.col-card-meta{font-size:.72rem;color:var(--mu)}
-.col-actions{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
-/* Collection view */
-.col-header{display:flex;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
-.col-cover-lg{width:120px;height:90px;object-fit:cover;border-radius:var(--r);flex-shrink:0;background:var(--sf2)}
-.col-section-hd{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin:18px 0 10px;display:flex;align-items:center;gap:8px}
-/* Add to collection modal checkbox list */
-.col-pick-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:var(--r);cursor:pointer;border:1.5px solid var(--bd);transition:all .12s;background:var(--sf)}
-.col-pick-item:hover{border-color:var(--bd2);background:var(--sf2)}
-.col-pick-item.selected{border-color:var(--ac);background:var(--sf2)}
-.col-pick-thumb{width:40px;height:40px;object-fit:cover;border-radius:5px;flex-shrink:0;background:var(--sf2)}
-/* Note card in collection */
-.note-col-item{background:var(--sf2);border-radius:var(--r);padding:11px;border:1px solid var(--bd);position:relative}
-.note-col-title{font-weight:600;font-size:.83rem;color:var(--tx);margin-bottom:3px}
-.note-col-preview{font-size:.76rem;color:var(--mu);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 </style>
 </head>
 <body>
@@ -457,8 +432,6 @@ input[type=file]{display:none}
   <button class="btn btn-sm" style="background:#fff;color:#111;border:none;font-weight:700" onclick="showAuthModal('register')">Sign Up Free</button>
   <button class="btn btn-sm" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)" onclick="showAuthModal('login')">Login</button>
 </div>
-
-
 <div id="authScreen">
  <div style="width:100%;max-width:380px">
   <div style="width:36px;height:36px;background:var(--accent);border-radius:9px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
@@ -512,7 +485,6 @@ input[type=file]{display:none}
     <div class="sb-logo-txt">Automation Note</div>
    </div>
    <button class="nav-item active" data-sec="photos"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos</button>
-   <button class="nav-item" data-sec="collections"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Collections</button>
    <button class="nav-item" data-sec="notes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes</button>
    <button class="nav-item" data-sec="blog"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Blog <span class="badge badge-purple" style="margin-left:auto;font-size:0.6rem">NEW</span></button>
    <button class="nav-item" data-sec="explore"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Explore</button>
@@ -569,7 +541,6 @@ input[type=file]{display:none}
      <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.25)" onclick="downloadSelected()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
      <button class="btn btn-sm btn-danger" onclick="deleteSelected()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Delete</button>
      <button class="btn btn-sm" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.2)" onclick="clearSel()">Cancel</button>
-     <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.25)" onclick="openAddToCollectionModal('photos')">+ Collection</button>
     </div>
     <div class="ph-toolbar">
      <div class="ph-toolbar-l">
@@ -586,23 +557,6 @@ input[type=file]{display:none}
     <div id="gallery"></div>
    </div>
 
-
-   <!-- COLLECTIONS -->
-   <div class="section" id="collectionsSection">
-    <div class="page-hd">
-     <div class="row" style="justify-content:space-between;align-items:flex-start">
-      <div><h2>Collections</h2><p>Organize photos and notes into folders. Share them publicly or keep private.</p></div>
-      <button class="btn btn-dark" onclick="openNewCollectionModal()">+ New Collection</button>
-     </div>
-    </div>
-    <div id="collectionsFeed"></div>
-   </div>
-
-   <!-- COLLECTION VIEW (single) -->
-   <div class="section" id="collectionViewSection">
-    <div id="collectionViewContent"></div>
-   </div>
-
    <!-- NOTES -->
    <div class="section" id="notesSection">
     <div class="page-hd"><h2>Notes</h2><p>Scripts, links, ideas — save anything</p></div>
@@ -610,12 +564,6 @@ input[type=file]{display:none}
      <div class="notes-list-panel">
       <div style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">My Notes</div>
       <button class="btn btn-dark btn-sm" onclick="newNote()">+ New Note</button>
-      <button class="btn btn-outline btn-sm" id="noteSelMode" onclick="toggleNoteSelMode()" style="font-size:.71rem">Select</button>
-      <div id="noteSelActions" style="display:none;flex-direction:column;gap:4px">
-       <button class="btn btn-dark btn-sm" onclick="openAddToCollectionModal('notes')">Add to Collection</button>
-       <button class="btn btn-danger btn-sm" onclick="deleteSelectedNotes()">Delete Selected</button>
-       <button class="btn btn-ghost btn-sm" onclick="toggleNoteSelMode()">Cancel</button>
-      </div>
       <div class="notes-list" id="noteList"></div>
      </div>
      <div class="note-ed-panel" id="noteEditor"><div class="note-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Select or create a note</span></div></div>
@@ -871,7 +819,7 @@ input[type=file]{display:none}
 <div id="previewModal" onclick="closePrevBg(event)">
  <div class="prev-wrap">
   <button class="prev-close" onclick="closeModal()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <img id="prevImg" src="" alt="" draggable="true" title="Drag to another app or website" ondragstart="onPhotoDragStart(event,this.src,document.getElementById('prevMeta').textContent.split('·')[0].trim())">
+  <img id="prevImg" src="" alt="" draggable="true" title="Drag to another app or website" ondragstart="event.dataTransfer.setData('text/uri-list',this.src);event.dataTransfer.setData('text/plain',this.src);event.dataTransfer.effectAllowed='copy';">
   <div class="prev-meta" id="prevMeta"></div>
   <button class="btn btn-dark btn-sm" onclick="dlCurrent()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
  </div>
@@ -1056,12 +1004,9 @@ function showApp(){
   document.getElementById('app').style.display='flex';
   document.getElementById('userAv').textContent=username.charAt(0).toUpperCase();
   document.getElementById('userNm').textContent=username;
-  loadPhotos();loadNotes();loadMyBlogs();loadPublicBlogs();loadCollections();
+  loadPhotos();loadNotes();loadMyBlogs();loadPublicBlogs();
   renderTracker();renderIdeas();renderCL();renderHashSets();renderSched();
-  // Default to Explore
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
-  if(!checkBlogRoute()){document.getElementById('exploreSection').classList.add('active');const eb=document.querySelector('[data-sec="explore"]');if(eb)eb.classList.add('active');}
+  if(!checkBlogRoute()){}
 }
 
 // Nav
@@ -1170,7 +1115,11 @@ function makeGridCard(p){norm(p);const isSel=selectedPhotos.has(p.id);
      </div>
     </div>`;
   d.querySelector('img').addEventListener('click',()=>openPreview(p));
-  d.querySelector('img').addEventListener('dragstart',e=>onPhotoDragStart(e,p.src,norm(p)&&p.originalName||'photo'));
+d.querySelector('img').addEventListener('dragstart',e=>{
+  e.dataTransfer.setData('text/uri-list',p.src);
+  e.dataTransfer.setData('text/plain',p.src);
+  e.dataTransfer.effectAllowed='copy';
+});
   d.querySelector('.chk').addEventListener('click',e=>{e.stopPropagation();toggleSel(p.id);});
   d.querySelector('.dl').addEventListener('click',e=>{e.stopPropagation();dlPhoto(p);});
   d.querySelector('.del').addEventListener('click',e=>{e.stopPropagation();deletePhoto(p.id);});
@@ -1178,7 +1127,7 @@ function makeGridCard(p){norm(p);const isSel=selectedPhotos.has(p.id);
 }
 function makeRowCard(p){norm(p);const isSel=selectedPhotos.has(p.id);
   const d=document.createElement('div');d.className='row-card'+(isSel?' sel':'');
-  d.innerHTML=`<img src="${esc(p.src)}" alt="" loading="lazy" draggable="true" title="Drag to another app">
+  d.innerHTML=`<img src="${esc(p.src)}" alt="" loading="lazy">
    <div class="row-info"><div class="row-fn">${esc(p.originalName||'Photo')}</div><div class="row-fd">${safeDate(p.timestamp)}</div></div>
    <div class="row" style="gap:4px;flex-shrink:0">
     <button class="btn btn-ghost btn-icon btn-sm" title="Select"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></button>
@@ -1499,182 +1448,1059 @@ if(token){
     .catch(()=>{});
 }
 
-// ─── DRAG PHOTOS TO OTHER WEBSITES ───────────────────────────
-function onPhotoDragStart(event, src, name) {
-  event.dataTransfer.setData('text/uri-list', src);
-  event.dataTransfer.setData('text/plain', src);
-  event.dataTransfer.setData('text/html', '<img src="' + src + '" alt="' + (name||'photo') + '">');
-  event.dataTransfer.effectAllowed = 'copy';
-}
+// ═══════════════════════════════════════
+// LOGOUT FIX + INIT
+// ═══════════════════════════════════════
+let currentMsgUser = null;
+let msgPollInterval = null;
+let unreadPollInterval = null;
+let isAdmin = false;
+let myDisplayName = '';
+let myAvatarUrl = '';
 
-// ═══ COLLECTIONS ═══════════════════════════════════════════════
-let collections = [];
-let currentCollectionId = null;
-let addToColType = 'photos';
-let selectedColId = null;
-let noteSelectMode = false;
-let selectedNoteIds = new Set();
+// Override showApp to default to explore and load profile
+const _origShowApp = showApp;
+showApp = function() {
+  // Call original but then override section
+  document.getElementById('authScreen').style.display='none';
+  document.getElementById('app').style.display='flex';
 
-async function loadCollections() {
-  try {
-    const r = await fetch('/api/collections', { headers: { 'x-auth-token': token } });
-    if (r.ok) collections = await r.json();
-  } catch(e) {}
-  renderCollections();
-}
-
-function renderCollections() {
-  const el = document.getElementById('collectionsFeed');
-  if (!el) return;
-  if (!collections.length) {
-    el.innerHTML = '<div class="empty"><p style="color:var(--mu)">No collections yet. Create one to start organizing!</p></div>';
-    return;
+  // Show admin nav if admin
+  if (isAdmin) {
+    let adminBtn = document.querySelector('[data-sec="admin"]');
+    if (!adminBtn) {
+      adminBtn = document.createElement('button');
+      adminBtn.className = 'nav-item';
+      adminBtn.dataset.sec = 'admin';
+      adminBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Admin <span class="badge badge-red" style="margin-left:auto">ADMIN</span>';
+      document.querySelector('.nav-label').before(adminBtn);
+      adminBtn.addEventListener('click', () => {
+        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+        document.getElementById('adminSection').classList.add('active');
+        adminBtn.classList.add('active');
+        loadAdminData();
+      });
+    }
   }
-  let html = '<div class="col-grid">';
-  collections.forEach(c => { html += colCardHtml(c); });
-  html += '</div>';
-  el.innerHTML = html;
-}
 
-function colCardHtml(c) {
-  const ph = parseInt(c.photo_count)||0, nt = parseInt(c.note_count)||0;
-  const meta = [ph?ph+' photo'+(ph!==1?'s':''):'', nt?nt+' note'+(nt!==1?'s':''):''].filter(Boolean).join(' · ')||'Empty';
-  const cover = c.cover_url
-    ? '<img src="'+esc(c.cover_url)+'" class="col-cover" alt="">'
-    : '<div class="col-cover-ph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--mu)" stroke-width="1.3"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>';
-  return '<div class="col-card" onclick="openCollectionView(''+c.id+'')">'+cover+'<div class="col-card-body">'+
-    '<div class="col-card-name">'+esc(c.name)+'</div>'+
-    '<div class="col-card-meta">'+meta+(c.is_public?' &middot; <span class="badge badge-green" style="font-size:.6rem">Public</span>':'')+'</div>'+
-    '<div class="col-actions" onclick="event.stopPropagation()">'+
-    '<button class="btn btn-outline btn-xs" onclick="openRenameModal(''+c.id+'')">Edit</button>'+
-    '<button class="btn btn-outline btn-xs" onclick="trigColCover(''+c.id+'')">Cover</button>'+
-    (c.is_public?'<button class="btn btn-outline btn-xs" onclick="copyColLink(''+c.id+'')">Copy Link</button>':'')+
-    '<button class="btn btn-danger btn-xs" onclick="deleteCollection(''+c.id+'')">Delete</button>'+
-    '</div></div></div>';
-}
+  document.getElementById('userAv').textContent = username.charAt(0).toUpperCase();
+  document.getElementById('userNm').textContent = myDisplayName || username;
+  if (myDisplayName && myDisplayName !== username) {
+    document.getElementById('userDispNm').textContent = '@'+username;
+    document.getElementById('userDispNm').style.display = 'block';
+  }
+  if (myAvatarUrl) {
+    document.getElementById('userAvImg').src = myAvatarUrl;
+    document.getElementById('userAvImg').style.display = 'block';
+    document.getElementById('userAv').style.display = 'none';
+  }
 
-function trigColCover(id) {
-  const inp = document.createElement('input'); inp.type='file'; inp.accept='image/*';
-  inp.onchange = () => uploadColCover(id, inp); inp.click();
-}
+  loadPhotos(); loadNotes(); loadMyBlogs(); loadPublicBlogs();
+  renderTracker(); renderIdeas(); renderCL(); renderHashSets(); renderSched();
 
-async function openCollectionView(id) {
-  const r = await fetch('/api/collections/'+id, { headers: { 'x-auth-token': token } });
-  if (!r.ok) { toast('Could not load collection'); return; }
-  const col = await r.json();
-  currentCollectionId = id;
+  // Default to Explore section
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
-  document.getElementById('collectionViewSection').classList.add('active');
-  const ph=(col.photos||[]).length, nt=(col.notes||[]).length;
-  const cover = col.cover_url
-    ? '<img src="'+esc(col.cover_url)+'" class="col-cover-lg" alt="">'
-    : '<div class="col-cover-lg" style="display:flex;align-items:center;justify-content:center;color:var(--mu);background:var(--sf2)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>';
-  let photosHtml = ph
-    ? '<div class="g-grid">'+col.photos.map(p=>
-        '<div style="position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:1;cursor:pointer;background:var(--sf2)" draggable="true" ondragstart="onPhotoDragStart(event,''+esc(p.src)+'',''+esc(p.original_name||'')+'')">'+
-        '<img src="'+esc(p.src)+'" style="width:100%;height:100%;object-fit:cover" loading="lazy" onclick="openPhotoPreviewFromCol(''+esc(p.src)+'',''+esc(p.original_name||'')+'')">'+
-        '<button onclick="removeFromCol(''+id+'','photo',''+p.id+'')" style="position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;background:rgba(220,38,38,.85);color:#fff;border:none;cursor:pointer;font-size:.65rem" title="Remove">&#10005;</button>'+
-        '</div>').join('')+'</div>'
-    : '<p style="color:var(--mu);font-size:.82rem">No photos in this collection</p>';
-  let notesHtml = nt
-    ? col.notes.map(n=>
-        '<div class="note-col-item">'+
-        '<div class="note-col-title">'+esc(n.title||'Untitled')+'</div>'+
-        '<div class="note-col-preview">'+esc((n.content||'').slice(0,120))+'</div>'+
-        '<div class="row" style="margin-top:7px;gap:5px">'+
-        '<button class="btn btn-outline btn-xs" onclick="openNoteFromCol(''+n.id+'')">Open</button>'+
-        '<button class="btn btn-ghost btn-xs" onclick="copyText(notes.find(x=>x.id===''+n.id+'')?.content||'')" >Copy</button>'+
-        '<button class="btn btn-danger btn-xs" onclick="removeFromCol(''+id+'','note',''+n.id+'')">Remove</button>'+
-        '</div></div>').join('')
-    : '<p style="color:var(--mu);font-size:.82rem">No notes in this collection</p>';
-  document.getElementById('collectionViewContent').innerHTML =
-    '<div class="row" style="justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">'+
-    '<button class="btn btn-ghost btn-sm" onclick="goToCollections()">&#8592; Collections</button>'+
-    '<div class="row" style="gap:6px">'+
-    '<button class="btn btn-outline btn-sm" onclick="openRenameModal(''+id+'')">Edit</button>'+
-    '<button class="btn btn-outline btn-sm" onclick="trigColCover(''+id+'')">Change Cover</button>'+
-    (col.is_public?'<button class="btn btn-dark btn-sm" onclick="copyColLink(''+id+'')">Copy Link</button>':'<button class="btn btn-outline btn-sm" onclick="makeColPublic(''+id+'')">Make Public</button>')+
-    '</div></div>'+
-    '<div class="col-header">'+cover+
-    '<div><div style="font-size:1.3rem;font-weight:800;letter-spacing:-.03em;color:var(--tx)">'+esc(col.name)+'</div>'+
-    (col.description?'<div style="font-size:.82rem;color:var(--mu);margin-top:4px">'+esc(col.description)+'</div>':'')+
-    '<div style="font-size:.75rem;color:var(--mu);margin-top:6px">'+ph+' photos &middot; '+nt+' notes '+
-    (col.is_public?'&middot; <span class="badge badge-green">Public</span>':'&middot; <span class="badge badge-gray">Private</span>')+'</div></div></div>'+
-    '<div class="col-section-hd">Photos ('+ph+')</div><div style="margin-bottom:18px">'+photosHtml+'</div>'+
-    '<div class="col-section-hd">Notes ('+nt+')</div><div style="display:flex;flex-direction:column;gap:8px">'+notesHtml+'</div>';
+  document.getElementById('exploreSection').classList.add('active');
+  document.querySelector('[data-sec="explore"]').classList.add('active');
+
+  // Poll unread messages
+  if (!isAdmin) {
+    pollUnread();
+    unreadPollInterval = setInterval(pollUnread, 30000);
+  }
+
+  if (!checkBlogRoute()) checkUserRoute();
+};
+
+// ═══════════════════════════════════════
+// AUTH OVERRIDE — capture isAdmin & profile
+// ═══════════════════════════════════════
+const _origLogin = doLogin;
+doLogin = async function() {
+  const u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value;
+  if(!u||!p)return setAM('Please fill in all fields','err');
+  const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+  const d=await r.json();if(!r.ok)return setAM(d.error,'err');
+  token=d.token; username=d.username; isAdmin=d.isAdmin||false;
+  myDisplayName=d.display_name||d.username; myAvatarUrl=d.avatar_url||'';
+  localStorage.setItem('an_token',token); localStorage.setItem('an_user',username);
+  localStorage.setItem('an_admin',isAdmin?'1':'0');
+  showApp();
+};
+const _origRegister = doRegister;
+doRegister = async function() {
+  const u=document.getElementById('regUser').value.trim(),p=document.getElementById('regPass').value;
+  if(!u||!p)return setAM('Please fill in all fields','err');
+  const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+  const d=await r.json();if(!r.ok)return setAM(d.error,'err');
+  setAM('Account created! Please log in.','ok');
+  document.querySelector('.auth-tab').click();document.getElementById('loginUser').value=u;
+};
+const _origLogout = doLogout;
+doLogout = async function() {
+  await fetch('/api/logout',{method:'POST',headers:{'x-auth-token':token}}).catch(()=>{});
+  token='';username='';isAdmin=false;myDisplayName='';myAvatarUrl='';
+  localStorage.removeItem('an_token');localStorage.removeItem('an_user');localStorage.removeItem('an_admin');
+  clearInterval(unreadPollInterval);clearInterval(msgPollInterval);
+  document.getElementById('app').style.display='none';
+  document.getElementById('authScreen').style.display='flex';
+};
+
+// Restore session with profile
+const _origInit = window._initDone;
+if (token) {
+  isAdmin = localStorage.getItem('an_admin') === '1';
+  fetch('/api/me',{headers:{'x-auth-token':token}})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{
+      if(d){
+        username=d.username; isAdmin=d.isAdmin||false;
+        myDisplayName=d.display_name||d.username; myAvatarUrl=d.avatar_url||'';
+        showApp();
+      } else {
+        token='';localStorage.removeItem('an_token');
+      }
+    }).catch(()=>{});
 }
-function goToCollections() {
-  loadCollections();
+
+// ═══════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════
+function openMyProfile() {
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
-  document.getElementById('collectionsSection').classList.add('active');
-  document.querySelector('[data-sec="collections"]')?.classList.add('active');
+  document.getElementById('profileSection').classList.add('active');
+  // Load profile data
+  document.getElementById('profileUsername').textContent = myDisplayName || username;
+  document.getElementById('profileUsernameAt').textContent = username;
+  document.getElementById('displayNameInput').value = myDisplayName || username;
+  document.getElementById('profileAvLetter').textContent = username.charAt(0).toUpperCase();
+  if (myAvatarUrl) {
+    document.getElementById('profileAvImg').src = myAvatarUrl;
+    document.getElementById('profileAvImg').style.display = 'block';
+    document.getElementById('profileAvLetter').style.display = 'none';
+  } else {
+    document.getElementById('profileAvImg').style.display = 'none';
+    document.getElementById('profileAvLetter').style.display = 'flex';
+  }
 }
-function openPhotoPreviewFromCol(src, name) {
-  document.getElementById('prevImg').src=src; document.getElementById('prevMeta').textContent=name;
-  document.getElementById('previewModal').classList.add('open'); document.body.style.overflow='hidden';
-  currentPhoto={src,originalName:name};
+async function saveProfile() {
+  const name = document.getElementById('displayNameInput').value.trim();
+  if (!name) return toast('Display name cannot be empty');
+  const r = await fetch('/api/profile', {method:'PUT', headers:{'Content-Type':'application/json','x-auth-token':token}, body:JSON.stringify({display_name:name})});
+  if (!r.ok) return toast('Failed to save');
+  myDisplayName = name;
+  document.getElementById('userNm').textContent = name;
+  document.getElementById('profileUsername').textContent = name;
+  toast('Profile saved!');
 }
-function openNoteFromCol(noteId) {
-  const n=notes.find(x=>x.id===noteId); if(!n)return;
+async function uploadAvatar(input) {
+  const file = input.files[0]; if (!file) return;
+  const fd = new FormData(); fd.append('avatar', file);
+  toast('Uploading avatar…');
+  const r = await fetch('/api/profile/avatar', {method:'POST', headers:{'x-auth-token':token}, body:fd});
+  if (!r.ok) return toast('Avatar upload failed');
+  const d = await r.json();
+  myAvatarUrl = d.avatar_url;
+  document.getElementById('profileAvImg').src = d.avatar_url;
+  document.getElementById('profileAvImg').style.display = 'block';
+  document.getElementById('profileAvLetter').style.display = 'none';
+  document.getElementById('userAvImg').src = d.avatar_url;
+  document.getElementById('userAvImg').style.display = 'block';
+  document.getElementById('userAv').style.display = 'none';
+  input.value = '';
+  toast('Avatar updated!');
+}
+
+// ═══════════════════════════════════════
+// VIEW OTHER USER PROFILE
+// ═══════════════════════════════════════
+async function viewUserProfile(uname) {
+  if (uname === username) { openMyProfile(); return; }
+  const r = await fetch(`/api/profile/${uname}`, {headers:{'x-auth-token':token}});
+  if (!r.ok) { toast('User not found'); return; }
+  const profile = await r.json();
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
-  document.getElementById('notesSection').classList.add('active');
-  document.querySelector('[data-sec="notes"]')?.classList.add('active'); openNote(n);
+  document.getElementById('userProfileSection').classList.add('active');
+
+  const avHtml = profile.avatar_url
+    ? `<div class="upv-av"><img src="${esc(profile.avatar_url)}" alt=""></div>`
+    : `<div class="upv-av">${esc((profile.display_name||profile.username).charAt(0).toUpperCase())}</div>`;
+
+  const blogsHtml = profile.blogs && profile.blogs.length
+    ? profile.blogs.map(b=>`
+      <div class="blog-card" onclick="viewBlog('${b.id}')" style="cursor:pointer">
+       <div class="blog-card-inner img-${b.image_position||'left'}">
+        ${b.image_url?`<img class="blog-card-img" src="${esc(b.image_url)}" alt="">`: ''}
+        <div class="blog-card-body">
+         <div class="blog-card-title">${esc(b.title)}</div>
+         <div class="blog-card-excerpt">${esc((b.content||'').slice(0,140))}${b.content&&b.content.length>140?'…':''}</div>
+         <div class="blog-card-meta"><span>${fmtAgo(b.created_at)}</span></div>
+        </div>
+       </div>
+      </div>`).join('')
+    : '<div class="empty" style="padding:24px"><p>No public posts yet</p></div>';
+
+  document.getElementById('userProfileContent').innerHTML = `
+   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <button class="btn btn-ghost btn-sm" onclick="navToExplore()">← Back</button>
+   </div>
+   <div class="upv-header">
+    ${avHtml}
+    <div>
+     <div style="font-size:1.1rem;font-weight:700">${esc(profile.display_name||profile.username)}</div>
+     <div style="color:var(--muted);font-size:0.8rem">@${esc(profile.username)}</div>
+     <div style="font-size:0.75rem;color:var(--muted);margin-top:3px">Member since ${new Date(parseInt(profile.created_at)).toLocaleDateString()}</div>
+    </div>
+    ${token&&!isAdmin?`<button class="btn btn-dark btn-sm" onclick="startChatWith('${esc(profile.username)}')">
+     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Message
+    </button>`:''}
+   </div>
+   <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Public Posts (${profile.blogs?profile.blogs.length:0})</div>
+   <div class="blog-feed">${blogsHtml}</div>`;
 }
-function copyColLink(id){copyText(location.origin+'/collection/'+id);toast('Collection link copied!');}
-async function makeColPublic(id){const r=await fetch('/api/collections/'+id,{method:'PUT',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({is_public:true})});if(!r.ok){toast('Failed');return;}toast('Collection is now public!');openCollectionView(id);}
-function openNewCollectionModal(){document.getElementById('newColName').value='';document.getElementById('newColDesc').value='';document.getElementById('newColModal').classList.add('open');setTimeout(()=>document.getElementById('newColName').focus(),100);}
-async function createCollection(){const name=document.getElementById('newColName').value.trim(),description=document.getElementById('newColDesc').value.trim();if(!name)return toast('Enter a name');const r=await fetch('/api/collections',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({name,description})});if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}const col=await r.json();collections.unshift(col);document.getElementById('newColModal').classList.remove('open');renderCollections();toast('Collection "'+name+'" created!');}
-function openRenameModal(id){const col=collections.find(c=>c.id===id);if(!col)return;document.getElementById('editColId').value=id;document.getElementById('editColName').value=col.name;document.getElementById('editColDesc').value=col.description||'';document.getElementById('editColPublic').checked=col.is_public||false;document.getElementById('renameColModal').classList.add('open');}
-async function saveCollectionEdit(){const id=document.getElementById('editColId').value,name=document.getElementById('editColName').value.trim(),description=document.getElementById('editColDesc').value.trim(),is_public=document.getElementById('editColPublic').checked;if(!name)return toast('Name required');const r=await fetch('/api/collections/'+id,{method:'PUT',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({name,description,is_public})});if(!r.ok){toast('Failed');return;}document.getElementById('renameColModal').classList.remove('open');const idx=collections.findIndex(c=>c.id===id);if(idx>-1){collections[idx].name=name;collections[idx].description=description;collections[idx].is_public=is_public;}renderCollections();if(currentCollectionId===id)openCollectionView(id);toast('Updated!');}
-async function uploadColCover(id,input){const file=input.files[0];if(!file)return;const fd=new FormData();fd.append('cover',file);toast('Uploading cover...');const r=await fetch('/api/collections/'+id+'/cover',{method:'POST',headers:{'x-auth-token':token},body:fd});if(!r.ok){toast('Failed');return;}const d=await r.json();const idx=collections.findIndex(c=>c.id===id);if(idx>-1)collections[idx].cover_url=d.cover_url;renderCollections();if(currentCollectionId===id)openCollectionView(id);toast('Cover updated!');input.value='';}
-async function deleteCollection(id){const col=collections.find(c=>c.id===id);if(!confirm('Delete collection "'+((col&&col.name)||'')+'"? Items inside are not deleted.'))return;await fetch('/api/collections/'+id,{method:'DELETE',headers:{'x-auth-token':token}});collections=collections.filter(c=>c.id!==id);renderCollections();toast('Collection deleted');}
-async function removeFromCol(colId,type,itemId){const url=type==='photo'?'/api/collections/'+colId+'/photos/'+itemId:'/api/collections/'+colId+'/notes/'+itemId;await fetch(url,{method:'DELETE',headers:{'x-auth-token':token}});toast('Removed from collection');openCollectionView(colId);}
-async function openAddToCollectionModal(type){
-  addToColType=type;selectedColId=null;document.getElementById('quickColName').value='';
-  const count=type==='photos'?selectedPhotos.size:selectedNoteIds.size;
-  if(!count)return toast('Select some '+type+' first');
-  document.getElementById('addToColTitle').textContent='Add '+count+' '+type+' to Collection';
-  document.getElementById('addToColSubtitle').textContent=count+' '+type+' selected';
-  if(!collections.length)await loadCollections();
-  const listEl=document.getElementById('colPickList');
-  if(!collections.length){listEl.innerHTML='<div style="color:var(--mu);font-size:.82rem">No collections yet. Create one below.</div>';}
-  else{listEl.innerHTML=collections.map(c=>{const ph=parseInt(c.photo_count)||0,nt=parseInt(c.note_count)||0;return'<div class="col-pick-item" id="colPick_'+c.id+'" onclick="selectColForAdd(''+c.id+'')">'+(c.cover_url?'<img src="'+esc(c.cover_url)+'" class="col-pick-thumb" alt="">':'<div class="col-pick-thumb" style="background:var(--sf2);display:flex;align-items:center;justify-content:center;color:var(--mu)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>')+'<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:.83rem;color:var(--tx)">'+esc(c.name)+'</div><div style="font-size:.71rem;color:var(--mu)">'+ph+' photos &middot; '+nt+' notes</div></div><div id="colPickCheck_'+c.id+'" style="width:18px;height:18px;border-radius:50%;border:2px solid var(--bd2);display:flex;align-items:center;justify-content:center;flex-shrink:0"></div></div>';}).join('');}
-  document.getElementById('addToColModal').classList.add('open');
+function navToExplore() {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('exploreSection').classList.add('active');
+  document.querySelector('[data-sec="explore"]').classList.add('active');
 }
-function selectColForAdd(id){
-  if(selectedColId){document.getElementById('colPick_'+selectedColId)?.classList.remove('selected');const pc=document.getElementById('colPickCheck_'+selectedColId);if(pc){pc.innerHTML='';pc.style.background='';pc.style.borderColor='var(--bd2)';}}
-  selectedColId=id;document.getElementById('colPick_'+id)?.classList.add('selected');const c=document.getElementById('colPickCheck_'+id);if(c){c.innerHTML='<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>';c.style.background='var(--ac)';c.style.borderColor='var(--ac)';}
+function startChatWith(uname) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('messagesSection').classList.add('active');
+  document.getElementById('msgNavBtn').classList.add('active');
+  loadConversations();
+  setTimeout(()=>openConversation(uname), 300);
 }
-async function confirmAddToCollection(){if(!selectedColId)return toast('Pick a collection first');await doAddToCollection(selectedColId);}
-async function quickCreateAndAdd(){const name=document.getElementById('quickColName').value.trim();if(!name)return toast('Enter a name');const r=await fetch('/api/collections',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({name})});if(!r.ok){toast('Failed');return;}const col=await r.json();collections.unshift(col);await doAddToCollection(col.id);}
-async function doAddToCollection(colId){
-  if(addToColType==='photos'){const ids=[...selectedPhotos];const r=await fetch('/api/collections/'+colId+'/photos',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({photo_ids:ids})});if(!r.ok){toast('Failed');return;}const d=await r.json();document.getElementById('addToColModal').classList.remove('open');clearSel();await loadCollections();toast(d.added+' photo'+(d.added!==1?'s':'')+' added to collection!');}
-  else{const ids=[...selectedNoteIds];const r=await fetch('/api/collections/'+colId+'/notes',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({note_ids:ids})});if(!r.ok){toast('Failed');return;}const d=await r.json();document.getElementById('addToColModal').classList.remove('open');clearNoteSelection();await loadCollections();toast(d.added+' note'+(d.added!==1?'s':'')+' added to collection!');}
+
+// Patch explore feed to make usernames clickable
+const _origRenderExploreFeed = renderExploreFeed;
+renderExploreFeed = function() {
+  const el = document.getElementById('exploreFeed');
+  if (!publicBlogs.length) { el.innerHTML='<div class="empty"><p>No public posts yet. Be the first to share!</p></div>'; return; }
+  el.innerHTML = '';
+  publicBlogs.forEach(b => { el.appendChild(makeExploreCard(b)); });
+};
+function makeExploreCard(b) {
+  const d = document.createElement('div'); d.className = 'blog-card';
+  const pos = b.image_position || 'left';
+  const excerpt = (b.content||'').slice(0,180)+(b.content&&b.content.length>180?'…':'');
+  const dispName = b.display_name || b.owner;
+  const avHtml = b.avatar_url
+    ? `<img src="${esc(b.avatar_url)}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle">`
+    : `<span style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;vertical-align:middle">${esc(dispName.charAt(0).toUpperCase())}</span>`;
+  d.innerHTML = `<div class="blog-card-inner img-${pos}">
+    ${b.image_url?`<img class="blog-card-img" src="${esc(b.image_url)}" alt="">`:''}
+    <div class="blog-card-body">
+     <div class="blog-card-title">${esc(b.title)}</div>
+     <div class="blog-card-excerpt">${esc(excerpt)}</div>
+     <div class="blog-card-meta">
+      <span style="display:flex;align-items:center;gap:5px;cursor:pointer" onclick="event.stopPropagation();viewUserProfile('${esc(b.owner)}')">${avHtml} ${esc(dispName)}</span>
+      <span>${fmtAgo(b.created_at)}</span>
+      <div style="margin-left:auto"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();viewBlog('${b.id}')">Read →</button></div>
+     </div>
+    </div>
+   </div>`;
+  d.querySelector('.blog-card-inner').addEventListener('click', ()=>viewBlog(b.id));
+  return d;
 }
-function toggleNoteSelMode(){noteSelectMode=!noteSelectMode;selectedNoteIds.clear();const btn=document.getElementById('noteSelMode'),actions=document.getElementById('noteSelActions');if(btn)btn.textContent=noteSelectMode?'Cancel':'Select';if(actions){actions.style.display=noteSelectMode?'flex':'none';if(noteSelectMode)actions.style.flexDirection='column';}renderNoteList();}
-function clearNoteSelection(){noteSelectMode=false;selectedNoteIds.clear();const btn=document.getElementById('noteSelMode'),actions=document.getElementById('noteSelActions');if(btn)btn.textContent='Select';if(actions)actions.style.display='none';renderNoteList();}
-async function deleteSelectedNotes(){if(!selectedNoteIds.size)return toast('No notes selected');if(!confirm('Delete '+selectedNoteIds.size+' note'+(selectedNoteIds.size!==1?'s':'')+' permanently?'))return;for(const id of selectedNoteIds)await fetch('/api/notes/'+id,{method:'DELETE',headers:{'x-auth-token':token}});toast(selectedNoteIds.size+' notes deleted');clearNoteSelection();await loadNotes();}
-const _origRNL=renderNoteList;
-renderNoteList=function(){
-  const el=document.getElementById('noteList');if(!el)return;
-  if(!notes.length){el.innerHTML='<div style="color:var(--mu);font-size:.76rem;padding:5px">No notes yet</div>';return;}
-  el.innerHTML='';
-  notes.forEach(n=>{
-    const d=document.createElement('div'),isSel=selectedNoteIds.has(n.id);
-    d.className='note-item'+(currentNote&&currentNote.id===n.id?' on':'');
-    if(isSel)d.style.cssText='border:1.5px solid var(--ac);border-radius:6px;';
-    const chk=noteSelectMode?'<div style="width:16px;height:16px;border-radius:3px;border:1.5px solid '+(isSel?'var(--ac)':'var(--bd2)')+';background:'+(isSel?'var(--ac)':'transparent')+';display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:6px">'+(isSel?'<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>':'')+'</div>':'';
-    d.innerHTML='<div style="display:flex;align-items:center">'+chk+'<div style="flex:1;min-width:0"><div style="font-size:.81rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tx)">'+esc(n.title||'Untitled')+'</div><div style="font-size:.69rem;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px">'+esc((n.content||'').slice(0,50))+'</div></div></div>';
-    d.onclick=()=>{if(noteSelectMode){if(selectedNoteIds.has(n.id))selectedNoteIds.delete(n.id);else selectedNoteIds.add(n.id);renderNoteList();}else openNote(n);};
+
+function checkUserRoute() {
+  const m = location.pathname.match(/^\/user\/([^/]+)$/);
+  if (m) viewUserProfile(decodeURIComponent(m[1]));
+}
+
+// ═══════════════════════════════════════
+// MESSAGES
+// ═══════════════════════════════════════
+async function loadConversations() {
+  const r = await fetch('/api/messages/conversations', {headers:{'x-auth-token':token}});
+  const convs = await r.json();
+  const el = document.getElementById('convList');
+  if (!convs.length) { el.innerHTML='<div style="padding:16px;color:var(--muted);font-size:0.82rem">No conversations yet</div>'; return; }
+  el.innerHTML = '';
+  convs.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'conv-item' + (currentMsgUser===c.other_user?' active':'');
+    const avHtml = c.avatar_url
+      ? `<div class="conv-av"><img src="${esc(c.avatar_url)}" alt=""></div>`
+      : `<div class="conv-av">${esc((c.display_name||c.other_user).charAt(0).toUpperCase())}</div>`;
+    d.innerHTML = `${avHtml}
+      <div class="conv-info">
+       <div class="conv-name">${esc(c.display_name||c.other_user)}</div>
+       <div class="conv-preview">${esc((c.content||'').slice(0,36))}</div>
+      </div>
+      ${c.has_unread?'<div class="conv-unread"></div>':''}`;
+    d.onclick = () => openConversation(c.other_user);
     el.appendChild(d);
   });
-};
-document.querySelector('[data-sec="collections"]')?.addEventListener('click',()=>loadCollections());
+}
+async function openConversation(otherUser) {
+  currentMsgUser = otherUser;
+  clearInterval(msgPollInterval);
+  // Load profile for header
+  const profR = await fetch(`/api/profile/${otherUser}`, {headers:{'x-auth-token':token}});
+  const prof = profR.ok ? await profR.json() : { username: otherUser };
+  const dispName = prof.display_name || otherUser;
+  const avHtml = prof.avatar_url
+    ? `<img src="${esc(prof.avatar_url)}" style="width:30px;height:30px;border-radius:50%;object-fit:cover">`
+    : `<div style="width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700">${esc(dispName.charAt(0).toUpperCase())}</div>`;
+  document.getElementById('msgHeader').innerHTML = `${avHtml}<div><div style="font-weight:700;font-size:0.88rem">${esc(dispName)}</div><div style="font-size:0.72rem;color:var(--muted)">@${esc(otherUser)}</div></div><button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="viewUserProfile('${esc(otherUser)}')">View Profile</button>`;
+  document.getElementById('msgInputArea').style.display = 'block';
+  await loadMessages(otherUser);
+  loadConversations();
+  msgPollInterval = setInterval(() => loadMessages(otherUser), 8000);
+}
+async function loadMessages(otherUser) {
+  const r = await fetch(`/api/messages/${otherUser}`, {headers:{'x-auth-token':token}});
+  const msgs = await r.json();
+  const el = document.getElementById('msgBody');
+  el.innerHTML = msgs.length ? msgs.map(m => {
+    const mine = m.from_user === username;
+    const time = new Date(parseInt(m.created_at)).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    return `<div class="msg-row ${mine?'mine':'theirs'}">
+      <div class="msg-bubble ${mine?'mine':'theirs'}">${esc(m.content)}</div>
+      <div class="msg-time ${mine?'':'theirs'}">${time}</div>
+     </div>`;
+  }).join('') : '<div style="text-align:center;color:var(--muted);font-size:0.82rem;padding:20px">Start the conversation!</div>';
+  el.scrollTop = el.scrollHeight;
+}
+async function sendMessage() {
+  if (!currentMsgUser) return;
+  const inp = document.getElementById('msgInput');
+  const content = inp.value.trim(); if (!content) return;
+  const r = await fetch(`/api/messages/${currentMsgUser}`, {method:'POST', headers:{'Content-Type':'application/json','x-auth-token':token}, body:JSON.stringify({content})});
+  if (!r.ok) { const e=await r.json(); toast(e.error||'Failed'); return; }
+  inp.value = '';
+  await loadMessages(currentMsgUser);
+  loadConversations();
+}
+document.addEventListener('keydown', e => {
+  if (e.key==='Enter' && !e.shiftKey && document.getElementById('msgInput')===document.activeElement) {
+    e.preventDefault(); sendMessage();
+  }
+});
+async function startConversation() {
+  const u = document.getElementById('newMsgUser').value.trim();
+  if (!u) return toast('Enter a username');
+  if (u === username) return toast('Cannot message yourself');
+  document.getElementById('newMsgUser').value = '';
+  await openConversation(u);
+}
+async function pollUnread() {
+  try {
+    const r = await fetch('/api/messages/unread/count', {headers:{'x-auth-token':token}});
+    const d = await r.json();
+    const badge = document.getElementById('msgBadge');
+    if (d.count > 0) { badge.textContent = d.count; badge.style.display = 'inline'; }
+    else badge.style.display = 'none';
+  } catch(e) {}
+}
 
-// ─── PWA ─────────────────────────────────────────────────────
+// Messages nav click
+document.querySelector('[data-sec="messages"]').addEventListener('click', () => {
+  loadConversations();
+  document.getElementById('msgBadge').style.display = 'none';
+});
+
+// ═══════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════
+async function loadAdminData() {
+  const [statsR, usersR, logR] = await Promise.all([
+    fetch('/api/admin/stats', {headers:{'x-auth-token':token}}),
+    fetch('/api/admin/users', {headers:{'x-auth-token':token}}),
+    fetch('/api/admin/log', {headers:{'x-auth-token':token}}),
+  ]);
+  const stats = await statsR.json();
+  const users = await usersR.json();
+  const log = await logR.json();
+
+  document.getElementById('adminStats').innerHTML = `
+    <div class="stat-box"><div class="stat-v">${stats.total_users}</div><div class="stat-l">Total Users</div></div>
+    <div class="stat-box"><div class="stat-v" style="color:var(--green)">${stats.online_users}</div><div class="stat-l">Online Now</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_blogs}</div><div class="stat-l">Posts</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_photos}</div><div class="stat-l">Photos</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_messages}</div><div class="stat-l">Messages</div></div>`;
+
+  const tbody = document.getElementById('adminUsersBody');
+  tbody.innerHTML = users.map(u => `
+    <tr>
+     <td>
+      <div style="display:flex;align-items:center;gap:8px">
+       ${u.avatar_url?`<img src="${esc(u.avatar_url)}" style="width:26px;height:26px;border-radius:50%;object-fit:cover">`:`<div style="width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700">${(u.display_name||u.username).charAt(0).toUpperCase()}</div>`}
+       <div>
+        <div style="font-weight:600;font-size:0.82rem">${esc(u.display_name||u.username)}</div>
+        <div style="font-size:0.7rem;color:var(--muted)">@${esc(u.username)}</div>
+       </div>
+      </div>
+     </td>
+     <td><span class="badge ${u.status==='active'?'badge-green':u.status==='suspended'?'badge-amber':'badge-red'}">${u.status}</span></td>
+     <td><span class="${u.is_online?'online-dot':'offline-dot'}"></span> ${u.is_online?'Online':'Offline'}</td>
+     <td style="font-size:0.76rem;color:var(--muted)">${new Date(parseInt(u.created_at)).toLocaleDateString()}</td>
+     <td style="font-size:0.76rem;color:var(--muted)">${u.last_seen?fmtAgo(u.last_seen):'Never'}</td>
+     <td>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">
+       ${u.status!=='suspended'?`<button class="btn btn-sm" style="background:var(--al);color:var(--amber);border:none" onclick="adminAction('${esc(u.username)}','suspended')">Suspend</button>`:''}
+       ${u.status!=='active'?`<button class="btn btn-green btn-sm" onclick="adminAction('${esc(u.username)}','active')">Unban</button>`:''}
+       ${u.status!=='banned'?`<button class="btn btn-danger btn-sm" onclick="adminAction('${esc(u.username)}','banned')">Ban</button>`:''}
+       <button class="btn btn-danger btn-sm" style="opacity:.7" onclick="adminDeleteUser('${esc(u.username)}')">Delete</button>
+      </div>
+     </td>
+    </tr>`).join('');
+
+  const logEl = document.getElementById('adminLog');
+  logEl.innerHTML = log.length ? log.map(l=>`
+    <div style="display:flex;gap:10px;align-items:center;padding:7px 10px;background:var(--s2);border-radius:6px;font-size:0.78rem">
+     <span class="badge ${l.action==='banned'?'badge-red':l.action==='suspended'?'badge-amber':l.action==='deleted'?'badge-red':'badge-green'}">${l.action}</span>
+     <span style="font-weight:600">@${esc(l.target||'—')}</span>
+     ${l.reason?`<span style="color:var(--muted)">${esc(l.reason)}</span>`:''}
+     <span style="color:var(--muted);margin-left:auto">${fmtAgo(l.created_at)}</span>
+    </div>`).join('') : '<div style="color:var(--muted);font-size:0.8rem">No actions yet</div>';
+}
+
+async function adminAction(uname, status) {
+  const reason = status !== 'active' ? (prompt(`Reason for ${status} @${uname}:`) || '') : '';
+  const r = await fetch(`/api/admin/users/${uname}/status`, {method:'PATCH', headers:{'Content-Type':'application/json','x-auth-token':token}, body:JSON.stringify({status, reason})});
+  if (!r.ok) { const e=await r.json(); toast(e.error||'Failed'); return; }
+  toast(`@${uname} is now ${status}`);
+  loadAdminData();
+}
+async function adminDeleteUser(uname) {
+  if (!confirm(`Permanently delete @${uname} and all their data? This cannot be undone.`)) return;
+  const r = await fetch(`/api/admin/users/${uname}`, {method:'DELETE', headers:{'x-auth-token':token}});
+  if (!r.ok) { const e=await r.json(); toast(e.error||'Failed'); return; }
+  toast(`@${uname} deleted`);
+  loadAdminData();
+}
+
+
+// ═══════════════════════════════════════
+// BLOG EDITOR — VIDEO + AI TAGS
+// ═══════════════════════════════════════
+let blogVidUrl=null, blogVidCldId=null;
+let selectedAiTools=[], selectedGenType=null;
+
+// Pill multi-select for AI tools
+document.addEventListener('click', e => {
+  if (e.target.closest('#aiToolsPills .pill')) {
+    const p = e.target.closest('.pill');
+    p.classList.toggle('on');
+    selectedAiTools = [...document.querySelectorAll('#aiToolsPills .pill.on')].map(x=>x.dataset.v);
+  }
+  if (e.target.closest('#genTypePills .pill')) {
+    const p = e.target.closest('.pill');
+    document.querySelectorAll('#genTypePills .pill').forEach(x=>x.classList.remove('on'));
+    p.classList.add('on');
+    selectedGenType = p.dataset.v;
+  }
+});
+
+function removeBlogVid(){
+  blogVidUrl=null; blogVidCldId=null;
+  document.getElementById('beVidPreview').style.display='none';
+}
+async function handleBlogVid(input){
+  const file=input.files[0]; if(!file) return;
+  const vs=document.getElementById('beVidStatus');
+  vs.textContent='Uploading video…';
+  const fd=new FormData(); fd.append('video',file);
+  const r=await fetch('/api/blog-video',{method:'POST',headers:{'x-auth-token':token},body:fd});
+  if(!r.ok){vs.textContent='Upload failed';return;}
+  const d=await r.json();
+  blogVidUrl=d.url; blogVidCldId=d.cloudinary_id;
+  document.getElementById('beVidThumb').src=d.url;
+  document.getElementById('beVidPreview').style.display='block';
+  vs.textContent='Video uploaded!';
+  setTimeout(()=>vs.textContent='',2000);
+  input.value='';
+}
+
+// Override openBlogEditor to populate new fields
+const _origOpenBlogEditor = openBlogEditor;
+openBlogEditor = function(id) {
+  selectedAiTools=[]; selectedGenType=null;
+  blogVidUrl=null; blogVidCldId=null;
+  // Reset pills
+  document.querySelectorAll('#aiToolsPills .pill').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('#genTypePills .pill').forEach(p=>p.classList.remove('on'));
+  document.getElementById('beVidPreview').style.display='none';
+  if(document.getElementById('beVidThumb')) document.getElementById('beVidThumb').src='';
+  _origOpenBlogEditor(id);
+  if(id){
+    const b=myBlogs.find(x=>x.id===id);
+    if(b){
+      // Restore AI tools
+      if(b.ai_tools&&b.ai_tools.length){
+        selectedAiTools=[...b.ai_tools];
+        document.querySelectorAll('#aiToolsPills .pill').forEach(p=>{ if(selectedAiTools.includes(p.dataset.v)) p.classList.add('on'); });
+      }
+      // Restore gen type
+      if(b.generation_type){
+        selectedGenType=b.generation_type;
+        document.querySelectorAll('#genTypePills .pill').forEach(p=>{ if(p.dataset.v===b.generation_type) p.classList.add('on'); });
+      }
+      // Restore video
+      if(b.video_url){ blogVidUrl=b.video_url; blogVidCldId=b.video_cloudinary_id; document.getElementById('beVidThumb').src=b.video_url; document.getElementById('beVidPreview').style.display='block'; }
+    }
+  }
+};
+
+// Override saveBlog to include new fields
+const _origSaveBlog = saveBlog;
+saveBlog = async function(){
+  const title=document.getElementById('beTitle').value.trim();
+  const content=document.getElementById('beContent').value.trim();
+  if(!title||!content) return toast('Title and content required');
+  const imgUrl=window.blogImgUrl, imgCldId=window.blogImgCldId;
+  const body={title,content,image_url:imgUrl||null,cloudinary_id:imgCldId||null,
+    video_url:blogVidUrl||null,video_cloudinary_id:blogVidCldId||null,
+    image_position:document.getElementById('beImgPos').value,
+    is_public:document.getElementById('bePublic').checked,
+    ai_tools:selectedAiTools, generation_type:selectedGenType};
+  const r=await fetch(editingBlogId?`/api/blogs/${editingBlogId}`:'/api/blogs',{method:editingBlogId?'PUT':'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify(body)});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  closeBlogEditor(); await loadMyBlogs(); await loadPublicBlogs();
+  toast(editingBlogId?'Post updated!':'Post published!');
+};
+
+// ═══════════════════════════════════════
+// BLOG TAGS RENDERING
+// ═══════════════════════════════════════
+function renderBlogTags(b){
+  let tags='';
+  if(b.generation_type) tags+=`<span class="badge gen-tag">${esc(b.generation_type)}</span> `;
+  if(b.ai_tools&&b.ai_tools.length) b.ai_tools.forEach(t=>{ tags+=`<span class="badge ai-tag">✓ ${esc(t)}</span> `; });
+  return tags;
+}
+
+// Override makeExploreCard to include tags and video preview
+const _origMakeExploreCard = makeExploreCard;
+makeExploreCard = function(b){
+  const d=document.createElement('div'); d.className='blog-card';
+  const pos=b.image_position||'left';
+  const excerpt=(b.content||'').slice(0,180)+(b.content&&b.content.length>180?'…':'');
+  const dispName=b.display_name||b.owner;
+  const tagBadge=b.user_tag?`<span class="user-tag-badge">${esc(b.user_tag)}</span> `:'';
+  const avHtml=b.avatar_url
+    ?`<img src="${esc(b.avatar_url)}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle">`
+    :`<span style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;vertical-align:middle">${esc(dispName.charAt(0).toUpperCase())}</span>`;
+  // Video preview takes priority over image
+  let mediaHtml='';
+  if(b.video_url) mediaHtml=`<video class="blog-card-video" src="${esc(b.video_url)}" muted loop preload="metadata" style="cursor:pointer" onmouseenter="this.play()" onmouseleave="this.pause()"></video>`;
+  else if(b.image_url) mediaHtml=`<img class="blog-card-img" src="${esc(b.image_url)}" alt="">`;
+  const avgStar=b.avg_rating?`<span style="color:var(--amber);font-weight:700;font-size:0.75rem">★ ${b.avg_rating}</span>`:'';
+  d.innerHTML=`<div class="blog-card-inner img-${pos}">
+    ${mediaHtml}
+    <div class="blog-card-body">
+     <div class="blog-card-title">${esc(b.title)}</div>
+     <div style="margin:4px 0;display:flex;flex-wrap:wrap;gap:3px">${renderBlogTags(b)}</div>
+     <div class="blog-card-excerpt">${esc(excerpt)}</div>
+     <div class="blog-card-meta">
+      <span style="display:flex;align-items:center;gap:4px;cursor:pointer" onclick="event.stopPropagation();viewUserProfile('${esc(b.owner)}')">${avHtml} ${tagBadge}${esc(dispName)}</span>
+      <span>${fmtAgo(b.created_at)}</span>
+      ${avgStar}
+      <div style="margin-left:auto"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();viewBlog('${b.id}')">Read →</button></div>
+     </div>
+    </div>
+   </div>`;
+  d.querySelector('.blog-card-inner').addEventListener('click',()=>viewBlog(b.id));
+  return d;
+};
+
+// ═══════════════════════════════════════
+// RATINGS
+// ═══════════════════════════════════════
+async function rateBlog(blogId, rating){
+  const r=await fetch(`/api/blogs/${blogId}/rate`,{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({rating})});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  const d=await r.json();
+  // Update stars UI
+  document.querySelectorAll(`.star-btn[data-blog="${blogId}"]`).forEach(btn=>{
+    btn.classList.toggle('active', parseInt(btn.dataset.val)<=rating);
+  });
+  const avgEl=document.getElementById(`avgRating_${blogId}`);
+  if(avgEl) avgEl.textContent=`★ ${d.avg_rating} (${d.rating_count} ratings)`;
+  // Show notification based on rating
+  const noteEl=document.getElementById(`ratingNote_${blogId}`);
+  if(noteEl){
+    if(rating>=5){
+      noteEl.className='rating-note good';
+      noteEl.innerHTML=`❤️ Glad you liked it! Consider following @<strong>${esc(currentBlogOwner)}</strong> for more!`;
+    } else {
+      noteEl.className='rating-note low';
+      noteEl.innerHTML=`💡 Got any suggestions? Leave them in the comments below!`;
+    }
+    noteEl.style.display='block';
+  }
+  toast(`Rated ${rating}/10!`);
+}
+
+let currentBlogOwner='';
+
+// Override viewBlog to add rating section
+const _origViewBlog = viewBlog;
+viewBlog = async function(id){
+  const r=await fetch(`/api/blogs/${id}`,{headers:{'x-auth-token':token}});
+  if(!r.ok){const e=await r.json();toast(e.error||'Cannot view');return;}
+  const b=await r.json();
+  currentBlogOwner=b.owner;
+  const isOwner=b.owner===username;
+  const pos=b.image_position||'left';
+  const dispName=b.display_name||b.owner;
+  const tagBadge=b.user_tag?`<span class="user-tag-badge">${esc(b.user_tag)}</span>`:'';
+
+  document.getElementById('blogViewActions').innerHTML=`
+   ${isOwner?`<button class="btn btn-outline btn-sm" onclick="closeBlogView();openBlogEditor('${b.id}')">Edit</button>
+   <button class="btn btn-outline btn-sm" onclick="toggleVisibility('${b.id}',${!b.is_public})">${b.is_public?'Make Private':'Make Public'}</button>
+   <button class="btn btn-ghost btn-sm" onclick="copyBlogLink('${b.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link</button>`:''}
+   ${b.is_public?'<span class="badge badge-green">Public</span>':'<span class="badge badge-gray">Private</span>'}`;
+
+  // Rating stars
+  const myRating=b.my_rating||0;
+  const starsHtml=[1,2,3,4,5,6,7,8,9,10].map(n=>
+    `<button class="star-btn ${n<=myRating?'active':''}" data-val="${n}" data-blog="${b.id}" onclick="rateBlog('${b.id}',${n})">${n}</button>`
+  ).join('');
+
+  const mediaHtml=b.video_url
+    ?`<video src="${esc(b.video_url)}" controls style="width:100%;max-height:360px;border-radius:var(--r);background:#000;margin-bottom:14px"></video>`
+    :(b.image_url?`<img class="blog-view-img" src="${esc(b.image_url)}" alt="">`:'');
+
+  const commentsHtml=b.comments&&b.comments.length?b.comments.map(c=>{
+    const cDisp=c.display_name||c.author;
+    const cAv=c.avatar_url?`<img src="${esc(c.avatar_url)}" style="width:28px;height:28px;border-radius:50%;object-fit:cover">`:`<div class="comment-av">${esc(cDisp.charAt(0).toUpperCase())}</div>`;
+    return`<div class="comment-item">
+     <div style="flex-shrink:0">${cAv}</div>
+     <div class="comment-body">
+      <div class="comment-author">${esc(cDisp)} <span class="comment-date">${fmtAgo(c.created_at)}</span></div>
+      <div class="comment-text">${esc(c.content)}</div>
+     </div>
+     ${(isOwner||c.author===username)?`<button class="btn btn-ghost btn-sm" onclick="deleteComment('${b.id}','${c.id}',this)" style="flex-shrink:0;color:var(--muted)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>`:''}
+    </div>`;}).join(''):'<div style="color:var(--muted);font-size:0.8rem;padding:8px 0">No comments yet. Be the first!</div>';
+
+  document.getElementById('blogViewContent').innerHTML=`
+   <div class="blog-view">
+    <div class="blog-view-header">
+     <div class="blog-view-title">${esc(b.title)}</div>
+     <div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">${renderBlogTags(b)}</div>
+     <div class="blog-view-meta">
+      <span style="cursor:pointer;display:flex;align-items:center;gap:5px" onclick="closeBlogView();viewUserProfile('${esc(b.owner)}')">
+       ${b.avatar_url?`<img src="${esc(b.avatar_url)}" style="width:20px;height:20px;border-radius:50%;object-fit:cover">`:`<span style="width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700">${esc(dispName.charAt(0).toUpperCase())}</span>`}
+       ${tagBadge} ${esc(dispName)}
+      </span>
+      <span>${fmtAgo(b.created_at)}</span>
+      ${b.avg_rating?`<span id="avgRating_${b.id}" style="color:var(--amber);font-weight:700">★ ${b.avg_rating} (${b.rating_count} ratings)</span>`:`<span id="avgRating_${b.id}" style="color:var(--muted);font-size:0.78rem">No ratings yet</span>`}
+     </div>
+    </div>
+    ${b.video_url?`<video src="${esc(b.video_url)}" controls style="width:100%;max-height:360px;border-radius:var(--r);background:#000;margin-bottom:16px"></video>`:''}
+    <div class="blog-view-layout img-${b.video_url?'top':pos}">
+     ${!b.video_url&&b.image_url?`<img class="blog-view-img" src="${esc(b.image_url)}" alt="">`:''}
+     <div>
+      <div class="blog-view-copy"><button class="btn btn-outline btn-sm" onclick="copyText(document.querySelector('.blog-view-content').textContent)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Prompt</button></div>
+      <div class="blog-view-content">${esc(b.content)}</div>
+     </div>
+    </div>
+
+    <!-- RATING SECTION -->
+    ${token&&!isOwner?`
+    <div style="margin-top:20px;padding:16px;background:var(--s2);border-radius:var(--r)">
+     <div style="font-weight:700;font-size:0.88rem;margin-bottom:10px">Rate this prompt — how would you rate it on a scale of 1 to 10?</div>
+     <div class="rating-stars">${starsHtml}</div>
+     <div id="ratingNote_${b.id}" class="rating-note" style="display:${myRating?'block':'none'}">
+      ${myRating>=5?`❤️ Glad you liked it! Consider following @<strong>${esc(b.owner)}</strong> for more!`:`💡 Got any suggestions? Leave them in the comments below!`}
+     </div>
+    </div>`:isOwner?`<div style="margin-top:14px;padding:12px;background:var(--s2);border-radius:var(--r);font-size:0.82rem;color:var(--muted)">Average rating: ${b.avg_rating?`★ ${b.avg_rating} from ${b.rating_count} user(s)`:' No ratings yet'}</div>`:''}
+
+    <div class="comments-section">
+     <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Comments (${b.comments?b.comments.length:0})</div>
+     ${token?`<div class="comment-form">
+      <div class="comment-av">${username.charAt(0).toUpperCase()}</div>
+      <div class="comment-inp-wrap">
+       <textarea class="inp ta" id="commentInput_${b.id}" placeholder="Write a comment..." style="min-height:60px"></textarea>
+       <div style="display:flex;justify-content:flex-end"><button class="btn btn-dark btn-sm" onclick="postComment('${b.id}')">Post Comment</button></div>
+      </div>
+     </div>`:'<div style="color:var(--muted);font-size:0.82rem;margin-bottom:14px">Login to comment.</div>'}
+     <div id="commentsList_${b.id}">${commentsHtml}</div>
+    </div>
+   </div>`;
+
+  document.getElementById('blogViewModal').classList.add('open');
+  document.body.style.overflow='hidden';
+};
+
+// ═══════════════════════════════════════
+// ADMIN TAG feature
+// ═══════════════════════════════════════
+async function adminSetTag(username, currentTag){
+  const tag=prompt(`Set tag for @${username} (leave blank to remove):`, currentTag||'');
+  if(tag===null) return; // cancelled
+  const r=await fetch(`/api/admin/users/${username}/tag`,{method:'PATCH',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({tag:tag.trim()||null})});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  toast(tag.trim()?`Tag "${tag.trim()}" set for @${username}`:`Tag removed from @${username}`);
+  loadAdminData();
+}
+
+// Override loadAdminData to add tag column
+const _origLoadAdmin = loadAdminData;
+loadAdminData = async function(){
+  const [statsR,usersR,logR]=await Promise.all([
+    fetch('/api/admin/stats',{headers:{'x-auth-token':token}}),
+    fetch('/api/admin/users',{headers:{'x-auth-token':token}}),
+    fetch('/api/admin/log',{headers:{'x-auth-token':token}}),
+  ]);
+  const stats=await statsR.json(),users=await usersR.json(),log=await logR.json();
+  document.getElementById('adminStats').innerHTML=`
+    <div class="stat-box"><div class="stat-v">${stats.total_users}</div><div class="stat-l">Users</div></div>
+    <div class="stat-box"><div class="stat-v" style="color:var(--green)">${stats.online_users}</div><div class="stat-l">Online</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_blogs}</div><div class="stat-l">Posts</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_photos}</div><div class="stat-l">Photos</div></div>
+    <div class="stat-box"><div class="stat-v">${stats.total_messages}</div><div class="stat-l">Messages</div></div>`;
+  const tbody=document.getElementById('adminUsersBody');
+  tbody.innerHTML=users.map(u=>`<tr>
+   <td>
+    <div style="display:flex;align-items:center;gap:8px">
+     ${u.avatar_url?`<img src="${esc(u.avatar_url)}" style="width:26px;height:26px;border-radius:50%;object-fit:cover">`:`<div style="width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700">${(u.display_name||u.username).charAt(0).toUpperCase()}</div>`}
+     <div><div style="font-weight:600;font-size:0.82rem">${esc(u.display_name||u.username)}</div><div style="font-size:0.7rem;color:var(--muted)">@${esc(u.username)}</div></div>
+    </div>
+   </td>
+   <td>${u.user_tag?`<span class="user-tag-badge">${esc(u.user_tag)}</span>`:'-'}</td>
+   <td><span class="badge ${u.status==='active'?'badge-green':u.status==='suspended'?'badge-amber':'badge-red'}">${u.status}</span></td>
+   <td><span class="${u.is_online?'online-dot':'offline-dot'}"></span> ${u.is_online?'Online':'Offline'}</td>
+   <td style="font-size:0.74rem;color:var(--muted)">${new Date(parseInt(u.created_at)).toLocaleDateString()}</td>
+   <td style="font-size:0.74rem;color:var(--muted)">${u.last_seen?fmtAgo(u.last_seen):'Never'}</td>
+   <td>
+    <div style="display:flex;gap:3px;flex-wrap:wrap">
+     <button class="btn btn-outline btn-sm" onclick="adminSetTag('${esc(u.username)}','${esc(u.user_tag||'')}')">Tag</button>
+     ${u.status!=='suspended'?`<button class="btn btn-sm" style="background:var(--al);color:var(--amber);border:none" onclick="adminAction('${esc(u.username)}','suspended')">Suspend</button>`:''}
+     ${u.status!=='active'?`<button class="btn btn-green btn-sm" onclick="adminAction('${esc(u.username)}','active')">Unban</button>`:''}
+     ${u.status!=='banned'?`<button class="btn btn-danger btn-sm" onclick="adminAction('${esc(u.username)}','banned')">Ban</button>`:''}
+     <button class="btn btn-danger btn-sm" style="opacity:.7" onclick="adminDeleteUser('${esc(u.username)}')">Del</button>
+    </div>
+   </td>
+  </tr>`).join('');
+  // Add tag column to thead
+  const thead=document.querySelector('#adminUsersTable thead tr');
+  if(thead&&thead.children.length<7){
+    const th=document.createElement('th'); th.textContent='Tag';
+    thead.insertBefore(th, thead.children[1]);
+  }
+  const logEl=document.getElementById('adminLog');
+  logEl.innerHTML=log.length?log.map(l=>`
+   <div style="display:flex;gap:10px;align-items:center;padding:7px 10px;background:var(--s2);border-radius:6px;font-size:0.78rem">
+    <span class="badge ${l.action==='banned'?'badge-red':l.action==='suspended'?'badge-amber':l.action==='deleted'?'badge-red':l.action==='tagged'?'badge-purple':'badge-green'}">${l.action}</span>
+    <span style="font-weight:600">@${esc(l.target||'—')}</span>
+    ${l.reason?`<span style="color:var(--muted)">${esc(l.reason)}</span>`:''}
+    <span style="color:var(--muted);margin-left:auto">${fmtAgo(l.created_at)}</span>
+   </div>`).join(''):'<div style="color:var(--muted);font-size:0.8rem">No actions yet</div>';
+};
+
+// ═══════════════════════════════════════
+// FRIENDS
+// ═══════════════════════════════════════
+async function loadFriends(){
+  const [fr, reqs] = await Promise.all([
+    fetch('/api/friends',{headers:{'x-auth-token':token}}).then(r=>r.json()),
+    fetch('/api/friends/requests',{headers:{'x-auth-token':token}}).then(r=>r.json()),
+  ]);
+  // Requests
+  const reqEl=document.getElementById('friendRequests');
+  const badge=document.getElementById('friendReqBadge');
+  if(reqs.length){badge.textContent=reqs.length;badge.style.display='inline';}else{badge.style.display='none';}
+  reqEl.innerHTML=reqs.length?reqs.map(r=>{
+    const av=r.avatar_url?`<div class="friend-av"><img src="${esc(r.avatar_url)}"></div>`:`<div class="friend-av">${(r.display_name||r.requester).charAt(0).toUpperCase()}</div>`;
+    return`<div class="friend-item">
+     ${av}<div style="flex:1"><div style="font-weight:600;font-size:0.82rem">${esc(r.display_name||r.requester)}</div>${r.user_tag?`<span class="user-tag-badge">${esc(r.user_tag)}</span>`:''}</div>
+     <button class="btn btn-green btn-sm" onclick="acceptFriend('${esc(r.requester)}')">Accept</button>
+     <button class="btn btn-danger btn-sm" onclick="rejectFriend('${esc(r.requester)}')">Decline</button>
+    </div>`;}).join(''):'<div style="color:var(--muted);font-size:0.8rem">No pending requests</div>';
+  // Friends list
+  const flEl=document.getElementById('friendsList');
+  const now=Date.now();
+  flEl.innerHTML=fr.length?fr.map(f=>{
+    const isOnline=f.last_seen&&(now-parseInt(f.last_seen))<5*60*1000;
+    const av=f.avatar_url?`<div class="friend-av ${isOnline?'online-ring':''}"><img src="${esc(f.avatar_url)}"></div>`:`<div class="friend-av ${isOnline?'online-ring':''}">${(f.display_name||f.other_user).charAt(0).toUpperCase()}</div>`;
+    return`<div class="friend-item">
+     ${av}<div style="flex:1;min-width:0"><div style="font-weight:600;font-size:0.82rem">${esc(f.display_name||f.other_user)}</div><div style="font-size:0.7rem;color:${isOnline?'var(--green)':'var(--muted)'}">${isOnline?'Online':'Offline'}</div>${f.user_tag?`<span class="user-tag-badge">${esc(f.user_tag)}</span>`:''}</div>
+     <button class="btn btn-outline btn-sm" onclick="startChatWith('${esc(f.other_user)}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+     <button class="btn btn-ghost btn-sm" onclick="viewUserProfile('${esc(f.other_user)}')">Profile</button>
+     <button class="btn btn-danger btn-sm" onclick="removeFriend('${esc(f.other_user)}')">Remove</button>
+    </div>`;}).join(''):'<div style="color:var(--muted);font-size:0.8rem">No friends yet — find people in Explore!</div>';
+}
+async function acceptFriend(uname){
+  const r=await fetch(`/api/friends/${uname}/accept`,{method:'PATCH',headers:{'x-auth-token':token}});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  toast('Friend request accepted!'); loadFriends();
+}
+async function rejectFriend(uname){
+  await fetch(`/api/friends/${uname}`,{method:'DELETE',headers:{'x-auth-token':token}});
+  toast('Request declined'); loadFriends();
+}
+async function removeFriend(uname){
+  if(!confirm(`Remove ${uname} from friends?`)) return;
+  await fetch(`/api/friends/${uname}`,{method:'DELETE',headers:{'x-auth-token':token}});
+  toast('Removed'); loadFriends();
+}
+async function sendFriendRequest(uname){
+  const r=await fetch(`/api/friends/request/${uname}`,{method:'POST',headers:{'x-auth-token':token}});
+  const d=await r.json();
+  toast(r.ok?'Friend request sent!':d.error||'Failed');
+}
+
+// Override viewUserProfile to add friend button
+const _origViewUserProfile = viewUserProfile;
+viewUserProfile = async function(uname){
+  if(uname===username){openMyProfile();return;}
+  const r=await fetch(`/api/profile/${uname}`,{headers:{'x-auth-token':token}});
+  if(!r.ok){toast('User not found');return;}
+  const profile=await r.json();
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('userProfileSection').classList.add('active');
+  const avHtml=profile.avatar_url?`<div class="upv-av"><img src="${esc(profile.avatar_url)}" alt=""></div>`:`<div class="upv-av">${esc((profile.display_name||profile.username).charAt(0).toUpperCase())}</div>`;
+  const tagBadge=profile.user_tag?`<span class="user-tag-badge" style="margin-left:6px">${esc(profile.user_tag)}</span>`:'';
+  const fs=profile.friend_status;
+  let friendBtn='';
+  if(token&&!isAdmin){
+    if(fs==='friends') friendBtn=`<button class="btn btn-outline btn-sm" onclick="removeFriend('${esc(uname)}');navToExplore()">Friends ✓</button>`;
+    else if(fs==='sent') friendBtn=`<button class="btn btn-outline btn-sm" disabled>Request Sent</button>`;
+    else if(fs==='received') friendBtn=`<button class="btn btn-green btn-sm" onclick="acceptFriend('${esc(uname)}');viewUserProfile('${esc(uname)}')">Accept Friend Request</button>`;
+    else friendBtn=`<button class="btn btn-outline btn-sm" onclick="sendFriendRequest('${esc(uname)}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Add Friend</button>`;
+  }
+  const blogsHtml=profile.blogs&&profile.blogs.length?profile.blogs.map(b=>`<div class="blog-card" onclick="viewBlog('${b.id}')" style="cursor:pointer"><div class="blog-card-inner img-${b.image_position||'left'}">${b.video_url?`<video class="blog-card-video" src="${esc(b.video_url)}" muted></video>`:b.image_url?`<img class="blog-card-img" src="${esc(b.image_url)}" alt="">`:''}
+    <div class="blog-card-body"><div class="blog-card-title">${esc(b.title)}</div><div style="margin:3px 0">${renderBlogTags(b)}</div><div class="blog-card-excerpt">${esc((b.content||'').slice(0,120))}…</div><div class="blog-card-meta"><span>${fmtAgo(b.created_at)}</span></div></div></div></div>`).join(''):'<div class="empty" style="padding:24px"><p>No public posts yet</p></div>';
+  document.getElementById('userProfileContent').innerHTML=`
+   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <button class="btn btn-ghost btn-sm" onclick="navToExplore()">← Back</button>
+   </div>
+   <div class="upv-header">${avHtml}
+    <div>
+     <div style="font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:6px">${esc(profile.display_name||profile.username)}${tagBadge}</div>
+     <div style="color:var(--muted);font-size:0.8rem">@${esc(profile.username)}</div>
+     <div style="font-size:0.74rem;color:var(--muted);margin-top:3px">Member since ${new Date(parseInt(profile.created_at)).toLocaleDateString()}</div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-left:auto">
+     ${friendBtn}
+     ${token&&!isAdmin?`<button class="btn btn-dark btn-sm" onclick="startChatWith('${esc(profile.username)}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Message</button>`:''}
+    </div>
+   </div>
+   <div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Public Posts (${profile.blogs?profile.blogs.length:0})</div>
+   <div class="blog-feed">${blogsHtml}</div>`;
+};
+
+// Poll friend requests badge
+async function pollFriendRequests(){
+  try{
+    const r=await fetch('/api/friends/requests',{headers:{'x-auth-token':token}});
+    const d=await r.json();
+    const badge=document.getElementById('friendReqBadge');
+    if(d.length){badge.textContent=d.length;badge.style.display='inline';}else{badge.style.display='none';}
+  }catch(e){}
+}
+
+// Friends nav click
+document.querySelector('[data-sec="friends"]').addEventListener('click',()=>{ loadFriends(); });
+
+// Add friend polling to showApp
+const _origShowAppV6 = showApp;
+showApp = function(){
+  _origShowAppV6();
+  if(!isAdmin){
+    pollFriendRequests();
+    setInterval(pollFriendRequests, 60000);
+  }
+};
+
+
+// ── DARK MODE ──────────────────────────
+function toggleDark() {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? '' : 'dark';
+  localStorage.setItem('an_dark', isDark ? '' : 'dark');
+  const lbl = document.getElementById('darkToggleLabel');
+  if (lbl) lbl.textContent = isDark ? 'Dark' : 'Light';
+}
+(function() {
+  if (localStorage.getItem('an_dark') === 'dark') {
+    document.documentElement.dataset.theme = 'dark';
+    setTimeout(() => { const l=document.getElementById('darkToggleLabel'); if(l)l.textContent='Light'; }, 200);
+  }
+})();
+
+// ── GUEST MODE ────────────────────────
+let isGuest = false;
+function showGuestMode() {
+  isGuest = true;
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('guestBanner').style.display = 'flex';
+  document.getElementById('reportFab').style.display = 'none';
+  ['photos','notes','blog','schedule','caption','hashtags','tracker','checklist','ideas','messages','friends'].forEach(sec => {
+    const btn = document.querySelector(`[data-sec="${sec}"]`);
+    if (btn) btn.style.display = 'none';
+  });
+  const sbFoot = document.querySelector('.sb-foot');
+  if (sbFoot) sbFoot.innerHTML = `<div style="display:flex;gap:6px;width:100%">
+    <button class="btn btn-dark btn-sm" style="flex:1;justify-content:center" onclick="showAuthForGuest('register')">Sign Up</button>
+    <button class="btn btn-outline btn-sm" style="flex:1;justify-content:center" onclick="showAuthForGuest('login')">Login</button>
+  </div>`;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('exploreSection').classList.add('active');
+  const expBtn = document.querySelector('[data-sec="explore"]');
+  if (expBtn) expBtn.classList.add('active');
+  loadPublicBlogs();
+}
+function showAuthForGuest(tab) {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('authScreen').style.display = 'flex';
+  isGuest = false;
+  if (tab === 'register') {
+    const tabs = document.querySelectorAll('.auth-tab');
+    if (tabs[1]) tabs[1].click();
+  }
+}
+
+// Init: show guest if not logged in
+window.addEventListener('load', () => {
+  setTimeout(() => { if (!token && !username) showGuestMode(); }, 100);
+});
+
+// Override showApp to restore nav and hide guest banner
+const _showAppFinal = showApp;
+showApp = function() {
+  isGuest = false;
+  _showAppFinal();
+  const gb = document.getElementById('guestBanner');
+  if (gb) gb.style.display = 'none';
+  const fab = document.getElementById('reportFab');
+  if (fab) fab.style.display = 'flex';
+  ['photos','notes','blog','explore','schedule','caption','hashtags','tracker','checklist','ideas','messages','friends'].forEach(sec => {
+    const btn = document.querySelector(`[data-sec="${sec}"]`);
+    if (btn) btn.style.display = '';
+  });
+};
+
+// ── EXPLORE SEARCH ────────────────────
+let exploreFilter = 'all', exploreSearchQ = '';
+function filterExplore(q) { exploreSearchQ = q.toLowerCase(); renderFilteredExplore(); }
+function setExploreFilter(f, btn) {
+  exploreFilter = f;
+  document.querySelectorAll('#exploreFilters .pill').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  renderFilteredExplore();
+}
+function renderFilteredExplore() {
+  const el = document.getElementById('exploreFeed');
+  let filtered = (window.publicBlogs||[]);
+  if (exploreFilter !== 'all') filtered = filtered.filter(b => b.generation_type === exploreFilter);
+  if (exploreSearchQ) filtered = filtered.filter(b =>
+    (b.title||'').toLowerCase().includes(exploreSearchQ) ||
+    (b.content||'').toLowerCase().includes(exploreSearchQ) ||
+    (b.owner||'').toLowerCase().includes(exploreSearchQ) ||
+    (b.display_name||'').toLowerCase().includes(exploreSearchQ) ||
+    (b.ai_tools||[]).some(t => t.toLowerCase().includes(exploreSearchQ))
+  );
+  el.innerHTML = '';
+  if (!filtered.length) { el.innerHTML='<div class="empty"><p>No posts match your search</p></div>'; return; }
+  filtered.forEach(b => el.appendChild(makeExploreCard(b)));
+}
+const _origRenderExploreV7 = renderExploreFeed;
+renderExploreFeed = function() { renderFilteredExplore(); };
+
+// Guest lock on blog cards
+const _origMakeExploreCardV7 = makeExploreCard;
+makeExploreCard = function(b) {
+  const d = _origMakeExploreCardV7(b);
+  if (isGuest) {
+    const body = d.querySelector('.blog-card-body');
+    if (body) {
+      const exc = body.querySelector('.blog-card-excerpt');
+      if (exc) exc.style.filter = 'blur(3px)';
+      body.style.position = 'relative';
+      const lock = document.createElement('div');
+      lock.className = 'guest-lock-overlay';
+      lock.innerHTML = `<button class="btn btn-dark btn-sm" onclick="event.stopPropagation();showAuthForGuest('register')">🔓 Sign Up to Read</button>`;
+      body.appendChild(lock);
+    }
+  }
+  return d;
+};
+
+// ── FRIEND SUGGESTIONS ────────────────
+async function loadFriendSuggestions() {
+  try {
+    const r = await fetch('/api/friends/suggestions', {headers:{'x-auth-token':token}});
+    if (!r.ok) return;
+    const sug = await r.json();
+    const el = document.getElementById('friendSuggestions');
+    if (!el) return;
+    if (!sug.length) { el.innerHTML='<div style="color:var(--muted);font-size:0.8rem">No suggestions right now</div>'; return; }
+    el.innerHTML = sug.map(u => {
+      const ring = u.top_contributor ? 'box-shadow:0 0 0 2.5px #f59e0b,0 0 0 4px #fef3c7;' : '';
+      const av = u.avatar_url
+        ? `<img src="${esc(u.avatar_url)}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;${ring}">`
+        : `<div style="width:44px;height:44px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;${ring}">${(u.display_name||u.username).charAt(0).toUpperCase()}</div>`;
+      return `<div style="background:var(--s2);border-radius:var(--r);padding:12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px">
+        ${av}
+        <div style="font-size:0.8rem;font-weight:600">${esc(u.display_name||u.username)}</div>
+        ${u.user_tag?`<span class="user-tag-badge">${esc(u.user_tag)}</span>`:''}
+        ${u.top_contributor?`<span class="tc-badge">⭐ Top Contributor</span>`:''}
+        <div style="font-size:0.68rem;color:var(--muted)">${u.post_count} posts</div>
+        <button class="btn btn-dark btn-sm" style="width:100%;justify-content:center" onclick="sendFriendRequest('${esc(u.username)}');this.textContent='Sent!';this.disabled=true">+ Add Friend</button>
+      </div>`;
+    }).join('');
+  } catch(e){}
+}
+const _origLoadFriendsV7 = loadFriends;
+if (typeof loadFriends !== 'undefined') {
+  loadFriends = async function() { await _origLoadFriendsV7(); await loadFriendSuggestions(); };
+}
+document.querySelector('[data-sec="friends"]')?.addEventListener('click', loadFriendSuggestions);
+
+// ── ADMIN TOP CONTRIBUTOR ─────────────
+async function adminToggleTopContributor(uname, cur) {
+  const r = await fetch(`/api/admin/users/${uname}/top-contributor`, {method:'PATCH',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({value:!cur})});
+  if (!r.ok) { const e=await r.json(); toast(e.error||'Failed'); return; }
+  toast(!cur ? `⭐ ${uname} is now Top Contributor!` : `Removed Top Contributor from ${uname}`);
+  if (typeof loadAdminData === 'function') loadAdminData();
+}
+
+// ── REPORT ───────────────────────────
+function openReportModal() { document.getElementById('reportModal').classList.add('open'); }
+async function submitReport() {
+  const type=document.getElementById('reportType').value;
+  const content=document.getElementById('reportContent').value.trim();
+  if(!content) return toast('Please write a message');
+  const r=await fetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json','x-auth-token':token},body:JSON.stringify({type,content})});
+  if(!r.ok){const e=await r.json();toast(e.error||'Failed');return;}
+  document.getElementById('reportContent').value='';
+  document.getElementById('reportModal').classList.remove('open');
+  toast('Message sent to admin!');
+}
+async function loadAdminReports() {
+  const r = await fetch('/api/admin/reports',{headers:{'x-auth-token':token}});
+  if (!r.ok) return;
+  const reports = await r.json();
+  let el = document.getElementById('adminReports');
+  if (!el) { const d=document.createElement('div');d.className='card';d.style.marginTop='14px';d.innerHTML='<div style="font-weight:700;font-size:0.9rem;margin-bottom:12px">Reports & Messages</div><div id="adminReports"></div>';document.getElementById('adminSection').appendChild(d);el=document.getElementById('adminReports'); }
+  el.innerHTML = reports.length ? reports.map(rep=>`
+   <div style="background:var(--s2);border-radius:var(--r);padding:9px 11px;display:flex;gap:9px;align-items:flex-start;${rep.read?'opacity:.55':''}">
+    <span class="badge ${rep.type==='bug'?'badge-red':rep.type==='suggestion'?'badge-blue':'badge-gray'}">${rep.type}</span>
+    <div style="flex:1"><div style="font-weight:600;font-size:0.79rem">@${esc(rep.from_user)}</div><div style="font-size:0.81rem;margin-top:2px">${esc(rep.content)}</div></div>
+    <div style="flex-shrink:0;text-align:right"><div style="font-size:0.69rem;color:var(--muted)">${fmtAgo(rep.created_at)}</div>
+    ${!rep.read?`<button class="btn btn-ghost btn-sm" onclick="markReportRead('${rep.id}')">Done</button>`:''}</div>
+   </div>`).join('') : '<div style="color:var(--muted);font-size:0.8rem">No reports yet</div>';
+}
+async function markReportRead(id) {
+  await fetch(`/api/admin/reports/${id}/read`,{method:'PATCH',headers:{'x-auth-token':token}});
+  loadAdminReports();
+}
+
+// ── PWA ───────────────────────────────
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 
 </script>
@@ -1705,65 +2531,5 @@ if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').cat
   </div>
  </div>
 </div>
-
-<!-- NEW COLLECTION MODAL -->
-<div class="modal-ov" id="newColModal">
- <div class="modal" style="max-width:400px">
-  <div class="modal-hd">New Collection
-   <button style="background:none;border:none;color:var(--muted);cursor:pointer;display:flex" onclick="document.getElementById('newColModal').classList.remove('open')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:12px">
-   <div><div class="lbl">Collection Name</div><input class="inp" id="newColName" placeholder="e.g. Product Photos, Summer 2024…"></div>
-   <div><div class="lbl">Description (optional)</div><textarea class="inp ta" id="newColDesc" placeholder="What's this collection about?" style="min-height:70px"></textarea></div>
-   <div class="row" style="justify-content:flex-end;gap:6px">
-    <button class="btn btn-outline btn-sm" onclick="document.getElementById('newColModal').classList.remove('open')">Cancel</button>
-    <button class="btn btn-dark btn-sm" onclick="createCollection()">Create</button>
-   </div>
-  </div>
- </div>
-</div>
-
-<!-- ADD TO COLLECTION MODAL -->
-<div class="modal-ov" id="addToColModal">
- <div class="modal" style="max-width:480px">
-  <div class="modal-hd"><span id="addToColTitle">Add to Collection</span>
-   <button style="background:none;border:none;color:var(--muted);cursor:pointer;display:flex" onclick="document.getElementById('addToColModal').classList.remove('open')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-  <div style="margin-bottom:12px;font-size:.82rem;color:var(--muted)" id="addToColSubtitle"></div>
-  <div id="colPickList" style="display:flex;flex-direction:column;gap:7px;max-height:320px;overflow-y:auto;margin-bottom:14px"></div>
-  <div class="divider"></div>
-  <div style="font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:8px">Or create a new collection</div>
-  <div class="row" style="gap:7px;margin-bottom:14px">
-   <input class="inp" id="quickColName" placeholder="New collection name…" style="flex:1">
-   <button class="btn btn-outline btn-sm" onclick="quickCreateAndAdd()">Create & Add</button>
-  </div>
-  <div class="row" style="justify-content:flex-end;gap:6px">
-   <button class="btn btn-outline btn-sm" onclick="document.getElementById('addToColModal').classList.remove('open')">Cancel</button>
-   <button class="btn btn-dark btn-sm" onclick="confirmAddToCollection()">Add to Selected</button>
-  </div>
- </div>
-</div>
-
-<!-- RENAME COLLECTION MODAL -->
-<div class="modal-ov" id="renameColModal">
- <div class="modal" style="max-width:400px">
-  <div class="modal-hd">Edit Collection
-   <button style="background:none;border:none;color:var(--muted);cursor:pointer;display:flex" onclick="document.getElementById('renameColModal').classList.remove('open')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:12px">
-   <input type="hidden" id="editColId">
-   <div><div class="lbl">Collection Name</div><input class="inp" id="editColName" placeholder="Collection name…"></div>
-   <div><div class="lbl">Description</div><textarea class="inp ta" id="editColDesc" style="min-height:70px" placeholder="Description…"></textarea></div>
-   <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.82rem;font-weight:500">
-    <input type="checkbox" id="editColPublic" style="width:15px;height:15px;accent-color:var(--accent)"> Make Public (anyone with link can view)
-   </label>
-   <div class="row" style="justify-content:flex-end;gap:6px">
-    <button class="btn btn-outline btn-sm" onclick="document.getElementById('renameColModal').classList.remove('open')">Cancel</button>
-    <button class="btn btn-dark btn-sm" onclick="saveCollectionEdit()">Save</button>
-   </div>
-  </div>
- </div>
-</div>
-
 </body>
 </html>
