@@ -135,13 +135,12 @@ input[type=file]{display:none}
 .ph-card.sel{border-color:var(--accent)}
 .ph-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
 .ph-card:hover img{transform:scale(1.04)}
-.ph-card-ov{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .2s;display:flex;flex-direction:column}
+.ph-card-ov{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .2s;display:flex;flex-direction:column;pointer-events:none}
 .ph-card:hover .ph-card-ov,.ph-card.sel .ph-card-ov{background:rgba(0,0,0,.34)}
-.card-top{display:flex;justify-content:space-between;padding:6px;opacity:0;transition:opacity .15s}
-.ph-card:hover .card-top,.ph-card.sel .card-top{opacity:1}
-.card-bot{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:flex-end;padding:6px;gap:4px;opacity:0;transition:opacity .15s}
+.card-top{display:flex;justify-content:space-between;padding:6px;opacity:1;transition:opacity .15s;pointer-events:all}
+.card-bot{pointer-events:all;position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:flex-end;padding:6px;gap:4px;opacity:0;transition:opacity .15s}
 .ph-card:hover .card-bot{opacity:1}
-.chk{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.75);background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;transition:all .12s}
+.chk{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;transition:all .12s;cursor:pointer}
 .ph-card.sel .chk{background:var(--accent);border-color:var(--accent)}
 .icbtn{width:25px;height:25px;border:none;border-radius:5px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .12s}
 .icbtn.dl{background:rgba(255,255,255,.9);color:var(--text)}
@@ -420,6 +419,25 @@ input[type=file]{display:none}
 /* ── REPORT MODAL ── */
 .fab { position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); z-index: 500; transition: transform .15s; }
 .fab:hover { transform: scale(1.08); }
+
+/* ── COLLECTIONS ───────────────────────────────────────── */
+.col-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.col-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl2);overflow:hidden;cursor:pointer;transition:box-shadow .15s}
+.col-card:hover{box-shadow:var(--sh)}
+.col-thumb{width:100%;height:130px;object-fit:cover;background:var(--sf2,#f4f4f2);display:block}
+.col-thumb-ph{width:100%;height:130px;background:var(--s2,#f4f4f2);display:flex;align-items:center;justify-content:center}
+.col-info{padding:12px}
+.col-name{font-weight:700;font-size:.88rem;color:var(--text,#111);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.col-meta{font-size:.73rem;color:var(--muted,#999)}
+.col-actions-row{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+/* Collection open view */
+.col-view-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.col-view-thumb{width:100px;height:75px;object-fit:cover;border-radius:var(--r,8px);flex-shrink:0;background:var(--s2,#f4f4f2)}
+.col-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px}
+.col-photo-item{position:relative;border-radius:var(--r,8px);overflow:hidden;aspect-ratio:1;background:var(--s2,#f4f4f2)}
+.col-photo-item img{width:100%;height:100%;object-fit:cover;display:block}
+.col-photo-item button{position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;background:rgba(220,38,38,.85);color:#fff;border:none;cursor:pointer;font-size:.7rem;display:none;align-items:center;justify-content:center}
+.col-photo-item:hover button{display:flex}
 </style>
 </head>
 <body>
@@ -485,6 +503,7 @@ input[type=file]{display:none}
     <div class="sb-logo-txt">Automation Note</div>
    </div>
    <button class="nav-item active" data-sec="photos"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photos</button>
+   <button class="nav-item" data-sec="collections"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>Collections</button>
    <button class="nav-item" data-sec="notes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes</button>
    <button class="nav-item" data-sec="blog"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Blog <span class="badge badge-purple" style="margin-left:auto;font-size:0.6rem">NEW</span></button>
    <button class="nav-item" data-sec="explore"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Explore</button>
@@ -541,8 +560,13 @@ input[type=file]{display:none}
      <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.25)" onclick="downloadSelected()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</button>
      <button class="btn btn-sm btn-danger" onclick="deleteSelected()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Delete</button>
      <button class="btn btn-sm" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.2)" onclick="clearSel()">Cancel</button>
+     <button class="btn btn-sm" style="background:#f59e0b;color:#fff;border-color:#f59e0b;font-weight:700" onclick="openAddToColModal()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Add to Folder</button>
     </div>
-    <div class="ph-toolbar">
+    <div id="selectHint" style="font-size:.78rem;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:5px">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      Tap the circle on any photo to select it, then use the toolbar to add to a folder or download.
+     </div>
+     <div class="ph-toolbar">
      <div class="ph-toolbar-l">
       <span class="ph-count" id="phCount">0 photos</span>
       <button class="btn btn-outline btn-sm" id="selAllBtn" style="display:none" onclick="toggleSelAll()">Select all</button>
@@ -598,6 +622,23 @@ input[type=file]{display:none}
     </div>
     <div id="exploreFeed"></div>
    </div>
+
+   <!-- COLLECTIONS -->
+   <div class="section" id="collectionsSection">
+    <div class="page-hd">
+     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+      <div><h2>Collections</h2><p>Organize your photos into folders</p></div>
+      <button class="btn btn-dark btn-sm" onclick="openNewColModal()">+ New Collection</button>
+     </div>
+    </div>
+    <div id="collectionsGrid"></div>
+   </div>
+
+   <!-- COLLECTION VIEW -->
+   <div class="section" id="collectionViewSection">
+    <div id="collectionViewContent"></div>
+   </div>
+
 
    <!-- SCHEDULE -->
    <div class="section" id="scheduleSection">
@@ -2531,5 +2572,71 @@ if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').cat
   </div>
  </div>
 </div>
+
+<!-- NEW COLLECTION MODAL -->
+<div class="modal-ov" id="newColModal">
+ <div class="modal" style="max-width:380px">
+  <div class="modal-hd">New Collection
+   <button style="background:none;border:none;cursor:pointer;color:var(--muted,#999);display:flex" onclick="document.getElementById('newColModal').classList.remove('open')">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+   </button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+   <div><div class="lbl">Folder Name</div><input class="inp" id="newColName" placeholder="e.g. Product Photos…" onkeydown="if(event.key==='Enter')createCollection()"></div>
+   <div class="row" style="justify-content:flex-end;gap:6px">
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('newColModal').classList.remove('open')">Cancel</button>
+    <button class="btn btn-dark btn-sm" onclick="createCollection()">Create</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ADD TO COLLECTION MODAL -->
+<div class="modal-ov" id="addToColModal">
+ <div class="modal" style="max-width:440px">
+  <div class="modal-hd">Add to Folder
+   <button style="background:none;border:none;cursor:pointer;color:var(--muted,#999);display:flex" onclick="document.getElementById('addToColModal').classList.remove('open')">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+   </button>
+  </div>
+  <div id="addToColSubtitle" style="font-size:.8rem;color:var(--muted,#999);margin-bottom:12px"></div>
+  <div id="colPickList" style="display:flex;flex-direction:column;gap:7px;max-height:300px;overflow-y:auto;margin-bottom:14px"></div>
+  <div style="border-top:1px solid var(--border,#e4e4e0);padding-top:12px;margin-top:4px">
+   <div style="font-size:.78rem;font-weight:600;color:var(--text2,#555);margin-bottom:8px">Or create a new folder</div>
+   <div style="display:flex;gap:8px">
+    <input class="inp" id="quickColName" placeholder="Folder name…" style="flex:1" onkeydown="if(event.key==='Enter')quickCreateAndAdd()">
+    <button class="btn btn-outline btn-sm" onclick="quickCreateAndAdd()">Create & Add</button>
+   </div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;gap:6px;margin-top:14px">
+   <button class="btn btn-outline btn-sm" onclick="document.getElementById('addToColModal').classList.remove('open')">Cancel</button>
+   <button class="btn btn-dark btn-sm" onclick="confirmAddToCol()">Add to Selected Folder</button>
+  </div>
+ </div>
+</div>
+
+<!-- RENAME COLLECTION MODAL -->
+<div class="modal-ov" id="renameColModal">
+ <div class="modal" style="max-width:380px">
+  <div class="modal-hd">Edit Folder
+   <button style="background:none;border:none;cursor:pointer;color:var(--muted,#999);display:flex" onclick="document.getElementById('renameColModal').classList.remove('open')">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+   </button>
+  </div>
+  <input type="hidden" id="editColId">
+  <div style="display:flex;flex-direction:column;gap:12px">
+   <div><div class="lbl">Folder Name</div><input class="inp" id="editColName" onkeydown="if(event.key==='Enter')saveColEdit()"></div>
+   <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.82rem;font-weight:500">
+    <input type="checkbox" id="editColPublic" style="width:15px;height:15px;accent-color:var(--accent,#111)">
+    Make public (anyone with the link can view)
+   </label>
+   <div class="row" style="justify-content:flex-end;gap:6px">
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('renameColModal').classList.remove('open')">Cancel</button>
+    <button class="btn btn-dark btn-sm" onclick="saveColEdit()">Save</button>
+   </div>
+  </div>
+ </div>
+</div>
+
 </body>
 </html>
